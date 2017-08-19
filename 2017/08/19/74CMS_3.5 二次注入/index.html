@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>Homaebic-Know thyself</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="forsigner,前端,设计,Hexo主题,前端开发,用户体验,设计,frontend,design,nodejs,JavaScript" />
+  
+
+  <meta name="description" content="零到一可能需要很长时间，从一开始，就不会那么久了 配合着之前师傅发过的二次注入的漏洞，跟随着类似的方法找到一个二次注入的漏洞。 复现了上次的漏洞，心想可不可以自己也挖一个二次注入的洞？说干就干 这次既然找二次注入漏洞，就依然是从找数据库取出数据然后写入数据库的地方下手，所以全局搜索get_user_info()函数。 用seay搜索了一下，大致看下传入的变量，选择了第30处，因为30处传入$res">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Homaebic-Know thyself">
+<meta property="og:url" content="http://hebic.me/2017/08/19/74CMS_3.5 二次注入/index.html">
+<meta property="og:site_name" content="Homaebic-Know thyself">
+<meta property="og:description" content="零到一可能需要很长时间，从一开始，就不会那么久了 配合着之前师傅发过的二次注入的漏洞，跟随着类似的方法找到一个二次注入的漏洞。 复现了上次的漏洞，心想可不可以自己也挖一个二次注入的洞？说干就干 这次既然找二次注入漏洞，就依然是从找数据库取出数据然后写入数据库的地方下手，所以全局搜索get_user_info()函数。 用seay搜索了一下，大致看下传入的变量，选择了第30处，因为30处传入$res">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://hebic.me/%27http://hebic.me/usr/uploads/2017/02/2390363053.png/%27">
+<meta property="og:updated_time" content="2017-08-19T14:52:34.848Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Homaebic-Know thyself">
+<meta name="twitter:description" content="零到一可能需要很长时间，从一开始，就不会那么久了 配合着之前师傅发过的二次注入的漏洞，跟随着类似的方法找到一个二次注入的漏洞。 复现了上次的漏洞，心想可不可以自己也挖一个二次注入的洞？说干就干 这次既然找二次注入漏洞，就依然是从找数据库取出数据然后写入数据库的地方下手，所以全局搜索get_user_info()函数。 用seay搜索了一下，大致看下传入的变量，选择了第30处，因为30处传入$res">
+<meta name="twitter:image" content="http://hebic.me/%27http://hebic.me/usr/uploads/2017/02/2390363053.png/%27">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cbe6" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?57e94d016e201fba3603a8a2b0263af0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-74CMS_3.5 二次注入" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">(no title)</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2017.08.19</span>
+      </span>
+
+      
+
+      
+
+
+      
+        <span>
+          <i class="icon-comment"></i>
+          <a href="http://hebic.me/2017/08/19/74CMS_3.5 二次注入/#disqus_thread"></a>
+        </span>
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>零到一可能需要很长时间，从一开始，就不会那么久了</p>
+<p>配合着之前师傅发过的二次注入的漏洞，跟随着类似的方法找到一个二次注入的漏洞。</p>
+<p>复现了上次的漏洞，心想可不可以自己也挖一个二次注入的洞？说干就干</p>
+<p>这次既然找二次注入漏洞，就依然是从找数据库取出数据然后写入数据库的地方下手，所以全局搜索get_user_info()函数。</p>
+<p>用seay搜索了一下，大致看下传入的变量，选择了第30处，因为30处传入$resume_user有写入数据库操作。</p>
+<p>文件位置/wap/plus/wap_ajax.php 653行</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">$resume_user=get_user_info($resume[\<span class="string">'uid\']);</span></div><div class="line"><span class="string">if ($_CFG[\'operation_mode\']=="2")</span></div><div class="line"><span class="string">&#123;</span></div><div class="line"><span class="string">	inserttable(table(\'company_interview\'),$addarr);</span></div><div class="line"><span class="string">	if ($resume[\'talent\']==\'2\')</span></div><div class="line"><span class="string">	&#123;</span></div><div class="line"><span class="string">		action_user_setmeal($_SESSION[\'uid\'],"interview_senior");</span></div><div class="line"><span class="string">		$setmeal=get_user_setmeal($_SESSION[\'uid\']);</span></div><div class="line"><span class="string">		write_memberslog($_SESSION[\'uid\'],1,9002,$_SESSION[\'username\'],"邀请了 &#123;$resume_user[\'username\']&#125; 面试，还可以邀请高级人才 &#123;$setmeal[\'interview_senior\']&#125; 次",2,1007,"邀请高级人才面试","1","&#123;$setmeal[\'interview_senior\']&#125;");</span></div><div class="line"><span class="string">		write_memberslog($_SESSION[\'uid\'],1,6001,$_SESSION[\'username\'],"邀请了 &#123;$resume_user[\'username\']&#125; 面试");</span></div><div class="line"><span class="string">	&#125;</span></div><div class="line"><span class="string">	else</span></div><div class="line"><span class="string">	&#123;				 </span></div><div class="line"><span class="string">		action_user_setmeal($_SESSION[\'uid\'],"interview_ordinary");</span></div><div class="line"><span class="string">		$setmeal=get_user_setmeal($_SESSION[\'uid\']);</span></div><div class="line"><span class="string">		write_memberslog($_SESSION[\'uid\'],1,9002,$_SESSION[\'username\'],"邀请了 &#123;$resume_user[\'username\']&#125; 面试，还可以邀请普通人才 &#123;$setmeal[\'interview_ordinary\']&#125; 次",2,1006,"邀请普通人才面试","1","&#123;$setmeal[\'interview_ordinary\']&#125;");</span></div><div class="line"><span class="string">		write_memberslog($_SESSION[\'uid\'],1,6001,$_SESSION[\'username\'],"邀请了 &#123;$resume_user[\'username\']&#125; 面试");				</span></div><div class="line"><span class="string">	&#125;			</span></div><div class="line"><span class="string">&#125;</span></div></pre></td></tr></table></figure>
+<p>大致看来是和上次很类似的洞，get_user_info()得到的参数交给resume_user变量，然后用write_memberslog()写入数据库。</p>
+<p>看下$resume的定义，在611行<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">elseif</span> ($act == \<span class="string">'invited_add\')</span></div><div class="line"><span class="string">&#123;</span></div><div class="line"><span class="string"></span></div><div class="line"><span class="string">	$smarty-&gt;cache = false;</span></div><div class="line"><span class="string">	$resume=resume_one($_POST["resume_id"]);</span></div><div class="line"><span class="string">	$resume = array_map("addslashes",$resume);</span></div></pre></td></tr></table></figure></p>
+<p>跟进resume_one()  ：在include/fun_wap.php 97行<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">resume_one</span><span class="params">($id)</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">	<span class="keyword">global</span> $db;</div><div class="line">	$id=intval($id);</div><div class="line">	$db-&gt;query(<span class="string">"update "</span>.table(\<span class="string">'resume\')." set click=click+1 WHERE id=\'&#123;$id&#125;\'  LIMIT 1");</span></div><div class="line"><span class="string">	$wheresql=" WHERE id=\'&#123;$id&#125;\'";</span></div><div class="line"><span class="string">	$sql = "select * from ".table(\'resume\').$wheresql." LIMIT 1";</span></div><div class="line"><span class="string">	$val=$db-&gt;getone($sql);</span></div></pre></td></tr></table></figure></p>
+<p>$_POST一个参数后找到resume表的这个参数所在行，返回这个行的所有内容。这个函数后面还有些内容，不会影响过程。</p>
+<p>回到第一图，找到这个行的uid值，通过ger_user_info()函数找到memeber表这个uid的行内容，将其中的username写入memebers_log表。</p>
+<p>所以复现的过程如下：</p>
+<p> 1.注册普通用户，用户名为：1\’,\’1\’,\’1\’,user(),\’1\’,\’9\’)#<br> 2.注册机构账号，登录后访问 <a href="http://localhost/code/74cms_3.5/upload/wap/plus/wap_ajax.php?act=invited_add" target="_blank" rel="external">http://localhost/code/74cms_3.5/upload/wap/plus/wap_ajax.php?act=invited_add</a> POST数据：resume_id=1<br> 3.访问【会员中心】的【我的账户】，消费明细中看到数据<br><img src="\'http://hebic.me/usr/uploads/2017/02/2390363053.png\'"></p>
+<p>总结：一个和上面非常类似的洞，经验不足，没有看清if条件，导致找变量如何传入浪费很多时间。</p>
+
+    
+  </div>
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，支持forsigner</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/qr-wechat.png" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/qr-alipay.png" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2017/08/19/你好哇吴文娟/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2017/08/19/74CMS_3.5 后台任意文件写入/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'forsigner';
+    
+    var disqus_url = 'http://hebic.me/2017/08/19/74CMS_3.5 二次注入/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//forsigner.disqus.com/count.js" async></script>
+
+
+
+    
+
+
+
+
+    
+
+    
+	
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

