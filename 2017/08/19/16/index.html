@@ -7,7 +7,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>你好哇吴文娟 | Homaebic-Know thyself</title>
+  <title>Homaebic-Know thyself</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -15,14 +15,17 @@
     <meta name="keywords" content="forsigner,前端,设计,Hexo主题,前端开发,用户体验,设计,frontend,design,nodejs,JavaScript" />
   
 
-  <meta property="og:type" content="article">
-<meta property="og:title" content="你好哇吴文娟">
-<meta property="og:url" content="http://hebic.me/2017/08/19/你好哇吴文娟/index.html">
+  <meta name="description" content="就select语句而言： （来自官方手册）1234567891011121314151617181920212223SELECT    [ALL | DISTINCT | DISTINCTROW ]      [HIGH_PRIORITY]      [STRAIGHT_JOIN]      [SQL_SMALL_RESULT] [SQL_BIG_RESULT] [SQL_BUFFER_RESUL">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Homaebic-Know thyself">
+<meta property="og:url" content="http://hebic.me/2017/08/19/16/index.html">
 <meta property="og:site_name" content="Homaebic-Know thyself">
+<meta property="og:description" content="就select语句而言： （来自官方手册）1234567891011121314151617181920212223SELECT    [ALL | DISTINCT | DISTINCTROW ]      [HIGH_PRIORITY]      [STRAIGHT_JOIN]      [SQL_SMALL_RESULT] [SQL_BIG_RESULT] [SQL_BUFFER_RESUL">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2017-08-19T09:15:05.735Z">
+<meta property="og:updated_time" content="2017-08-19T14:55:52.052Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="你好哇吴文娟">
+<meta name="twitter:title" content="Homaebic-Know thyself">
+<meta name="twitter:description" content="就select语句而言： （来自官方手册）1234567891011121314151617181920212223SELECT    [ALL | DISTINCT | DISTINCTROW ]      [HIGH_PRIORITY]      [STRAIGHT_JOIN]      [SQL_SMALL_RESULT] [SQL_BIG_RESULT] [SQL_BUFFER_RESUL">
 
   
 
@@ -182,9 +185,9 @@
 
 
 <div class="content content-post CENTER">
-   <article id="post-你好哇吴文娟" class="article article-type-post" itemprop="blogPost">
+   <article id="post-16" class="article article-type-post" itemprop="blogPost">
   <header class="article-header">
-    <h1 class="post-title">你好哇吴文娟</h1>
+    <h1 class="post-title">(no title)</h1>
 
     <div class="article-meta">
       <span>
@@ -200,7 +203,7 @@
       
         <span>
           <i class="icon-comment"></i>
-          <a href="http://hebic.me/2017/08/19/你好哇吴文娟/#disqus_thread"></a>
+          <a href="http://hebic.me/2017/08/19/16/#disqus_thread"></a>
         </span>
       
 
@@ -219,7 +222,11 @@
 
   <div class="article-content">
     
-      
+      <p>就select语句而言：<br> （来自官方手册）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">SELECT</div><div class="line">    [ALL | DISTINCT | DISTINCTROW ]</div><div class="line">      [HIGH_PRIORITY]</div><div class="line">      [STRAIGHT_JOIN]</div><div class="line">      [SQL_SMALL_RESULT] [SQL_BIG_RESULT] [SQL_BUFFER_RESULT]</div><div class="line">      [SQL_CACHE | SQL_NO_CACHE] [SQL_CALC_FOUND_ROWS]</div><div class="line">    select_expr [, select_expr ...]</div><div class="line">    [FROM table_references</div><div class="line">      [PARTITION partition_list]</div><div class="line">    [WHERE where_condition]</div><div class="line">    [GROUP BY &#123;col_name | expr | position&#125;</div><div class="line">      [ASC | DESC], ... [WITH ROLLUP]]</div><div class="line">    [HAVING where_condition]</div><div class="line">    [ORDER BY &#123;col_name | expr | position&#125;</div><div class="line">      [ASC | DESC], ...]</div><div class="line">    [LIMIT &#123;[offset,] row_count | row_count OFFSET offset&#125;]</div><div class="line">    [PROCEDURE procedure_name(argument_list)]</div><div class="line">    [INTO OUTFILE \&apos;file_name\&apos;</div><div class="line">        [CHARACTER SET charset_name]</div><div class="line">        export_options</div><div class="line">      | INTO DUMPFILE \&apos;file_name\&apos;</div><div class="line">      | INTO var_name [, var_name]]</div><div class="line">    [FOR UPDATE | LOCK IN SHARE MODE]]</div></pre></td></tr></table></figure></p>
+<p>Mysql对于一句<code>select query</code>的处理是从最上面的子句执行，每执行一句子句就生成虚拟表V，将虚拟表V作为下一个子句的输入，如果没有遇到子句则跳过寻找下一个可能的子句，直到执行到最后一个子句。将生成的最后一个表返回到用户界面，而执行顺序中的虚拟表对用户是透明的。其他语法的查询均遵从这一方法。<br>而报错注入的特性是当执行到执行到报错函数处，停止后面语句的执行并抛出错误到用户界面。基于这一特点，可以构造出并不符合语法规则的报错语句。在 <code>http://blog.csdn.net/niexinming/article/details/55001126</code> 中mysql执行的语句是：<code>sql
+update `table` t left join (select char(97) as user from dual where (extractvalue(1,concat(0x7e,(select user()),0x7e)))) tt on tt.user=`t.username` set username =\&#39;admin\&#39; where id=1;</code>修改为：<code>sql
+update `users` t left join (select (extractvalue(1,concat(0x7e,(select user()),0x7e)))) tt on tt.a=`t.a` set username =\&#39;admin\&#39; where id=1;</code>依然可以执行。但由于子查询优先级低于主句，因此不可以改变join on语法的完整性。<br>另外小密圈里有人问<code>select * from test_***</code> 中的<em>*</em>可控，但是没有test_存在的表，能否注入。回答是不可以的，因为执行到from前没有可控内容，from就会被优先执行，由于表不存在，就会立刻退出并不执行后面的句子，因此是不可以注入的。如果有师傅有什么注入的姿势还请指教</p>
+
     
   </div>
 </article>
@@ -249,10 +256,10 @@
 
    
   <div class="box-prev-next clearfix">
-    <a class="show pull-left" href="/2017/08/19/hello-world/">
+    <a class="show pull-left" href="/2017/08/19/15/">
         <i class="icon icon-angle-left"></i>
     </a>
-    <a class="show pull-right" href="/2017/08/19/1/">
+    <a class="show pull-right" href="/2017/08/19/17/">
         <i class="icon icon-angle-right"></i>
     </a>
   </div>
@@ -377,7 +384,7 @@
   <script>
     var disqus_shortname = 'forsigner';
     
-    var disqus_url = 'http://hebic.me/2017/08/19/你好哇吴文娟/';
+    var disqus_url = 'http://hebic.me/2017/08/19/16/';
     
     (function(){
       var dsq = document.createElement('script');
