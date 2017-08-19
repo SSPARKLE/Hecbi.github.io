@@ -7,7 +7,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Homaebic-Know thyself</title>
+  <title>MySQL注入绕过过滤表名 | Homaebic-Know thyself</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -17,14 +17,14 @@
 
   <meta name="description" content="昨晚得知一种可以不知道表名也可以注入出数据的技巧，赶快来试了一下。其核心在将一个可控的虚拟表V1与需要查询的真实表V2联合起来（使用union select），使得表字段可控从而查询数据。 首先创建一个和需要查询的表有相同列数的虚拟表1234567mysql&amp;gt; select * from ((select 1)a,(select 2)b,(select 3)c);+---+---+---+|">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Homaebic-Know thyself">
+<meta property="og:title" content="MySQL注入绕过过滤表名">
 <meta property="og:url" content="http://hebic.me/2017/08/19/MySQL注入绕过过滤表名/index.html">
 <meta property="og:site_name" content="Homaebic-Know thyself">
 <meta property="og:description" content="昨晚得知一种可以不知道表名也可以注入出数据的技巧，赶快来试了一下。其核心在将一个可控的虚拟表V1与需要查询的真实表V2联合起来（使用union select），使得表字段可控从而查询数据。 首先创建一个和需要查询的表有相同列数的虚拟表1234567mysql&amp;gt; select * from ((select 1)a,(select 2)b,(select 3)c);+---+---+---+|">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2017-08-19T14:56:06.802Z">
+<meta property="og:updated_time" content="2017-08-19T15:17:23.889Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Homaebic-Know thyself">
+<meta name="twitter:title" content="MySQL注入绕过过滤表名">
 <meta name="twitter:description" content="昨晚得知一种可以不知道表名也可以注入出数据的技巧，赶快来试了一下。其核心在将一个可控的虚拟表V1与需要查询的真实表V2联合起来（使用union select），使得表字段可控从而查询数据。 首先创建一个和需要查询的表有相同列数的虚拟表1234567mysql&amp;gt; select * from ((select 1)a,(select 2)b,(select 3)c);+---+---+---+|">
 
   
@@ -187,7 +187,7 @@
 <div class="content content-post CENTER">
    <article id="post-MySQL注入绕过过滤表名" class="article article-type-post" itemprop="blogPost">
   <header class="article-header">
-    <h1 class="post-title">(no title)</h1>
+    <h1 class="post-title">MySQL注入绕过过滤表名</h1>
 
     <div class="article-meta">
       <span>
@@ -259,10 +259,10 @@
 
    
   <div class="box-prev-next clearfix">
-    <a class="show pull-left" href="/2017/08/19/MySQL的查询操作逻辑/">
+    <a class="show pull-left" href="/2017/08/19/CSP绕过姿势总结（2017.3.1更新）/">
         <i class="icon icon-angle-left"></i>
     </a>
-    <a class="show pull-right" href="/2017/08/19/NSCTF 2017 Web部分 WriteUp/">
+    <a class="show pull-right" href="/2017/08/19/Pwnhub杯几道题WriteUp/">
         <i class="icon icon-angle-right"></i>
     </a>
   </div>

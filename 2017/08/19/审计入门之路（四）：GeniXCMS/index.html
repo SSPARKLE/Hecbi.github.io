@@ -15,20 +15,20 @@
     <meta name="keywords" content="forsigner,前端,设计,Hexo主题,前端开发,用户体验,设计,frontend,design,nodejs,JavaScript" />
   
 
-  <meta name="description" content="柠檬师傅和皓宝宝都拿CVE了，我也跟风审这cms。要是能申请到一个CVE-ID这个学期的目标就提前完成了。 一周之后就收到了第一个CVE，开心。顺带着把审到的几个全都交了，CNA也都分配了CVE-ID 后台SQL注入输入类没有看出什么问题，根据我的水平，也只能找找过滤不完善的地方了。/inc/lib/control/backend/menus/control.php 245行12345678910">
+  <meta name="description" content="审计入门之路（四）：GenixCMS柠檬师傅和皓宝宝都拿CVE了，我也跟风审这cms。要是能申请到一个CVE-ID这个学期的目标就提前完成了。 一周之后就收到了第一个CVE，开心。顺带着把审到的几个全都交了，CNA也都分配了CVE-ID 后台SQL注入输入类没有看出什么问题，根据我的水平，也只能找找过滤不完善的地方了。/inc/lib/control/backend/menus/control.p">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Homaebic-Know thyself">
 <meta property="og:url" content="http://hebic.me/2017/08/19/审计入门之路（四）：GeniXCMS/index.html">
 <meta property="og:site_name" content="Homaebic-Know thyself">
-<meta property="og:description" content="柠檬师傅和皓宝宝都拿CVE了，我也跟风审这cms。要是能申请到一个CVE-ID这个学期的目标就提前完成了。 一周之后就收到了第一个CVE，开心。顺带着把审到的几个全都交了，CNA也都分配了CVE-ID 后台SQL注入输入类没有看出什么问题，根据我的水平，也只能找找过滤不完善的地方了。/inc/lib/control/backend/menus/control.php 245行12345678910">
+<meta property="og:description" content="审计入门之路（四）：GenixCMS柠檬师傅和皓宝宝都拿CVE了，我也跟风审这cms。要是能申请到一个CVE-ID这个学期的目标就提前完成了。 一周之后就收到了第一个CVE，开心。顺带着把审到的几个全都交了，CNA也都分配了CVE-ID 后台SQL注入输入类没有看出什么问题，根据我的水平，也只能找找过滤不完善的地方了。/inc/lib/control/backend/menus/control.p">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://hebic.me/usr/uploads/2017/04/3330811745.png">
 <meta property="og:image" content="http://hebic.me/usr/uploads/2017/04/3053319278.png">
 <meta property="og:image" content="http://hebic.me/usr/uploads/2017/04/3374663366.png">
-<meta property="og:updated_time" content="2017-08-19T14:54:30.001Z">
+<meta property="og:updated_time" content="2017-08-19T15:19:49.970Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Homaebic-Know thyself">
-<meta name="twitter:description" content="柠檬师傅和皓宝宝都拿CVE了，我也跟风审这cms。要是能申请到一个CVE-ID这个学期的目标就提前完成了。 一周之后就收到了第一个CVE，开心。顺带着把审到的几个全都交了，CNA也都分配了CVE-ID 后台SQL注入输入类没有看出什么问题，根据我的水平，也只能找找过滤不完善的地方了。/inc/lib/control/backend/menus/control.php 245行12345678910">
+<meta name="twitter:description" content="审计入门之路（四）：GenixCMS柠檬师傅和皓宝宝都拿CVE了，我也跟风审这cms。要是能申请到一个CVE-ID这个学期的目标就提前完成了。 一周之后就收到了第一个CVE，开心。顺带着把审到的几个全都交了，CNA也都分配了CVE-ID 后台SQL注入输入类没有看出什么问题，根据我的水平，也只能找找过滤不完善的地方了。/inc/lib/control/backend/menus/control.p">
 <meta name="twitter:image" content="http://hebic.me/usr/uploads/2017/04/3330811745.png">
 
   
@@ -231,7 +231,7 @@
 
   <div class="article-content">
     
-      <p>柠檬师傅和皓宝宝都拿CVE了，我也跟风审这cms。要是能申请到一个CVE-ID这个学期的目标就提前完成了。</p>
+      <p>审计入门之路（四）：GenixCMS<br>柠檬师傅和皓宝宝都拿CVE了，我也跟风审这cms。要是能申请到一个CVE-ID这个学期的目标就提前完成了。</p>
 <p>一周之后就收到了第一个CVE，开心。顺带着把审到的几个全都交了，CNA也都分配了CVE-ID</p>
 <h2 id="后台SQL注入"><a href="#后台SQL注入" class="headerlink" title="后台SQL注入"></a>后台SQL注入</h2><p>输入类没有看出什么问题，根据我的水平，也只能找找过滤不完善的地方了。<br><code>/inc/lib/control/backend/menus/control.php 245行</code><br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">case</span> \<span class="string">'remove\':</span></div><div class="line"><span class="string">            if (isset($_GET[\'menuid\'])) &#123;</span></div><div class="line"><span class="string">                $token = Typo::cleanX($_GET[\'token\']);</span></div><div class="line"><span class="string">                if (!isset($_GET[\'token\']) || !Token::validate($token)) &#123;</span></div><div class="line"><span class="string">                    // VALIDATE ALL</span></div><div class="line"><span class="string">                    $alertDanger[] = TOKEN_NOT_EXIST;</span></div><div class="line"><span class="string">                &#125;</span></div><div class="line"><span class="string">                if (isset($alertDanger)) &#123;</span></div><div class="line"><span class="string">                    $data[\'alertDanger\'] = $alertDanger;</span></div><div class="line"><span class="string">                &#125; else &#123;</span></div><div class="line"><span class="string">                    $menus = json_decode(Options::v(\'menus\'), true);</span></div><div class="line"><span class="string">                    unset($menus[$_GET[\'menuid\']]);</span></div><div class="line"><span class="string">                    $sql = sprintf("DELETE FROM `menus` WHERE `menuid` = \'%s\' ", $_GET[\'menuid\']);</span></div><div class="line"><span class="string">                    Db::query($sql);</span></div><div class="line"><span class="string">                    $menu = json_encode($menus);</span></div><div class="line"><span class="string">                    Options::update(\'menus\', $menu);</span></div><div class="line"><span class="string">                    new Options();</span></div><div class="line"><span class="string">                    $data[\'alertSuccess\'][] = \'Menu Deleted\';</span></div><div class="line"><span class="string">                &#125;</span></div><div class="line"><span class="string">                if (isset($_GET[\'token\'])) &#123;</span></div><div class="line"><span class="string">                    Token::remove($token);</span></div><div class="line"><span class="string">                &#125;</span></div><div class="line"><span class="string">            &#125; else &#123;</span></div><div class="line"><span class="string">                $data[\'alertDanger\'][] = \'No ID Selected.\';</span></div><div class="line"><span class="string">            &#125;</span></div><div class="line"><span class="string">                $data[\'menus\'] = Options::get(\'menus\');</span></div><div class="line"><span class="string">                Theme::admin(\'header\', $data);</span></div><div class="line"><span class="string">                System::inc(\'menus\', $data);</span></div><div class="line"><span class="string">                Theme::admin(\'footer\');</span></div><div class="line"><span class="string">            break;</span></div></pre></td></tr></table></figure></p>
 <p><code>http://localhost/CMS/GeniXCMS-master/gxadmin/index.php?page=menus&amp;act=remove</code> 因为有csrftoken，只能改包。抓一个删除menus的包，修改token和menuid的位置，然后修改menuid的内容：hebic\’/<strong>/or/</strong>/extractvalue(1,concat(0x7e,database()))/**/or\’</p>
@@ -281,10 +281,10 @@
 
    
   <div class="box-prev-next clearfix">
-    <a class="show pull-left" href="/2017/08/19/审计入门之路（三）：Hadsky/">
+    <a class="show pull-left" href="/2017/08/19/Pwnhub杯几道题WriteUp/">
         <i class="icon icon-angle-left"></i>
     </a>
-    <a class="show pull-right" href="/2017/08/19/审计入门之路（一）：YzmCMS/">
+    <a class="hide pull-right" href="/">
         <i class="icon icon-angle-right"></i>
     </a>
   </div>

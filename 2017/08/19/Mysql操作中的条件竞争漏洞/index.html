@@ -7,7 +7,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Homaebic-Know thyself</title>
+  <title>Mysql操作中的条件竞争漏洞 | Homaebic-Know thyself</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -17,7 +17,7 @@
 
   <meta name="description" content="今天发现一个有趣的web条件竞争漏洞，本地复现了一下。 这一个常见情景：A和B互相转账。数据库操作也非常简单，取出A的余额与转账金额比较，如果转账金额小于余额就成功，大于就失败。简单的代码如下：123456789101112131415161718192021222324252627282930313233&amp;lt;?php$db_host = \&apos;\&apos;;$db_name = \&apos;\&apos;;$db_us">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Homaebic-Know thyself">
+<meta property="og:title" content="Mysql操作中的条件竞争漏洞">
 <meta property="og:url" content="http://hebic.me/2017/08/19/Mysql操作中的条件竞争漏洞/index.html">
 <meta property="og:site_name" content="Homaebic-Know thyself">
 <meta property="og:description" content="今天发现一个有趣的web条件竞争漏洞，本地复现了一下。 这一个常见情景：A和B互相转账。数据库操作也非常简单，取出A的余额与转账金额比较，如果转账金额小于余额就成功，大于就失败。简单的代码如下：123456789101112131415161718192021222324252627282930313233&amp;lt;?php$db_host = \&apos;\&apos;;$db_name = \&apos;\&apos;;$db_us">
@@ -26,9 +26,9 @@
 <meta property="og:image" content="http://hebic.me/usr/uploads/2017/07/619986578.png">
 <meta property="og:image" content="http://hebic.me/usr/uploads/2017/07/3276965046.png">
 <meta property="og:image" content="http://hebic.me/usr/uploads/2017/07/4034399520.png">
-<meta property="og:updated_time" content="2017-08-19T14:56:30.904Z">
+<meta property="og:updated_time" content="2017-08-19T15:16:37.559Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Homaebic-Know thyself">
+<meta name="twitter:title" content="Mysql操作中的条件竞争漏洞">
 <meta name="twitter:description" content="今天发现一个有趣的web条件竞争漏洞，本地复现了一下。 这一个常见情景：A和B互相转账。数据库操作也非常简单，取出A的余额与转账金额比较，如果转账金额小于余额就成功，大于就失败。简单的代码如下：123456789101112131415161718192021222324252627282930313233&amp;lt;?php$db_host = \&apos;\&apos;;$db_name = \&apos;\&apos;;$db_us">
 <meta name="twitter:image" content="http://hebic.me/usr/uploads/2017/07/2354612848.png">
 
@@ -192,7 +192,7 @@
 <div class="content content-post CENTER">
    <article id="post-Mysql操作中的条件竞争漏洞" class="article article-type-post" itemprop="blogPost">
   <header class="article-header">
-    <h1 class="post-title">(no title)</h1>
+    <h1 class="post-title">Mysql操作中的条件竞争漏洞</h1>
 
     <div class="article-meta">
       <span>
@@ -274,7 +274,7 @@
 
    
   <div class="box-prev-next clearfix">
-    <a class="show pull-left" href="/2017/08/19/CSP绕过姿势总结（2017.3.1更新）/">
+    <a class="show pull-left" href="/2017/08/19/NSCTF 2017 Web部分 WriteUp/">
         <i class="icon icon-angle-left"></i>
     </a>
     <a class="show pull-right" href="/2017/08/19/MySQL的查询操作逻辑/">
