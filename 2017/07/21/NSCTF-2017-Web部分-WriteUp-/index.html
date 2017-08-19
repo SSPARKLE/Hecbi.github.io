@@ -7,7 +7,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>NSCTF 2017 Web���� WriteUp | Homaebic-Know thyself</title>
+  <title>NSCTF 2017 Web部分 WriteUp | Homaebic-Know thyself</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -15,22 +15,22 @@
     <meta name="keywords" content="homaebic," />
   
 
-  <meta name="description" content="Web01������������ת�����˹���������������Ŀ��ַ������ץ302�����õ�flag�� Web02һ������������ʾ��һ��ping���ߡ�������ַ������ping�Ľ��������˿�������ִ�У�127.0.0.1%0atac%20ping.php �õ�flag��ַ����tacһ�ΰ���flag��php��">
+  <meta name="description" content="Web01点击超链接跳转到绿盟官网，超链接是题目地址。于是抓302包，得到flag。 Web02一个输入框，提示是一个ping工具。输入地址，返回ping的结果。因此考虑命令执行：127.0.0.1%0atac%20ping.php 得到flag地址，再tac一次包含flag的php即可 Web03PHP弱类型，没有什么新知识，调试一下就可以。  Web04提示送分题，这题没做出来，有个地址为?u">
 <meta name="keywords" content="homaebic">
 <meta property="og:type" content="article">
-<meta property="og:title" content="NSCTF 2017 Web���� WriteUp">
+<meta property="og:title" content="NSCTF 2017 Web部分 WriteUp">
 <meta property="og:url" content="http://hebic.me/2017/07/21/NSCTF-2017-Web部分-WriteUp-/index.html">
 <meta property="og:site_name" content="Homaebic-Know thyself">
-<meta property="og:description" content="Web01������������ת�����˹���������������Ŀ��ַ������ץ302�����õ�flag�� Web02һ������������ʾ��һ��ping���ߡ�������ַ������ping�Ľ��������˿�������ִ�У�127.0.0.1%0atac%20ping.php �õ�flag��ַ����tacһ�ΰ���flag��php��">
+<meta property="og:description" content="Web01点击超链接跳转到绿盟官网，超链接是题目地址。于是抓302包，得到flag。 Web02一个输入框，提示是一个ping工具。输入地址，返回ping的结果。因此考虑命令执行：127.0.0.1%0atac%20ping.php 得到flag地址，再tac一次包含flag的php即可 Web03PHP弱类型，没有什么新知识，调试一下就可以。  Web04提示送分题，这题没做出来，有个地址为?u">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://hebic.me/usr/uploads/2017/07/4267951816.png">
 <meta property="og:image" content="http://hebic.me/usr/uploads/2017/07/2795109844.png">
 <meta property="og:image" content="http://hebic.me/usr/uploads/2017/07/1499879447.png">
 <meta property="og:image" content="http://hebic.me/usr/uploads/2017/07/4275711936.png">
-<meta property="og:updated_time" content="2017-08-19T11:11:12.407Z">
+<meta property="og:updated_time" content="2017-08-19T11:13:40.547Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="NSCTF 2017 Web���� WriteUp">
-<meta name="twitter:description" content="Web01������������ת�����˹���������������Ŀ��ַ������ץ302�����õ�flag�� Web02һ������������ʾ��һ��ping���ߡ�������ַ������ping�Ľ��������˿�������ִ�У�127.0.0.1%0atac%20ping.php �õ�flag��ַ����tacһ�ΰ���flag��php��">
+<meta name="twitter:title" content="NSCTF 2017 Web部分 WriteUp">
+<meta name="twitter:description" content="Web01点击超链接跳转到绿盟官网，超链接是题目地址。于是抓302包，得到flag。 Web02一个输入框，提示是一个ping工具。输入地址，返回ping的结果。因此考虑命令执行：127.0.0.1%0atac%20ping.php 得到flag地址，再tac一次包含flag的php即可 Web03PHP弱类型，没有什么新知识，调试一下就可以。  Web04提示送分题，这题没做出来，有个地址为?u">
 <meta name="twitter:image" content="http://hebic.me/usr/uploads/2017/07/4267951816.png">
 
   
@@ -198,7 +198,7 @@
 <div class="content content-post CENTER">
    <article id="post-NSCTF-2017-Web部分-WriteUp-" class="article article-type-post" itemprop="blogPost">
   <header class="article-header">
-    <h1 class="post-title">NSCTF 2017 Web���� WriteUp</h1>
+    <h1 class="post-title">NSCTF 2017 Web部分 WriteUp</h1>
 
     <div class="article-meta">
       <span>
@@ -238,13 +238,13 @@
 
   <div class="article-content">
     
-      <h2 id="Web01"><a href="#Web01" class="headerlink" title="Web01"></a>Web01</h2><p>������������ת�����˹���������������Ŀ��ַ������ץ302�����õ�flag��</p>
-<h2 id="Web02"><a href="#Web02" class="headerlink" title="Web02"></a>Web02</h2><p>һ������������ʾ��һ��ping���ߡ�������ַ������ping�Ľ��������˿�������ִ�У�<code>127.0.0.1%0atac%20ping.php</code> �õ�flag��ַ����tacһ�ΰ���flag��php����</p>
-<h2 id="Web03"><a href="#Web03" class="headerlink" title="Web03"></a>Web03</h2><p>PHP�����ͣ�û��ʲô��֪ʶ������һ�¾Ϳ��ԡ�</p>
-<p><img src="http://hebic.me/usr/uploads/2017/07/4267951816.png" alt="TIM��ͼ20170720123356.png"></p>
-<h2 id="Web04"><a href="#Web04" class="headerlink" title="Web04"></a>Web04</h2><p>��ʾ�ͷ��⣬����û���������и���ַΪ?url=git ����Ӧ���뵽gitй¶���õ�һ��txt��ַ������֮��������������base64 decode���ɡ�</p>
-<h2 id="Web05"><a href="#Web05" class="headerlink" title="Web05"></a>Web05</h2><p>500�ֵ��⣬��һ���ļ���ȡ���ҾͰ����еĵ�ַ�����˳���������������ҳ�滹û���ؾ������������ˡ�����Ӳ��ͷƤ���ƣ���һ��insert�ҵ�ע���㣬������Ҫ��¼���Σ��Ƚ��˷�ʱ�䡣������������������������ʦ���ķ�������������search.php����һ�����򵥵�likeע�룬��ô�������һ�������ֱ����500�ֵ��⡣<br><img src="http://hebic.me/usr/uploads/2017/07/2795109844.png" alt="TIMͼƬ20170721213605.png"></p>
-<h2 id="Web06"><a href="#Web06" class="headerlink" title="Web06"></a>Web06</h2><p>Wget���ߣ�����Ϊ��ssrf��������������������wget CVE������ʧ�ܸ��ա�������֪��wget����-O���������԰��ļ������������ط����������ƹ��˱�Ŀ¼����д�����⡣���⻹��һ��admin.php����ͷ��βû�����ϣ��������������з��ֵĶ��������á�<br><img src="http://hebic.me/usr/uploads/2017/07/1499879447.png" alt="1.png"></p>
+      <h2 id="Web01"><a href="#Web01" class="headerlink" title="Web01"></a>Web01</h2><p>点击超链接跳转到绿盟官网，超链接是题目地址。于是抓302包，得到flag。</p>
+<h2 id="Web02"><a href="#Web02" class="headerlink" title="Web02"></a>Web02</h2><p>一个输入框，提示是一个ping工具。输入地址，返回ping的结果。因此考虑命令执行：<code>127.0.0.1%0atac%20ping.php</code> 得到flag地址，再tac一次包含flag的php即可</p>
+<h2 id="Web03"><a href="#Web03" class="headerlink" title="Web03"></a>Web03</h2><p>PHP弱类型，没有什么新知识，调试一下就可以。</p>
+<p><img src="http://hebic.me/usr/uploads/2017/07/4267951816.png" alt="TIM截图20170720123356.png"></p>
+<h2 id="Web04"><a href="#Web04" class="headerlink" title="Web04"></a>Web04</h2><p>提示送分题，这题没做出来，有个地址为?url=git 于是应该想到git泄露。得到一个txt地址，访问之，将里面的内容base64 decode即可。</p>
+<h2 id="Web05"><a href="#Web05" class="headerlink" title="Web05"></a>Web05</h2><p>500分的题，有一处文件读取。我就把所有的地址都读了出来决定慢慢看。页面还没下载就有人做出来了。后来硬着头皮审计，在一处insert找到注入点，但是需要登录两次，比较浪费时间。但还是做出来。结束后试了师傅的方法，结果发现search.php中有一处超简单的like注入，这么简单让我怀疑这简直不是500分的题。<br><img src="http://hebic.me/usr/uploads/2017/07/2795109844.png" alt="TIM图片20170721213605.png"></p>
+<h2 id="Web06"><a href="#Web06" class="headerlink" title="Web06"></a>Web06</h2><p>Wget工具，本以为是ssrf，还用上了曾经爆出的wget CVE，均以失败告终。后来才知道wget还有-O参数，可以把文件保存在其他地方，这样就绕过了本目录不可写的问题。另外还有一个admin.php，从头至尾没有用上，看来并不是所有发现的东西都有用。<br><img src="http://hebic.me/usr/uploads/2017/07/1499879447.png" alt="1.png"></p>
 <p><img src="http://hebic.me/usr/uploads/2017/07/4275711936.png" alt="2.png"></p>
 
     
