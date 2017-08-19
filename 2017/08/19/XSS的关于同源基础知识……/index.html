@@ -22,7 +22,7 @@
 <meta property="og:site_name" content="Homaebic-Know thyself">
 <meta property="og:description" content="在学XSS前一直没有弄得很明白同源，AJAX，XMLHttpRequest，看文章时又遇到CORS，一团乱。这两天学了一下，做个总结。 AJAXAJAX是一种用于快速创建动态网页的技术，他可以不需要重新加载网页，就对网页中的一部分进行更新。而XMLHttpRequest是AJAX的基础。 XMLHttpRequestXMLHttpRequest 是一个浏览器的接口，他让javascript可以进行">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2017-08-19T15:27:06.588Z">
+<meta property="og:updated_time" content="2017-08-19T15:31:19.434Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="XSS的关于同源的知识">
 <meta name="twitter:description" content="在学XSS前一直没有弄得很明白同源，AJAX，XMLHttpRequest，看文章时又遇到CORS，一团乱。这两天学了一下，做个总结。 AJAXAJAX是一种用于快速创建动态网页的技术，他可以不需要重新加载网页，就对网页中的一部分进行更新。而XMLHttpRequest是AJAX的基础。 XMLHttpRequestXMLHttpRequest 是一个浏览器的接口，他让javascript可以进行">
@@ -237,11 +237,11 @@
 <li>DOM无法获得</li>
 <li>AJAX请求不能发送</li>
 </ol>
-<h2 id="COOKIE"><a href="#COOKIE" class="headerlink" title="COOKIE"></a>COOKIE</h2><p>如果二级域名不相同的话，浏览器允许通过设置document.domin共享cookie: <code>document.domain=\&#39;a.com\&#39;</code>;<br>接着A网页设置一个<code>document.cookie=\&#39;aaaa\&#39;</code>; B网页就可以读到这个cookie<br>这只适用于Cookie和iframe窗口，LocalStorage和IndexDB无法使用这种方法。<br>另外，服务器可以在设置cookie设置为一级域名：<code>.a.com</code>，这样二三级的域名都可以读这个cookie啦！</p>
+<h2 id="COOKIE"><a href="#COOKIE" class="headerlink" title="COOKIE"></a>COOKIE</h2><p>如果二级域名不相同的话，浏览器允许通过设置document.domin共享cookie: <code>document.domain=&#39;a.com&#39;</code>;<br>接着A网页设置一个<code>document.cookie=&#39;aaaa&#39;</code>; B网页就可以读到这个cookie<br>这只适用于Cookie和iframe窗口，LocalStorage和IndexDB无法使用这种方法。<br>另外，服务器可以在设置cookie设置为一级域名：<code>.a.com</code>，这样二三级的域名都可以读这个cookie啦！</p>
 <h2 id="iframe"><a href="#iframe" class="headerlink" title="iframe"></a>iframe</h2><p>如果不同源的话，在一个网页中的iframe是无法读取dom的，父窗口读子窗口的dom还是子窗口读父窗口的dom都会因为跨源而报错。<br>但如果两个窗口一级域名相同，就可以使用设置document.domin属性，拿到dom。<br>对于完全不同源的网站，有三种方法可以绕过跨源通信问题：</p>
 <ol>
 <li>片段识别符<br>就是指的URL的#后面的部分。比如 <code>www.a.com/aa.html#aaa</code> 中的 <code>#aaa</code>。 如果只是改变片段识别符，页面不会刷新。<br>父窗口可以把信息写到子窗口的片段标识符，子窗口通过<code>hashchange</code>事件得到通知。<br>同样子窗口也可以改变父窗口的片段标识符。</li>
-<li>Window.name<br>浏览器有window.name属性，这个属性的特点是无论同源，只要在一个窗口里，前一个网页设置这个属性，后一个网页就可以读取他。<br>做法如下：父窗口打开一个子窗口，载入一个非同源网页，将网页信息写入<code>window.name</code>属性中：<code>window.name=data</code>;<br>接着，子窗口跳回一个主窗口同源的网址 <code>location=\&#39;www.a.com\&#39;</code><br>主窗口就可以读取子窗口的<code>window.name</code>了~<br>优点是<code>window.name</code>容量大，可以放很多信息。缺点是必须监听子窗口<code>window.name</code>变化，影响性能.</li>
+<li>Window.name<br>浏览器有window.name属性，这个属性的特点是无论同源，只要在一个窗口里，前一个网页设置这个属性，后一个网页就可以读取他。<br>做法如下：父窗口打开一个子窗口，载入一个非同源网页，将网页信息写入<code>window.name</code>属性中：<code>window.name=data</code>;<br>接着，子窗口跳回一个主窗口同源的网址 <code>location=&#39;www.a.com&#39;</code><br>主窗口就可以读取子窗口的<code>window.name</code>了~<br>优点是<code>window.name</code>容量大，可以放很多信息。缺点是必须监听子窗口<code>window.name</code>变化，影响性能.</li>
 <li>上面的两个都是破解方法，官方解决方案是：window.postMessage<br>HTML为了解决跨域通信，引入了全新的API，这个API为window对象新增了一个<code>window.postMessage</code>方法，允许跨窗口通信。</li>
 </ol>
 <h2 id="AJAX-1"><a href="#AJAX-1" class="headerlink" title="AJAX"></a>AJAX</h2><p>同源政策规定，AJAX不能跨源，不然就报错。<br>除了架设代理服务器，还有三种方法规避</p>
