@@ -13,12 +13,12 @@
 <meta property="og:site_name" content="Homaebic-Know thyself">
 <meta property="og:description" content="第一次认真地打比赛。 简陋的博客点进题非常简洁，只有两个按钮，分别对应两篇文章。两个URL分别为 ：http://54.223.247.98:8023/?a=article&amp;amp;page=1和http://54.223.247.98:8023/?a=article&amp;amp;page=2。第一篇文章中提到对GET、POST、REQUEST变量进行过滤。大致猜到可以注入。于是对Page参数进行注入">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://hebic.me/usr/uploads/2017/05/3332961668.jpg">
-<meta property="og:updated_time" content="2017-08-19T15:31:20.308Z">
+<meta property="og:image" content="http://120.25.80.195:7230/05/3332961668.jpg">
+<meta property="og:updated_time" content="2017-08-20T00:55:33.265Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Pwnhub杯几道题Writeup">
 <meta name="twitter:description" content="第一次认真地打比赛。 简陋的博客点进题非常简洁，只有两个按钮，分别对应两篇文章。两个URL分别为 ：http://54.223.247.98:8023/?a=article&amp;amp;page=1和http://54.223.247.98:8023/?a=article&amp;amp;page=2。第一篇文章中提到对GET、POST、REQUEST变量进行过滤。大致猜到可以注入。于是对Page参数进行注入">
-<meta name="twitter:image" content="http://hebic.me/usr/uploads/2017/05/3332961668.jpg">
+<meta name="twitter:image" content="http://120.25.80.195:7230/05/3332961668.jpg">
     
     
         
@@ -136,7 +136,7 @@
   <div class="content" itemprop="articleBody">
     <p>第一次认真地打比赛。</p>
 <h3 id="简陋的博客"><a href="#简陋的博客" class="headerlink" title="简陋的博客"></a>简陋的博客</h3><p>点进题非常简洁，只有两个按钮，分别对应两篇文章。两个URL分别为 ：<a href="http://54.223.247.98:8023/?a=article&amp;page=1和http://54.223.247.98:8023/?a=article&amp;page=2。第一篇文章中提到对GET、POST、REQUEST变量进行过滤。大致猜到可以注入。于是对Page参数进行注入测试，进行一轮FUZZ之后牺牲惨烈，几乎所有的符号都被过滤了。这时候想到文章说的对POST也进行了过滤，那就试试把参数放到post中。测试下来发现a和page可以使用post传参，a参数只过滤了单引号，page参数如何测试都无法验证过滤了什么。" target="_blank" rel="external">http://54.223.247.98:8023/?a=article&amp;page=1和http://54.223.247.98:8023/?a=article&amp;page=2。第一篇文章中提到对GET、POST、REQUEST变量进行过滤。大致猜到可以注入。于是对Page参数进行注入测试，进行一轮FUZZ之后牺牲惨烈，几乎所有的符号都被过滤了。这时候想到文章说的对POST也进行了过滤，那就试试把参数放到post中。测试下来发现a和page可以使用post传参，a参数只过滤了单引号，page参数如何测试都无法验证过滤了什么。</a></p>
-<p><img src="http://hebic.me/usr/uploads/2017/05/3332961668.jpg" alt="1.jpg"></p>
+<p><img src="http://120.25.80.195:7230/05/3332961668.jpg" alt="1.jpg"></p>
 <p>对a测试时，发现a是表名。表名是不可以被单引号包裹的，但表名可以被反引号包裹，本题也是如此。输入一个单引号就会报错。进行了一顿报错后，猜测查询语句为 select * from <code>sqli.输入点</code> where <code>id</code>=’输入点’。在报错信息中也发现page参数经过了intval()处理。</p>
 <p>还有一个点是在出字段名时，表名称需要单引号包裹，用16进制绕过。</p>
 <p>最后的payload：</p>

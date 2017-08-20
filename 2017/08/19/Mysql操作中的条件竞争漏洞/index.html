@@ -13,15 +13,15 @@
 <meta property="og:site_name" content="Homaebic-Know thyself">
 <meta property="og:description" content="今天发现一个有趣的web条件竞争漏洞，本地复现了一下。 这一个常见情景：A和B互相转账。数据库操作也非常简单，取出A的余额与转账金额比较，如果转账金额小于余额就成功，大于就失败。简单的代码如下：123456789101112131415161718192021222324252627282930313233&amp;lt;?php$db_host = &apos;&apos;;$db_name = &apos;&apos;;$db_user =">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://hebic.me/usr/uploads/2017/07/2354612848.png">
-<meta property="og:image" content="http://hebic.me/usr/uploads/2017/07/619986578.png">
-<meta property="og:image" content="http://hebic.me/usr/uploads/2017/07/3276965046.png">
-<meta property="og:image" content="http://hebic.me/usr/uploads/2017/07/4034399520.png">
-<meta property="og:updated_time" content="2017-08-19T15:31:23.662Z">
+<meta property="og:image" content="http://120.25.80.195:7230/07/2354612848.png">
+<meta property="og:image" content="http://120.25.80.195:7230/07/619986578.png">
+<meta property="og:image" content="http://120.25.80.195:7230/07/3276965046.png">
+<meta property="og:image" content="http://120.25.80.195:7230/07/4034399520.png">
+<meta property="og:updated_time" content="2017-08-20T00:55:18.448Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Mysql操作中的条件竞争漏洞">
 <meta name="twitter:description" content="今天发现一个有趣的web条件竞争漏洞，本地复现了一下。 这一个常见情景：A和B互相转账。数据库操作也非常简单，取出A的余额与转账金额比较，如果转账金额小于余额就成功，大于就失败。简单的代码如下：123456789101112131415161718192021222324252627282930313233&amp;lt;?php$db_host = &apos;&apos;;$db_name = &apos;&apos;;$db_user =">
-<meta name="twitter:image" content="http://hebic.me/usr/uploads/2017/07/2354612848.png">
+<meta name="twitter:image" content="http://120.25.80.195:7230/07/2354612848.png">
     
     
         
@@ -143,14 +143,14 @@
 <p>发送数据包：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">POST /secstu/tiaojianjingzheng/index.php HTTP/1.1</div><div class="line">Host: localhost</div><div class="line">User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.73 Safari/537.36</div><div class="line">Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8</div><div class="line">Accept-Language: zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3</div><div class="line">Accept-Encoding: gzip, deflate</div><div class="line">Content-Type: application/x-www-form-urlencoded</div><div class="line">Content-Length: 43</div><div class="line">Connection: close</div><div class="line">Upgrade-Insecure-Requests: 1</div><div class="line"></div><div class="line">submit=&amp;from=homaebic&amp;to=godot&amp;transfer=100</div></pre></td></tr></table></figure></p>
 <p>再看数据库：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">mysql&gt; select * from money;</div><div class="line">+----------+-------+----+</div><div class="line">| user     | money | id |</div><div class="line">+----------+-------+----+</div><div class="line">| homaebic |   900 |  1 |</div><div class="line">| godot    |  1100 |  2 |</div><div class="line">+----------+-------+----+</div><div class="line">2 rows in set (0.00 sec)</div></pre></td></tr></table></figure></p>
 <p>多发包几次，homaebic的money到0之后就不再动了。</p>
-<p><img src="http://hebic.me/usr/uploads/2017/07/2354612848.png" alt="TIM截图20170725172724.png">）</p>
+<p><img src="http://120.25.80.195:7230/07/2354612848.png" alt="TIM截图20170725172724.png">）</p>
 <p>（MYSQL监控也显示只进行select操作，没有update操作。）</p>
 <p>这时候要使用Burpsuite的多线程功能了，重复此操作N次</p>
-<p><img src="http://hebic.me/usr/uploads/2017/07/619986578.png" alt="TIM截图20170725172922.png"></p>
-<p><img src="http://hebic.me/usr/uploads/2017/07/3276965046.png" alt="TIM截图20170725172928.png"></p>
+<p><img src="http://120.25.80.195:7230/07/619986578.png" alt="TIM截图20170725172922.png"></p>
+<p><img src="http://120.25.80.195:7230/07/3276965046.png" alt="TIM截图20170725172928.png"></p>
 <p>发送50个包，25线程。</p>
 <p>再来看数据库<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">mysql&gt; select * from money;</div><div class="line">+----------+-------+----+</div><div class="line">| user     | money | id |</div><div class="line">+----------+-------+----+</div><div class="line">| homaebic | -5000 |  1 |</div><div class="line">| godot    |  6900 |  2 |</div><div class="line">+----------+-------+----+</div><div class="line">2 rows in set (0.00 sec)</div></pre></td></tr></table></figure></p>
-<p><img src="http://hebic.me/usr/uploads/2017/07/4034399520.png" alt="TIM截图20170725173446.png"></p>
+<p><img src="http://120.25.80.195:7230/07/4034399520.png" alt="TIM截图20170725173446.png"></p>
 <p>数据库的顺序也非常混乱。</p>
 <p>将这个操作扩展到其他方面，只要是从数据库取出的数据比较后再次操作数据库，就有可能产生这样的问题。而这样的操作是非常多的，大到用户注册，小到添加栏目都会有。但并不是每一个操作都会加锁，所以这时如果服务器处理速度缓慢，就有可能产生上面的情况。<br>我不是很了解系统上并发，多线程的原理之类，所以想了蛮久也不清楚为何会出现这样的情况。</p>
 <p>解决方法也很简单，给MYSQL上个锁：mysql第一句话之前加上一句BEGIN，结束后加上一句操作COMMIT，就不会发生上面的情况了。</p>

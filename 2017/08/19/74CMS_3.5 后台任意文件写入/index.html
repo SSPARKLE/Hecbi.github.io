@@ -13,15 +13,15 @@
 <meta property="og:site_name" content="Homaebic-Know thyself">
 <meta property="og:description" content="/admin/admin_database.php 45行 12345678910111213141516elseif($act ==&apos;do_backup&apos;)&amp;#123;	check_permissions($_SESSION[&apos;admin_purview&apos;],&quot;database&quot;);	if (!file_exists(&quot;../data/&quot;.$backup_dir.&quot;/&quot;))adminmsg(&quot;备">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://hebic.me/usr/uploads/2017/02/2092823335.png">
-<meta property="og:image" content="http://hebic.me/usr/uploads/2017/02/3510793580.png">
-<meta property="og:image" content="http://hebic.me/usr/uploads/2017/02/3604994104.png">
-<meta property="og:image" content="http://hebic.me/usr/uploads/2017/02/3781881478.png">
-<meta property="og:updated_time" content="2017-08-19T15:31:24.750Z">
+<meta property="og:image" content="http://120.25.80.195:7230/02/2092823335.png">
+<meta property="og:image" content="http://120.25.80.195:7230/02/3510793580.png">
+<meta property="og:image" content="http://120.25.80.195:7230/02/3604994104.png">
+<meta property="og:image" content="http://120.25.80.195:7230/02/3781881478.png">
+<meta property="og:updated_time" content="2017-08-20T00:55:10.244Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="74CMS_3.5 后台任意文件写入">
 <meta name="twitter:description" content="/admin/admin_database.php 45行 12345678910111213141516elseif($act ==&apos;do_backup&apos;)&amp;#123;	check_permissions($_SESSION[&apos;admin_purview&apos;],&quot;database&quot;);	if (!file_exists(&quot;../data/&quot;.$backup_dir.&quot;/&quot;))adminmsg(&quot;备">
-<meta name="twitter:image" content="http://hebic.me/usr/uploads/2017/02/2092823335.png">
+<meta name="twitter:image" content="http://120.25.80.195:7230/02/2092823335.png">
     
     
         
@@ -140,17 +140,17 @@
     <p>/admin/admin_database.php 45行</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">elseif</span>($act ==<span class="string">'do_backup'</span>)</div><div class="line">&#123;</div><div class="line">	check_permissions($_SESSION[<span class="string">'admin_purview'</span>],<span class="string">"database"</span>);</div><div class="line">	<span class="keyword">if</span> (!file_exists(<span class="string">"../data/"</span>.$backup_dir.<span class="string">"/"</span>))adminmsg(<span class="string">"备份文件存放目录data/"</span>.$backup_dir.<span class="string">"不存在！"</span>,<span class="number">0</span>);</div><div class="line">	<span class="keyword">if</span> (!is_writable(<span class="string">"../data/"</span>.$backup_dir.<span class="string">"/"</span>))adminmsg(<span class="string">"备份文件存放目录data/"</span>.$backup_dir.<span class="string">"不可写！"</span>,<span class="number">0</span>);</div><div class="line">	$limit_size = !<span class="keyword">empty</span>($_REQUEST[<span class="string">'limit_size'</span>]) ? intval($_REQUEST[<span class="string">'limit_size'</span>]) : <span class="string">'2048'</span>; </div><div class="line">	$mysql_type = !<span class="keyword">empty</span>($_REQUEST[<span class="string">'mysql_type'</span>]) ? trim($_REQUEST[<span class="string">'mysql_type'</span>]) : <span class="string">''</span>;</div><div class="line">	$table_id = !<span class="keyword">empty</span>($_REQUEST[<span class="string">'table_id'</span>]) ? intval($_REQUEST[<span class="string">'table_id'</span>]) : <span class="number">0</span>;</div><div class="line">	$file = !<span class="keyword">empty</span>($_GET[<span class="string">'file'</span>]) ? trim($_GET[<span class="string">'file'</span>]) : date(<span class="string">"Ymd_"</span>, time()) . get_rand_char(<span class="number">5</span>).uniqid();</div><div class="line">	$num = !<span class="keyword">empty</span>($_GET[<span class="string">'num'</span>]) ? intval($_GET[<span class="string">'num'</span>]) : <span class="number">1</span>;</div><div class="line">	$pos = !<span class="keyword">empty</span>($_GET[<span class="string">'pos'</span>]) ? intval($_GET[<span class="string">'pos'</span>]) : <span class="number">0</span>;</div><div class="line">		<span class="keyword">if</span> (!<span class="keyword">empty</span>($_POST[<span class="string">'tables'</span>]))</div><div class="line">		&#123;</div><div class="line">		$tables = $_POST[<span class="string">'tables'</span>];</div><div class="line">		 @file_put_contents(<span class="string">"../data/&#123;$backup_dir&#125;/temp.txt"</span>, serialize($_POST[<span class="string">'tables'</span>]));</div><div class="line">		&#125;</div></pre></td></tr></table></figure>
 <p>可以往data/backup/temp.txt中写入内容，写一个phpinfo();</p>
-<p><img src="http://hebic.me/usr/uploads/2017/02/2092823335.png"></p>
+<p><img src="http://120.25.80.195:7230/02/2092823335.png"></p>
 <p>本地去查看，的确写入了。</p>
-<p><img src="http://hebic.me/usr/uploads/2017/02/3510793580.png"></p>
+<p><img src="http://120.25.80.195:7230/02/3510793580.png"></p>
 <p>然后找一个require或者include包含他</p>
 <p>/admin/admin_crons.php 105行</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">elseif</span>($act == <span class="string">'execution'</span>)</div><div class="line">&#123;</div><div class="line">	check_token();</div><div class="line">	$id=intval($_GET[<span class="string">'id'</span>]);</div><div class="line">	$crons=$db-&gt;getone(<span class="string">"select * from "</span>.table(<span class="string">'crons'</span>).<span class="string">" WHERE  cronid='&#123;$id&#125;' LIMIT 1 "</span>);</div><div class="line">	<span class="keyword">if</span> (!<span class="keyword">empty</span>($crons))</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">if</span> (!file_exists(QISHI_ROOT_PATH.<span class="string">"include/crons/"</span>.$crons[<span class="string">'filename'</span>]))</div><div class="line">		&#123;</div><div class="line">		adminmsg(<span class="string">"任务文件 &#123;$crons['filename']&#125; 不存在！"</span>,<span class="number">0</span>);</div><div class="line">		&#125;</div><div class="line">	<span class="keyword">require_once</span>(QISHI_ROOT_PATH.<span class="string">"include/crons/"</span>.$crons[<span class="string">'filename'</span>]);</div><div class="line">	adminmsg(<span class="string">"执行成功！"</span>,<span class="number">2</span>);</div><div class="line">	&#125;	</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>取出crons表中的输入的id所在行，并require /include/crons/[filename]列</p>
 <p>所以后台修改crons表里的filename值</p>
-<p><img src="http://hebic.me/usr/uploads/2017/02/3604994104.png"></p>
+<p><img src="http://120.25.80.195:7230/02/3604994104.png"></p>
 <p>然后执行这个计划，这个文件就被require了。</p>
-<p><img src="http://hebic.me/usr/uploads/2017/02/3781881478.png"></p>
+<p><img src="http://120.25.80.195:7230/02/3781881478.png"></p>
 <p>总结：可控文件写入+可控文件包含<br>文件包含处要过滤../</p>
 
   </div>
