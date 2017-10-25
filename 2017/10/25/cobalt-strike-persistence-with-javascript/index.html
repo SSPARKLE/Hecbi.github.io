@@ -8,14 +8,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <meta name="description" content="Cobalt strike弹过来的shell重启之后shell就掉了，自然希望他可以在重启电脑之后依然发送心跳包过来，本文提供了一种cobalt strike权限维持的方法。 理论操作github上有一份cs权限维持的脚本：https://github.com/Cyri1s/cobalt-strike-persistence  脚本需要web delivery类的shell，在非管理员权限下需要调">
 <meta property="og:type" content="article">
-<meta property="og:title" content="cobalt strike persistence with javascript">
+<meta property="og:title" content="cobalt strike persistence with javascript backdoor">
 <meta property="og:url" content="http://hebic.me/2017/10/25/cobalt-strike-persistence-with-javascript/index.html">
 <meta property="og:site_name" content="Homaebic-Know thyself">
 <meta property="og:description" content="Cobalt strike弹过来的shell重启之后shell就掉了，自然希望他可以在重启电脑之后依然发送心跳包过来，本文提供了一种cobalt strike权限维持的方法。 理论操作github上有一份cs权限维持的脚本：https://github.com/Cyri1s/cobalt-strike-persistence  脚本需要web delivery类的shell，在非管理员权限下需要调">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2017-10-25T14:15:04.753Z">
+<meta property="og:updated_time" content="2017-10-25T14:17:22.486Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="cobalt strike persistence with javascript">
+<meta name="twitter:title" content="cobalt strike persistence with javascript backdoor">
 <meta name="twitter:description" content="Cobalt strike弹过来的shell重启之后shell就掉了，自然希望他可以在重启电脑之后依然发送心跳包过来，本文提供了一种cobalt strike权限维持的方法。 理论操作github上有一份cs权限维持的脚本：https://github.com/Cyri1s/cobalt-strike-persistence  脚本需要web delivery类的shell，在非管理员权限下需要调">
     
     
@@ -36,7 +36,7 @@
         
     
     <!-- title -->
-    <title>cobalt strike persistence with javascript</title>
+    <title>cobalt strike persistence with javascript backdoor</title>
     <!-- styles -->
     <link rel="stylesheet" href="/css/style.css">
     <!-- rss -->
@@ -83,15 +83,15 @@
     <div id="share" style="display: none">
       <ul>
   <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://hebic.me/2017/10/25/cobalt-strike-persistence-with-javascript/"><i class="fa fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=http://hebic.me/2017/10/25/cobalt-strike-persistence-with-javascript/&text=cobalt strike persistence with javascript"><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://hebic.me/2017/10/25/cobalt-strike-persistence-with-javascript/&title=cobalt strike persistence with javascript"><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://hebic.me/2017/10/25/cobalt-strike-persistence-with-javascript/&is_video=false&description=cobalt strike persistence with javascript"><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=cobalt strike persistence with javascript&body=Check out this article: http://hebic.me/2017/10/25/cobalt-strike-persistence-with-javascript/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=http://hebic.me/2017/10/25/cobalt-strike-persistence-with-javascript/&title=cobalt strike persistence with javascript"><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=http://hebic.me/2017/10/25/cobalt-strike-persistence-with-javascript/&title=cobalt strike persistence with javascript"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://hebic.me/2017/10/25/cobalt-strike-persistence-with-javascript/&title=cobalt strike persistence with javascript"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=http://hebic.me/2017/10/25/cobalt-strike-persistence-with-javascript/&title=cobalt strike persistence with javascript"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://hebic.me/2017/10/25/cobalt-strike-persistence-with-javascript/&name=cobalt strike persistence with javascript&description="><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://hebic.me/2017/10/25/cobalt-strike-persistence-with-javascript/&text=cobalt strike persistence with javascript backdoor"><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://hebic.me/2017/10/25/cobalt-strike-persistence-with-javascript/&title=cobalt strike persistence with javascript backdoor"><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://hebic.me/2017/10/25/cobalt-strike-persistence-with-javascript/&is_video=false&description=cobalt strike persistence with javascript backdoor"><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=cobalt strike persistence with javascript backdoor&body=Check out this article: http://hebic.me/2017/10/25/cobalt-strike-persistence-with-javascript/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://hebic.me/2017/10/25/cobalt-strike-persistence-with-javascript/&title=cobalt strike persistence with javascript backdoor"><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://hebic.me/2017/10/25/cobalt-strike-persistence-with-javascript/&title=cobalt strike persistence with javascript backdoor"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://hebic.me/2017/10/25/cobalt-strike-persistence-with-javascript/&title=cobalt strike persistence with javascript backdoor"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://hebic.me/2017/10/25/cobalt-strike-persistence-with-javascript/&title=cobalt strike persistence with javascript backdoor"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://hebic.me/2017/10/25/cobalt-strike-persistence-with-javascript/&name=cobalt strike persistence with javascript backdoor&description="><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -108,7 +108,7 @@
   <header>
     
     <h1 class="posttitle" itemprop="name headline">
-        cobalt strike persistence with javascript
+        cobalt strike persistence with javascript backdoor
     </h1>
 
 
@@ -189,15 +189,15 @@
     <div id="share-footer" style="display: none">
       <ul>
   <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://hebic.me/2017/10/25/cobalt-strike-persistence-with-javascript/"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=http://hebic.me/2017/10/25/cobalt-strike-persistence-with-javascript/&text=cobalt strike persistence with javascript"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://hebic.me/2017/10/25/cobalt-strike-persistence-with-javascript/&title=cobalt strike persistence with javascript"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://hebic.me/2017/10/25/cobalt-strike-persistence-with-javascript/&is_video=false&description=cobalt strike persistence with javascript"><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=cobalt strike persistence with javascript&body=Check out this article: http://hebic.me/2017/10/25/cobalt-strike-persistence-with-javascript/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=http://hebic.me/2017/10/25/cobalt-strike-persistence-with-javascript/&title=cobalt strike persistence with javascript"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=http://hebic.me/2017/10/25/cobalt-strike-persistence-with-javascript/&title=cobalt strike persistence with javascript"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://hebic.me/2017/10/25/cobalt-strike-persistence-with-javascript/&title=cobalt strike persistence with javascript"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=http://hebic.me/2017/10/25/cobalt-strike-persistence-with-javascript/&title=cobalt strike persistence with javascript"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://hebic.me/2017/10/25/cobalt-strike-persistence-with-javascript/&name=cobalt strike persistence with javascript&description="><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://hebic.me/2017/10/25/cobalt-strike-persistence-with-javascript/&text=cobalt strike persistence with javascript backdoor"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://hebic.me/2017/10/25/cobalt-strike-persistence-with-javascript/&title=cobalt strike persistence with javascript backdoor"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://hebic.me/2017/10/25/cobalt-strike-persistence-with-javascript/&is_video=false&description=cobalt strike persistence with javascript backdoor"><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=cobalt strike persistence with javascript backdoor&body=Check out this article: http://hebic.me/2017/10/25/cobalt-strike-persistence-with-javascript/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://hebic.me/2017/10/25/cobalt-strike-persistence-with-javascript/&title=cobalt strike persistence with javascript backdoor"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://hebic.me/2017/10/25/cobalt-strike-persistence-with-javascript/&title=cobalt strike persistence with javascript backdoor"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://hebic.me/2017/10/25/cobalt-strike-persistence-with-javascript/&title=cobalt strike persistence with javascript backdoor"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://hebic.me/2017/10/25/cobalt-strike-persistence-with-javascript/&title=cobalt strike persistence with javascript backdoor"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://hebic.me/2017/10/25/cobalt-strike-persistence-with-javascript/&name=cobalt strike persistence with javascript backdoor&description="><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
