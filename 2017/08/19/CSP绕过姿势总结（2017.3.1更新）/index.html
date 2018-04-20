@@ -155,7 +155,7 @@
 <p><img src="http://120.25.80.195:7230/02/3918442669.jpg" alt="解释图片.jpg"></p>
 <p>这种方法可以在Safari，Firefox，Edge，IE11上运行，Chrome聪明的不会把图片当做Javascript执行。Firefox 2017之后的版本修补了这个漏洞。</p>
 <p>最后Javascript的代码如下：</p>
- <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;script charset =<span class="string">'ISO-8859-1'</span>src=<span class="string">'xss.jpg'</span>&gt; &lt;/script&gt;</div></pre></td></tr></table></figure>
+ <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;script charset =<span class="string">'ISO-8859-1'</span>src=<span class="string">'xss.jpg'</span>&gt; <span class="xml"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></div></pre></td></tr></table></figure>
 <p>这里提供大小不同的已经完成修改了的图片：<br><a href="http://hebic.me/websec/xss/xss.jpg">大图片</a><br><a href="http://hebic.me/websec/xss/xss_small.jpg">小图片</a></p>
 <h3 id="扩展阅读"><a href="#扩展阅读" class="headerlink" title="扩展阅读"></a>扩展阅读</h3><p><a href="http://www.thinkfu.com/blog/gifjavascript-polyglots&amp;usg=ALkJrhglFwPzVXwZpAT8ilY5p-RQ1QQfLA" target="_blank" rel="external">GIF/Javascript Polyglots</a></p>
 <hr>
@@ -237,7 +237,7 @@
     
     <footer id="footer">
   <div class="footer-left">
-    Copyright &copy; 2017 Homaebic-Know thyself
+    Copyright &copy; 2018 Homaebic-Know thyself
   </div>
   <div class="footer-right">
     <nav>
