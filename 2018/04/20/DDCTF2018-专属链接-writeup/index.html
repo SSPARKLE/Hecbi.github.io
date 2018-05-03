@@ -12,7 +12,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-    <meta name="keywords" content="forsigner,前端,设计,Hexo主题,前端开发,用户体验,设计,frontend,design,nodejs,JavaScript" />
+    <meta name="keywords" content="web,web安全,ctf,安全" />
   
 
   <meta name="description" content="专属链接服务器根据每一个用户注册的邮箱，用rsa加密成密文。同样被加密的还有一个用户专属的随机flag。这道题目的思路是先下载到邮箱和flag的加密类，将“好朋友”的邮箱当做新的注册邮箱，加密为邮箱的密文。提交到网页的/flag/getflag处，网页会返回给这个用户在注册时加密的flag密文。利用下载到的秘钥库提取出公钥解密密文，得到flag。 下面说具体步骤。 进入网页，对比和官网的区别，有两">
