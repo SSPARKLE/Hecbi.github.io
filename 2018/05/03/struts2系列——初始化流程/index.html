@@ -22,16 +22,16 @@
 <meta property="og:site_name" content="Homaebic-Know thyself">
 <meta property="og:description" content="配置元素与初始化主线Struts2两大主线的入口程序是相同的，都是StrutsPrepareAndExecuteFilter，入口程序驱动了两条完全不同的主线运行。从init方法开始，主要针对三个元素展开的。  Dispatcher 核心分发器 PrepareOperations     HTTP预处理类 ExecuteOperations     HTTP处理执行类  初始化主线的核心驱动力是将">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="file:///C:/Users/99585/AppData/Local/Packages/Microsoft.Office.OneNote_8wekyb3d8bbwe/TempState/msohtmlclip/clip_image001.png">
-<meta property="og:image" content="file:///C:/Users/99585/AppData/Local/Packages/Microsoft.Office.OneNote_8wekyb3d8bbwe/TempState/msohtmlclip/clip_image002.png">
-<meta property="og:image" content="file:///C:/Users/99585/AppData/Local/Packages/Microsoft.Office.OneNote_8wekyb3d8bbwe/TempState/msohtmlclip/clip_image003.png">
-<meta property="og:image" content="file:///C:/Users/99585/AppData/Local/Packages/Microsoft.Office.OneNote_8wekyb3d8bbwe/TempState/msohtmlclip/clip_image004.png">
-<meta property="og:image" content="file:///C:/Users/99585/AppData/Local/Packages/Microsoft.Office.OneNote_8wekyb3d8bbwe/TempState/msohtmlclip/clip_image005.png">
-<meta property="og:updated_time" content="2018-05-03T03:14:01.765Z">
+<meta property="og:image" content="http://hebic.me/2018/05/03/struts2系列——初始化流程/1.png">
+<meta property="og:image" content="http://hebic.me/2018/05/03/struts2系列——初始化流程/2.png">
+<meta property="og:image" content="http://hebic.me/2018/05/03/struts2系列——初始化流程/3.png">
+<meta property="og:image" content="http://hebic.me/2018/05/03/struts2系列——初始化流程/4.png">
+<meta property="og:image" content="http://hebic.me/2018/05/03/struts2系列——初始化流程/5.png">
+<meta property="og:updated_time" content="2018-05-03T03:18:17.552Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="struts2系列——初始化流程">
 <meta name="twitter:description" content="配置元素与初始化主线Struts2两大主线的入口程序是相同的，都是StrutsPrepareAndExecuteFilter，入口程序驱动了两条完全不同的主线运行。从init方法开始，主要针对三个元素展开的。  Dispatcher 核心分发器 PrepareOperations     HTTP预处理类 ExecuteOperations     HTTP处理执行类  初始化主线的核心驱动力是将">
-<meta name="twitter:image" content="file:///C:/Users/99585/AppData/Local/Packages/Microsoft.Office.OneNote_8wekyb3d8bbwe/TempState/msohtmlclip/clip_image001.png">
+<meta name="twitter:image" content="http://hebic.me/2018/05/03/struts2系列——初始化流程/1.png">
 
   
 
@@ -258,7 +258,7 @@
 <p>Dispatcher：初始化主线核心驱动力</p>
 <p>Provider：初始化主线的操作载体</p>
 <p>Builder：初始化主线中元素的构建方式</p>
-<h1 id="Struts2初始化主线详解"><a href="#Struts2初始化主线详解" class="headerlink" title="Struts2初始化主线详解"></a>Struts2初始化主线详解</h1><p><img src="file:///C:/Users/99585/AppData/Local/Packages/Microsoft.Office.OneNote_8wekyb3d8bbwe/TempState/msohtmlclip/clip_image001.png" alt=" "></p>
+<h1 id="Struts2初始化主线详解"><a href="#Struts2初始化主线详解" class="headerlink" title="Struts2初始化主线详解"></a>Struts2初始化主线详解</h1><p><img src="/2018/05/03/struts2系列——初始化流程/1.png" alt="1"></p>
 <h2 id="容器"><a href="#容器" class="headerlink" title="容器"></a>容器</h2><p>面向对象的高级编程语言都是以对象为中心，对象之间的继承、嵌套引用关系所构成的对象树为我们进行对象级别的逻辑操作提供了足够的语法支持，但是对象之间复杂的关系也为对象生命周期带来了问题：</p>
 <ul>
 <li>在程序的运行期如何创建我们需要的对象？</li>
@@ -275,17 +275,17 @@
 <p>结论：容器由一系列对象的操作接口构成，其中至少包含获取对象实例以及管理对象之间的依赖关系这两类操作方法。</p>
 <p>进入init_preloadConfiguration()，在getConfiguration方法的调用中，我们不仅获得了Configuration对象的操作接口，也完成了对所有配置元素的调度。追进getConfiguration（ConfigurationManager.java），在这个方法中，调用了reloadContainer这个方法，我们继续追入。（DefaultConfiguration.java）这个方法是容器的初始化方法。</p>
 <p>第0步：</p>
-<p><img src="file:///C:/Users/99585/AppData/Local/Packages/Microsoft.Office.OneNote_8wekyb3d8bbwe/TempState/msohtmlclip/clip_image002.png" alt="this. packageContexts. clear(); this. loadedFi1eNames . clear(); vackaeeproviders - ArravList(); "></p>
+<p><img src="/2018/05/03/struts2系列——初始化流程/2.png" alt="this. packageContexts. clear(); this. loadedFi1eNames . clear(); vackaeeproviders - ArravList(); "></p>
 <p>内部缓存对象的清理</p>
 <p>第一步：</p>
-<p><img src="file:///C:/Users/99585/AppData/Local/Packages/Microsoft.Office.OneNote_8wekyb3d8bbwe/TempState/msohtmlclip/clip_image003.png" alt="img"></p>
+<p><img src="/2018/05/03/struts2系列——初始化流程/3.png" alt="img"></p>
 <p>ContainerProperites可以追踪方法，可以看出，这是一个将Properties文件中的键值和ContainerBuilder关联起来的一个工具类。实际上ContainerBuilder收集参数的过程之一。</p>
 <p>ContainerBuilder前面讲过，是container的构造器。</p>
 <p>第二步：</p>
-<p><img src="file:///C:/Users/99585/AppData/Local/Packages/Microsoft.Office.OneNote_8wekyb3d8bbwe/TempState/msohtmlclip/clip_image004.png" alt="Iterator i$ — providers . iterator(); while(i$. hasNext()) { Containerprovider containerprovider = (Container-provider) i$. next ( ) ; containerprovlder. init( configuration: this); containerprovider. register(builder, props); props . setConstants (builder); builder. factory (Configuration. class, create(context) { return DefaultConfü ActionContext oldContext ActionContext . getContext() ; "></p>
+<p><img src="/2018/05/03/struts2系列——初始化流程/4.png" alt="Iterator i$ — providers . iterator(); while(i$. hasNext()) { Containerprovider containerprovider = (Container-provider) i$. next ( ) ; containerprovlder. init( configuration: this); containerprovider. register(builder, props); props . setConstants (builder); builder. factory (Configuration. class, create(context) { return DefaultConfü ActionContext oldContext ActionContext . getContext() ; "></p>
 <p>第二步是COntainerBuilder收集参数的过程。在containerProvider的register方法，本身就定义了containerBuild作为参数，因此在不同配置的加载方式实现类中，ContainerBuilder将会被调用。</p>
 <p>第三步：</p>
-<p><img src="file:///C:/Users/99585/AppData/Local/Packages/Microsoft.Office.OneNote_8wekyb3d8bbwe/TempState/msohtmlclip/clip_image005.png" alt="img"></p>
+<p><img src="/2018/05/03/struts2系列——初始化流程/5.png" alt="img"></p>
 <p>调用create把容器创建出来</p>
 <p>第四步：</p>
 <p>初始化时间映射关系。实际上就是对PackageProvider的生命周期调用过程。</p>
