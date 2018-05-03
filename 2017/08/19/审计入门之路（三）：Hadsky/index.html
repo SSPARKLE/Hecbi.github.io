@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="这次是一个轻论坛，下载的源码合计1M。数据库一共才8个表，过滤挺暴力的，但还是找到一处后台的注入。 /app/superadmin/phpscript/moveread.php 11行1234567if ($_G[&apos;GET&apos;][&apos;TABLE&apos;] == &apos;read&apos; &amp;amp;&amp;amp; $sortid &amp;amp;&amp;amp; count($ids)) &amp;#123;	foreach ($ids as">
+<meta property="og:type" content="article">
+<meta property="og:title" content="审计入门之路（三）：Hadsky">
+<meta property="og:url" content="http://hebic.me/2017/08/19/审计入门之路（三）：Hadsky/index.html">
+<meta property="og:site_name" content="Homaebic-Know thyself">
+<meta property="og:description" content="这次是一个轻论坛，下载的源码合计1M。数据库一共才8个表，过滤挺暴力的，但还是找到一处后台的注入。 /app/superadmin/phpscript/moveread.php 11行1234567if ($_G[&apos;GET&apos;][&apos;TABLE&apos;] == &apos;read&apos; &amp;amp;&amp;amp; $sortid &amp;amp;&amp;amp; count($ids)) &amp;#123;	foreach ($ids as">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2017-08-20T00:54:55.245Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="审计入门之路（三）：Hadsky">
+<meta name="twitter:description" content="这次是一个轻论坛，下载的源码合计1M。数据库一共才8个表，过滤挺暴力的，但还是找到一处后台的注入。 /app/superadmin/phpscript/moveread.php 11行1234567if ($_G[&apos;GET&apos;][&apos;TABLE&apos;] == &apos;read&apos; &amp;amp;&amp;amp; $sortid &amp;amp;&amp;amp; count($ids)) &amp;#123;	foreach ($ids as">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>审计入门之路（三）：Hadsky</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- rss -->
+    
+    
+</head>
+
+<body>
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/friends/">Friendly link</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2017/08/19/审计入门之路（四）：GeniXCMS/"><i class="fa fa-chevron-left" aria-hidden="true" onmouseover='$("#i-prev").toggle();' onmouseout='$("#i-prev").toggle();'></i></a></li>
+        
+        
+        <li><a class="icon" href="/2017/08/19/审计入门之路（二）：ourphp/"><i class="fa fa-chevron-right" aria-hidden="true" onmouseover='$("#i-next").toggle();' onmouseout='$("#i-next").toggle();'></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up" aria-hidden="true" onmouseover='$("#i-top").toggle();' onmouseout='$("#i-top").toggle();'></i></a></li>
+        <li><a class="icon" href="#"><i class="fa fa-share-alt" aria-hidden="true" onmouseover='$("#i-share").toggle();' onmouseout='$("#i-share").toggle();' onclick='$("#share").toggle();return false;'></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://hebic.me/2017/08/19/审计入门之路（三）：Hadsky/"><i class="fa fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://hebic.me/2017/08/19/审计入门之路（三）：Hadsky/&text=审计入门之路（三）：Hadsky"><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://hebic.me/2017/08/19/审计入门之路（三）：Hadsky/&title=审计入门之路（三）：Hadsky"><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://hebic.me/2017/08/19/审计入门之路（三）：Hadsky/&is_video=false&description=审计入门之路（三）：Hadsky"><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=审计入门之路（三）：Hadsky&body=Check out this article: http://hebic.me/2017/08/19/审计入门之路（三）：Hadsky/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://hebic.me/2017/08/19/审计入门之路（三）：Hadsky/&title=审计入门之路（三）：Hadsky"><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://hebic.me/2017/08/19/审计入门之路（三）：Hadsky/&title=审计入门之路（三）：Hadsky"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://hebic.me/2017/08/19/审计入门之路（三）：Hadsky/&title=审计入门之路（三）：Hadsky"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://hebic.me/2017/08/19/审计入门之路（三）：Hadsky/&title=审计入门之路（三）：Hadsky"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://hebic.me/2017/08/19/审计入门之路（三）：Hadsky/&name=审计入门之路（三）：Hadsky&description="><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index width mx-auto px2 my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        审计入门之路（三）：Hadsky
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Homaebic-Know thyself</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2017-08-19T09:15:03.000Z" itemprop="datePublished">2017-08-19</time>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>这次是一个轻论坛，下载的源码合计1M。数据库一共才8个表，过滤挺暴力的，但还是找到一处后台的注入。</p>
+<p>/app/superadmin/phpscript/moveread.php 11行<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> ($_G[<span class="string">'GET'</span>][<span class="string">'TABLE'</span>] == <span class="string">'read'</span> &amp;&amp; $sortid &amp;&amp; count($ids)) &#123;</div><div class="line">	<span class="keyword">foreach</span> ($ids <span class="keyword">as</span> $id) &#123;</div><div class="line">		<span class="keyword">if</span> ($id)</div><div class="line">			mysql_query(<span class="string">"update `&#123;$_G['MYSQL']['PREFIX']&#125;read` set `sortid`=&#123;$sortid&#125; where `id`=&#123;$id&#125;"</span>);</div><div class="line">	&#125;</div><div class="line">	$r = <span class="string">'操作成功！'</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>$id被带入数据库中，向上追$id</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ids = (<span class="keyword">array</span>)$_POST[<span class="string">'ids'</span>];</div></pre></td></tr></table></figure>
+<p>所以就直接注入了。</p>
+<p>除了注入，还有一处没有利用成功的XSS，也写进来把。</p>
+<p>/puyuetian/function.php 258行<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">getClientInfos</span><span class="params">($info = <span class="string">'all'</span>)</span> </span>&#123;</div><div class="line">	<span class="keyword">if</span> ($info == <span class="string">'all'</span>) &#123;</div><div class="line">		$infos = <span class="string">'浏览器标示：'</span> . $_SERVER[<span class="string">'HTTP_USER_AGENT'</span>] . <span class="string">' &lt;br&gt;</span></div><div class="line"><span class="string">'</span>;</div><div class="line">		$infos .= <span class="string">'客户端语言：'</span> . $_SERVER[<span class="string">'HTTP_ACCEPT_LANGUAGE'</span>] . <span class="string">'</span></div><div class="line"><span class="string">&lt;br&gt;</span></div><div class="line"><span class="string">'</span>;</div><div class="line">		$infos .= <span class="string">'客户端IP地址：'</span> . $_SERVER[<span class="string">'REMOTE_ADDR'</span>];</div><div class="line">	&#125; <span class="keyword">elseif</span> ($info == <span class="string">'ip'</span>) &#123;</div><div class="line">		$IPaddress = <span class="string">''</span>;</div><div class="line">		<span class="keyword">if</span> (<span class="keyword">isset</span>($_SERVER)) &#123;</div><div class="line">			<span class="keyword">if</span> (<span class="keyword">isset</span>($_SERVER[<span class="string">"HTTP_X_FORWARDED_FOR"</span>])) &#123;</div><div class="line">				$IPaddress = $_SERVER[<span class="string">"HTTP_X_FORWARDED_FOR"</span>];</div><div class="line">			&#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="keyword">isset</span>($_SERVER[<span class="string">"HTTP_CLIENT_IP"</span>])) &#123;</div><div class="line">				$IPaddress = $_SERVER[<span class="string">"HTTP_CLIENT_IP"</span>];</div><div class="line">			&#125; <span class="keyword">else</span> &#123;</div><div class="line">				$IPaddress = $_SERVER[<span class="string">"REMOTE_ADDR"</span>];</div><div class="line">			&#125;</div><div class="line">		&#125; <span class="keyword">else</span> &#123;</div><div class="line">			<span class="keyword">if</span> (getenv(<span class="string">"HTTP_X_FORWARDED_FOR"</span>)) &#123;</div><div class="line">				$IPaddress = getenv(<span class="string">"HTTP_X_FORWARDED_FOR"</span>);</div><div class="line">			&#125; <span class="keyword">else</span> <span class="keyword">if</span> (getenv(<span class="string">"HTTP_CLIENT_IP"</span>)) &#123;</div><div class="line">				$IPaddress = getenv(<span class="string">"HTTP_CLIENT_IP"</span>);</div><div class="line">			&#125; <span class="keyword">else</span> &#123;</div><div class="line">				$IPaddress = getenv(<span class="string">"REMOTE_ADDR"</span>);</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		$infos = $IPaddress;</div><div class="line">	&#125; <span class="keyword">else</span> &#123;</div><div class="line">		$infos = $_SERVER[$info];</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> $infos;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>没有做ip的限制。把ip存入数据库的时候有过滤，所以不能注入，但是他把ip直接输出在每个网页的最下面了。但我不知道怎么用伪造ip头做XSS。有会的师傅请指点一哈^_^</p>
+<p>最近看Seay师傅写的代码审计书，跟吸大麻似的两天就看完了。学习很多干货，看代码的时候也更有针对性了。同时也意识到了这几次找的注入都是很基础的漏洞。我在找的是之后也发现，如果入口过滤完善，程序员写代码按照规范，也就基本不会出现注入一类的漏洞了。（二次注入不算）所以这几次找的注入都是程序员写代码时没使用db类，使用query()直接查询出了问题。</p>
+
+  </div>
+</article>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/friends/">Friendly link</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://hebic.me/2017/08/19/审计入门之路（三）：Hadsky/"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://hebic.me/2017/08/19/审计入门之路（三）：Hadsky/&text=审计入门之路（三）：Hadsky"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://hebic.me/2017/08/19/审计入门之路（三）：Hadsky/&title=审计入门之路（三）：Hadsky"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://hebic.me/2017/08/19/审计入门之路（三）：Hadsky/&is_video=false&description=审计入门之路（三）：Hadsky"><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=审计入门之路（三）：Hadsky&body=Check out this article: http://hebic.me/2017/08/19/审计入门之路（三）：Hadsky/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://hebic.me/2017/08/19/审计入门之路（三）：Hadsky/&title=审计入门之路（三）：Hadsky"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://hebic.me/2017/08/19/审计入门之路（三）：Hadsky/&title=审计入门之路（三）：Hadsky"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://hebic.me/2017/08/19/审计入门之路（三）：Hadsky/&title=审计入门之路（三）：Hadsky"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://hebic.me/2017/08/19/审计入门之路（三）：Hadsky/&title=审计入门之路（三）：Hadsky"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://hebic.me/2017/08/19/审计入门之路（三）：Hadsky/&name=审计入门之路（三）：Hadsky&description="><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+      <ul>
+        <li id="toc"><a class="icon" href="#" onclick='$("#toc-footer").toggle();return false;'><i class="fa fa-list fa-lg" aria-hidden="true"></i> TOC</a></li>
+        <li id="share"><a class="icon" href="#" onclick='$("#share-footer").toggle();return false;'><i class="fa fa-share-alt fa-lg" aria-hidden="true"></i> Share</a></li>
+        <li id="top" style="display:none"><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a></li>
+        <li id="menu"><a class="icon" href="#" onclick='$("#nav-footer").toggle();return false;'><i class="fa fa-bars fa-lg" aria-hidden="true"></i> Menu</a></li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2018 Homaebic-Know thyself
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/friends/">Friendly link</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="/lib/meslo-LG/styles.css">
+<link rel="stylesheet" href="/lib/justified-gallery/justifiedGallery.min.css">
+
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-86660611-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Disqus Comments -->
+
+

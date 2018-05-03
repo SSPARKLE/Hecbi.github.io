@@ -1,71 +1,106 @@
-/*!
- * Clean Blog v1.0.0 (http://startbootstrap.com)
- * Copyright 2015 Start Bootstrap
- * Licensed under Apache 2.0 (https://github.com/IronSummitMedia/startbootstrap/blob/gh-pages/LICENSE)
+/**
+ * Sets up Justified Gallery.
  */
+if (!!$.prototype.justifiedGallery) {
+  var options = {
+    rowHeight: 140,
+    margins: 4,
+    lastRow: 'justify'
+  };
+  $('.article-gallery').justifiedGallery(options);
+}
 
-// Tooltip Init
-$(function () {
-  $('[data-toggle="tooltip"]').tooltip()
-})
 
-// responsive tables
 $(document).ready(function() {
-    $("table").each(function(){
-      if ($(this).parent().get(0).tagName != 'FIGURE') {
-        $(this).addClass("table table-responsive table-striped table-hover");
-        $(this).find("th").addClass("text-center");
+
+  /**
+   * Shows the responsive navigation menu on mobile.
+   */
+  $("#header > #nav > ul > .icon").click(function() {
+    $("#header > #nav > ul").toggleClass("responsive");
+  });
+
+
+  /**
+   * Controls the different versions of  the menu in blog post articles 
+   * for Desktop, tablet and mobile.
+   */
+  if ($(".post").length) {
+    /**
+     * Display the menu if the menu icon is clicked.
+     */
+    var menu = $("#menu");
+    var menu_icon = $("#menu-icon, #menu-icon-tablet");
+    menu_icon.click(function() {
+      if (menu.css('visibility') === 'hidden') {
+        menu.css("visibility", "visible");
+        menu_icon.addClass('active');
+      } else {
+        menu.css("visibility", "hidden");
+        menu_icon.removeClass('active');
       }
+      return false;
     });
-});
 
-// responsive embed videos
-$(document).ready(function () {
-    $('iframe[src*="youtube.com"]').wrap('<div class="embed-responsive embed-responsive-16by9"></div>');
-    $('iframe[src*="youtube.com"]').addClass('embed-responsive-item');
-    $('iframe[src*="vimeo.com"]').wrap('<div class="embed-responsive embed-responsive-16by9"></div>');
-    $('iframe[src*="vimeo.com"]').addClass('embed-responsive-item');
-    $('img').addClass('img-responsive-center')
-});
+    /**
+     * Add a scroll listener to the menu to hide/show the navigation links.
+     */
+    if (menu.length) {
+      $(window).on('scroll', function() {
+        var topDistance = $("#menu > #nav").offset().top;
 
-// whether a post
-function isPages(attr){
-    var currentBoolean = document.querySelector('.navbar.header-navbar').getAttribute(attr);
-    if(currentBoolean === 'true'){return true;}
-    return false;
-}
-/*
-    scroll function
-    3 parameters
-        1. a DOM object
-        2 a class for targeted object
-        3 height when acctivated (optional. default: the height of the DOM)
-*/
-function scrollCheck(scrollTarget, toggleClass, scrollHeight){
-    document.addEventListener('scroll',function(){
-    var currentTop = window.pageYOffset;
-        currentTop > (scrollHeight||scrollTarget.clientHeight)
-        ?scrollTarget.classList.add(toggleClass)
-        :scrollTarget.classList.remove(toggleClass)
-    })
-}
+        // hide only the navigation links on desktop
+        if (menu.css('visibility') !== 'hidden' && topDistance < 50) {
+          $("#menu > #nav").show();
+        } else if (menu.css('visibility') !== 'hidden' && topDistance > 100) {
+          $("#menu > #nav").hide();
+        }
 
-
-
-/*
-* Steps
-* 1. get the content of h1
-* 2. scroll and appear fixed navbar
-* 3. the content of h1 is shown center at the top of the page
-* */
-
-(function(){
-    if (isPages('data-ispost')){
-        var navbar = document.querySelector('.navbar-custom');
-        var introHeader = document.querySelector('.intro-header').offsetHeight;
-        var introHeader = introHeader > 597 ? introHeader : 500;
-        var toc = document.querySelector('.toc-wrap');
-        scrollCheck(toc,'toc-fixed',introHeader-60);
-        // scrollCheck(navbar,'is-fixed');
+        // on tablet, hide the navigation icon as well and show a "scroll to top
+        // icon" instead
+        if ( ! $( "#menu-icon" ).is(":visible") && topDistance < 50 ) {
+          $("#menu-icon-tablet").show();
+          $("#top-icon-tablet").hide();
+        } else if (! $( "#menu-icon" ).is(":visible") && topDistance > 100) {
+          $("#menu-icon-tablet").hide();
+          $("#top-icon-tablet").show();
+        }
+      });
     }
-})();
+
+    /**
+     * Show mobile navigation menu after scrolling upwards,
+     * hide it again after scrolling downwards.
+     */
+    if ($( "#footer-post").length) {
+      var lastScrollTop = 0;
+      $(window).on('scroll', function() {
+        var topDistance = $(window).scrollTop();
+
+        if (topDistance > lastScrollTop){
+          // downscroll -> show menu
+          $("#footer-post").hide();
+        } else {
+          // upscroll -> hide menu
+          $("#footer-post").show();
+        }
+        lastScrollTop = topDistance;
+
+        // close all submenu's on scroll
+        $("#nav-footer").hide();
+        $("#toc-footer").hide();
+        $("#share-footer").hide();
+
+        // show a "navigation" icon when close to the top of the page, 
+        // otherwise show a "scroll to the top" icon
+        if (topDistance < 50) {
+          $("#actions-footer > ul > #top").hide();
+          $("#actions-footer > ul > #menu").show();
+        } else if (topDistance > 100) {
+          $("#actions-footer > ul > #menu").hide();
+          $("#actions-footer > ul > #top").show();
+        }
+      });
+    }
+  }
+});

