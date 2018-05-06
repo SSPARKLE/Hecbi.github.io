@@ -27,7 +27,7 @@
 <meta property="og:image" content="http://hebic.me/2018/05/03/struts2系列——初始化流程/3.png">
 <meta property="og:image" content="http://hebic.me/2018/05/03/struts2系列——初始化流程/4.png">
 <meta property="og:image" content="http://hebic.me/2018/05/03/struts2系列——初始化流程/5.png">
-<meta property="og:updated_time" content="2018-05-03T03:19:03.742Z">
+<meta property="og:updated_time" content="2018-05-03T12:55:42.392Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="struts2系列——初始化流程">
 <meta name="twitter:description" content="配置元素与初始化主线Struts2两大主线的入口程序是相同的，都是StrutsPrepareAndExecuteFilter，入口程序驱动了两条完全不同的主线运行。从init方法开始，主要针对三个元素展开的。  Dispatcher 核心分发器 PrepareOperations     HTTP预处理类 ExecuteOperations     HTTP处理执行类  初始化主线的核心驱动力是将">
@@ -92,7 +92,7 @@
 
   
 
-  <div class="post-header CENTER">
+  <div class="post-header">
    
 
 </div>
@@ -175,7 +175,7 @@
 <li>如何保证被创建出来的对象所关联的依赖关系（关联对象）也可以被正确创建出来？</li>
 </ul>
 <p>在实现一个复杂的业务需求，离不开多个对象彼此协作共同完成。对象关系模型中协作的真正含义正式通过依赖对象的绑住，完成业务逻辑的过程。那么每个对象不得不依赖于其协作对象的引用和构建。那么每个对象对自己逻辑的执行能力是被他依赖的对象反向控制了，又称控制反转。</p>
-<p>控制反转的提出对编程提出了：获取依赖对象 这一基本功能，如果这个功能通过程序逻辑自身实现，会存在很多弊端，于是容器（Container）被踢出来了。所以容器是一个与距离业务逻辑完全无关的额外编程元素，来帮助对象生命周期管理。</p>
+<p>控制反转的提出对编程提出了：获取依赖对象 这一基本功能，如果这个功能通过程序逻辑自身实现，会存在很多弊端，于是容器（Container）被提出来了。所以容器是一个与业务逻辑完全无关的额外编程元素，来帮助对象生命周期管理。</p>
 <p>这一编程元素（容器）需要遵循一定原则：</p>
 <ul>
 <li>容器应该被设计成全局、统一的编程元素</li>
@@ -234,7 +234,7 @@
     <a class="show pull-left" href="/2018/04/20/DDCTF2018-专属链接-writeup/">
         <i class="icon icon-angle-left"></i>
     </a>
-    <a class="hide pull-right" href="/">
+    <a class="show pull-right" href="/2018/05/06/struts2系列——XWork/">
         <i class="icon icon-angle-right"></i>
     </a>
   </div>
@@ -322,7 +322,7 @@
               class="CIRCLE"
               href="/atom.xml"
               rel="noopener noreferrer"
-              target="_blank"
+              target="_self"
               >
               RSS
             </a>
